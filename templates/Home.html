@@ -197,8 +197,8 @@
                   <div class="tab-pane fade show active" id="v-pills-step1" role="tabpanel" aria-labelledby="v-pills-step1-tab">
                     <form>
                       <div class="mb-3 ms-5 me-5">
-                        <label for="exampleInputEmail1" class="form-label">User name</label>
-                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your user name here" required>
+                        <label for="exampleInputname" class="form-label">User name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="exampleInputname" aria-describedby="emailHelp" placeholder="Your user name here" required>
                       </div>
                       <div class="mb-3 ms-5 me-5">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -216,7 +216,7 @@
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                       </div>
-                      <button type="button" class="btn btn-outline-primary ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
+                      <button type="button" id="next_btn_free_pill" class="btn btn-outline-primary ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
                     </form>
                   </div>
                   <div class="tab-pane fade" id="v-pills-step2" role="tabpanel" aria-labelledby="v-pills-step2-tab">
@@ -245,8 +245,8 @@
                         <label for="userobjective" class="form-label">why you create an account </label>
                         <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="userobjective" aria-describedby="emailHelp" placeholder="optional">
                       </div>
-                      <button type="button" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
-                      <button type="button" class="btn btn-outline-primary ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
+                      <button type="button" id="btn_prev_free_2" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
+                      <button type="button" id="btn_next_free_2" class="btn btn-outline-primary ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
                     </form>
                   </div>
                   <div class="tab-pane fade" id="v-pills-step3" role="tabpanel" aria-labelledby="v-pills-step3-tab">
@@ -267,7 +267,7 @@
                         <label for="cardcode" class="form-label">Security code</label>
                         <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="cardcode" aria-describedby="emailHelp" placeholder="CVC" required>
                       </div>
-                      <button type="button" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
+                      <button type="button" id="btn_prev_free_3" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
                       <button type="button" class="btn btn-outline-warning ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-check"></i>Confirm</button>
                     </form>
                   </div>
@@ -321,8 +321,65 @@
 
 </body>
 
-<style>
-</style>
+<script>
+  function next_step_free1(){
+    // remove active class and show class from the ferst div : 
+    document.getElementById("v-pills-step1-tab").classList.remove("active");;
+    document.getElementById("v-pills-step1").classList.remove("active");
+    document.getElementById("v-pills-step1").classList.remove("show");
+    // add show and active  class to seconde div :
+    document.getElementById("v-pills-step2-tab").classList.add("active");
+    document.getElementById("v-pills-step2").classList.add("active");
+    document.getElementById("v-pills-step2").classList.add("show");
+    console.log("next is clicked");
+  };
+  function prev_step_free1(){
+    // remove active class and show class from the ferst div : 
+    document.getElementById("v-pills-step2-tab").classList.remove("active");;
+    document.getElementById("v-pills-step2").classList.remove("active");
+    document.getElementById("v-pills-step2").classList.remove("show");
+    // add show and active  class to seconde div :
+    document.getElementById("v-pills-step1-tab").classList.add("active");
+    document.getElementById("v-pills-step1").classList.add("active");
+    document.getElementById("v-pills-step1").classList.add("show");
+    console.log("prev is clicked");
+  };
+  function next_step_free2(){
+    // remove active class and show class from the ferst div : 
+    document.getElementById("v-pills-step2-tab").classList.remove("active");;
+    document.getElementById("v-pills-step2").classList.remove("active");
+    document.getElementById("v-pills-step2").classList.remove("show");
+    // add show and active  class to seconde div :
+    document.getElementById("v-pills-step3-tab").classList.add("active");
+    document.getElementById("v-pills-step3").classList.add("active");
+    document.getElementById("v-pills-step3").classList.add("show");
+    console.log("prev is clicked");
+  };
+  function prev_step_free3(){
+    // remove active class and show class from the ferst div : 
+    document.getElementById("v-pills-step3-tab").classList.remove("active");;
+    document.getElementById("v-pills-step3").classList.remove("active");
+    document.getElementById("v-pills-step3").classList.remove("show");
+    // add show and active  class to seconde div :
+    document.getElementById("v-pills-step2-tab").classList.add("active");
+    document.getElementById("v-pills-step2").classList.add("active");
+    document.getElementById("v-pills-step2").classList.add("show");
+    console.log("prev is clicked");
+  }
+
+
+
+  // selector elements :
+  const btn_next_free = document.getElementById("next_btn_free_pill");
+  const btn_prev_free_2_to_1 = document.getElementById("btn_prev_free_2");
+  const btn_next_free_2_to_3 = document.getElementById("btn_next_free_2");
+  const btn_prev_free_3_to_2 = document.getElementById("btn_prev_free_3");
+  // add event to elements selected : 
+  btn_next_free.addEventListener("click",next_step_free1,false);
+  btn_prev_free_2_to_1.addEventListener("click",prev_step_free1,false);
+  btn_next_free_2_to_3.addEventListener("click",next_step_free2,false);
+  btn_prev_free_3_to_2.addEventListener("click",prev_step_free3,false);
+</script>
 
 
 
