@@ -184,30 +184,96 @@
                 <h5 class="modal-title" id="exampleModalToggleLabel"><i class="fad fa-pen"></i> Free trial account </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body">
-                <form>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">User name</label>
-                    <input type="text" class="form-control border-0 border-bottom border-primary w-5" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+              <div class="modal-body d-flex align-items-start">
+                <!-- multi steps bar -->
+                <div class="nav flex-column nav-pills me-3 my-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <button class="nav-link active ms-0 ps-0" id="v-pills-step1-tab" data-bs-toggle="pill" data-bs-target="#v-pills-step1" type="button" role="tab" aria-controls="v-pills-step1" aria-selected="true"><span class="text-info fw-bold">1</span> account setup</button>
+                  <button class="nav-link ms-0 ps-0" id="v-pills-step2-tab" data-bs-toggle="pill" data-bs-target="#v-pills-step2" type="button" role="tab" aria-controls="v-pills-step2" aria-selected="false"><span class="text-info fw-bold">2</span> account details</button>
+                  <button class="nav-link ms-0 ps-0" id="v-pills-step3-tab" data-bs-toggle="pill" data-bs-target="#v-pills-step3" type="button" role="tab" aria-controls="v-pills-step3" aria-selected="false"><span class="text-info fw-bold">3</span> payment details</button>
+                </div>
+                <!-- multi steps bar end -->
+                <!-- multi steps bar controler -->
+                <div class="tab-content" id="v-pills-tabContent">
+                  <div class="tab-pane fade show active" id="v-pills-step1" role="tabpanel" aria-labelledby="v-pills-step1-tab">
+                    <form>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="exampleInputEmail1" class="form-label">User name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your user name here" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="exampleInputEmail1" placeholder="username@exemple.exemple" aria-describedby="emailHelp" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="exampleInputPassword1" placeholder="a-z,A-Z,0-9,@#$£...." required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="exampleInputPassword2" class="form-label">Confirm your password</label>
+                        <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="exampleInputPassword2" placeholder="Confirme your password" required>
+                      </div>
+                      <div class="mb-3 form-check ms-5 me-5">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                      </div>
+                      <button type="button" class="btn btn-outline-primary ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
+                    </form>
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control border-0 border-bottom border-primary" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <div class="tab-pane fade" id="v-pills-step2" role="tabpanel" aria-labelledby="v-pills-step2-tab">
+                    <form>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userfname" class="form-label">Ferst name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="userfname" aria-describedby="emailHelp" placeholder="Your ferst name " required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userlname" class="form-label">Last name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="userlname" aria-describedby="emailHelp" placeholder="Your Last name " required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userphone" class="form-label">Phone number</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="userphone" aria-describedby="emailHelp" placeholder="+212 000000 " required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="useradrs" class="form-label">Adress</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="useradrs" aria-describedby="emailHelp" placeholder="optional">
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userdate" class="form-label">Birthday</label>
+                        <input type="date" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="userdate" aria-describedby="emailHelp" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userobjective" class="form-label">why you create an account </label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="userobjective" aria-describedby="emailHelp" placeholder="optional">
+                      </div>
+                      <button type="button" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
+                      <button type="button" class="btn btn-outline-primary ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
+                    </form>
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control border-0 border-bottom border-primary" id="exampleInputPassword1">
+                  <div class="tab-pane fade" id="v-pills-step3" role="tabpanel" aria-labelledby="v-pills-step3-tab">
+                    <form>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="cardname" class="form-label">Name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="cardname" aria-describedby="emailHelp" placeholder="Name on card " required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="cardnumber" class="form-label">Credit card number</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="cardnumber" aria-describedby="emailHelp" placeholder="9999 9999 9999 9999" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="carddate" class="form-label">Expiration date</label>
+                        <input type="date" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="carddate" aria-describedby="emailHelp" placeholder="9999 9999 9999 9999" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="cardcode" class="form-label">Security code</label>
+                        <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="cardcode" aria-describedby="emailHelp" placeholder="CVC" required>
+                      </div>
+                      <button type="button" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
+                      <button type="button" class="btn btn-outline-warning ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-check"></i>Confirm</button>
+                    </form>
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleInputPassword2" class="form-label">Confirm your password</label>
-                    <input type="password" class="form-control border-0 border-bottom border-primary" id="exampleInputPassword2">
-                  </div>
-                  <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                  </div>
-                  <button type="Next" class="btn btn-outline-primary"><i class="fad fa-hand-point-right"></i> Next</button>
-                </form>
+                </div>
+                <!-- multi steps bar controler end-->
+                
               </div>
             </div>
           </div>
