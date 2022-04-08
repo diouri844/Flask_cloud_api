@@ -165,25 +165,65 @@
           <div class="card border-0">
             <div class="card-body text-center py-4">
               <h4 class="card-title">Starter Edition</h4>
-              <p class="lead card-subtitle">eBook download only</p>
-              <p class="display-5 my-4 text-primary fw-bold">$12.99</p>
-              <p class="card-text mx-5 text-muted d-none d-lg-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, vitae magni! Repellat commodi a fuga corporis saepe dolorum.</p>
-              <a href="#" class="btn btn-outline-primary btn-lg mt-3">
+              <p class="lead card-subtitle">Limited days only </p>
+              <p class="display-5 my-4 text-primary fw-bold">$0.00</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-gift"></i> 7 days free trial</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-gift"></i> limited services for you</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-gift"></i> limited storage space in 5 GB</p>
+              <a type="button" class="btn btn-outline-primary btn-lg mt-3" data-bs-toggle="modal" href="#freeModalstep1">
                 Buy Now
               </a>
             </div>
           </div>
         </div>
-
+        <!-- Modal create new account for free step 1 -->
+        <div class="modal fade container-lg" id="freeModalstep1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-primary">
+              <div class="modal-header bg-primary text-light">
+                <h5 class="modal-title" id="exampleModalToggleLabel"><i class="fad fa-pen"></i> Free trial account </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">User name</label>
+                    <input type="text" class="form-control border-0 border-bottom border-primary w-5" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control border-0 border-bottom border-primary" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control border-0 border-bottom border-primary" id="exampleInputPassword1">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputPassword2" class="form-label">Confirm your password</label>
+                    <input type="password" class="form-control border-0 border-bottom border-primary" id="exampleInputPassword2">
+                  </div>
+                  <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                  </div>
+                  <button type="Next" class="btn btn-outline-primary"><i class="fad fa-hand-point-right"></i> Next</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end section of modal free account create -->
         <div class="col-9 col-lg-4">
-          <div class="card border-primary border-2">
-            <div class="card-header text-center text-primary">Most Popular</div>
+          <div class="card border-secondary border-2">
+            <div class="card-header text-center text-secondary">Most Popular</div>
             <div class="card-body text-center py-5">
-              <h4 class="card-title">Complete Edition</h4>
-              <p class="lead card-subtitle">eBook download & all updates</p>
-              <p class="display-4 my-4 text-primary fw-bold">$18.99</p>
-              <p class="card-text mx-5 text-muted d-none d-lg-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, vitae magni! Repellat commodi a fuga corporis saepe dolorum.</p>
-              <a href="#" class="btn btn-outline-primary btn-lg mt-3">
+              <h4 class="card-title">Complet Edition</h4>
+              <p class="lead card-subtitle">Special account</p>
+              <p class="display-4 my-4 text-secondary fw-bold">$18.99</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-smile"></i> 100 hours per month</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-smile"></i> limited storage space in 30 GB</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-smile"></i> more available services for you</p>
+              <a href="#" class="btn btn-outline-secondary btn-lg mt-3">
                 Buy Now
               </a>
             </div>
@@ -194,10 +234,12 @@
           <div class="card border-0">
             <div class="card-body text-center py-4">
               <h4 class="card-title">Ultimate Edition</h4>
-              <p class="lead card-subtitle">download, updates & extras</p>
-              <p class="display-5 my-4 text-primary fw-bold">$24.99</p>
-              <p class="card-text mx-5 text-muted d-none d-lg-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, vitae magni! Repellat commodi a fuga corporis saepe dolorum.</p>
-              <a href="#" class="btn btn-outline-primary btn-lg mt-3">
+              <p class="lead card-subtitle">Ninja account</p>
+              <p class="display-5 my-4 text-warning fw-bold">$24.99</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-universal-access text-warning"></i> unlimited hours of work</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-universal-access text-warning"></i> storage space at can be exceeded 55 GB</p>
+              <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-universal-access text-warning"></i> all services at your disposal</p>
+              <a href="#" class="btn btn-outline-warning btn-lg mt-3">
                 Buy Now
               </a>
             </div>
