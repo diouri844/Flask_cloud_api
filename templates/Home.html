@@ -187,9 +187,9 @@
               <div class="modal-body d-flex align-items-start">
                 <!-- multi steps bar -->
                 <div class="nav flex-column nav-pills me-3 my-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <button class="nav-link active ms-0 ps-0" id="v-pills-step1-tab" data-bs-toggle="pill" data-bs-target="#v-pills-step1" type="button" role="tab" aria-controls="v-pills-step1" aria-selected="true"><span class="text-info fw-bold">1</span> account setup</button>
-                  <button class="nav-link ms-0 ps-0" id="v-pills-step2-tab" data-bs-toggle="pill" data-bs-target="#v-pills-step2" type="button" role="tab" aria-controls="v-pills-step2" aria-selected="false"><span class="text-info fw-bold">2</span> account details</button>
-                  <button class="nav-link ms-0 ps-0" id="v-pills-step3-tab" data-bs-toggle="pill" data-bs-target="#v-pills-step3" type="button" role="tab" aria-controls="v-pills-step3" aria-selected="false"><span class="text-info fw-bold">3</span> payment details</button>
+                  <button class="nav-link active ms-0 ps-0" id="v-pills-step1-tab" type="label" aria-selected="true"><span class="text-info fw-bold">1</span> account setup</span>
+                  <button class="nav-link ms-0 ps-0" id="v-pills-step2-tab" type="label" aria-selected="false"><span class="text-info fw-bold">2</span> account details</button>
+                  <button class="nav-link ms-0 ps-0" id="v-pills-step3-tab" type="label" aria-selected="false"><span class="text-info fw-bold">3</span> payment details</button>
                 </div>
                 <!-- multi steps bar end -->
                 <!-- multi steps bar controler -->
@@ -320,67 +320,10 @@
 
 
 </body>
-
-<script>
-  function next_step_free1(){
-    // remove active class and show class from the ferst div : 
-    document.getElementById("v-pills-step1-tab").classList.remove("active");;
-    document.getElementById("v-pills-step1").classList.remove("active");
-    document.getElementById("v-pills-step1").classList.remove("show");
-    // add show and active  class to seconde div :
-    document.getElementById("v-pills-step2-tab").classList.add("active");
-    document.getElementById("v-pills-step2").classList.add("active");
-    document.getElementById("v-pills-step2").classList.add("show");
-    console.log("next is clicked");
-  };
-  function prev_step_free1(){
-    // remove active class and show class from the ferst div : 
-    document.getElementById("v-pills-step2-tab").classList.remove("active");;
-    document.getElementById("v-pills-step2").classList.remove("active");
-    document.getElementById("v-pills-step2").classList.remove("show");
-    // add show and active  class to seconde div :
-    document.getElementById("v-pills-step1-tab").classList.add("active");
-    document.getElementById("v-pills-step1").classList.add("active");
-    document.getElementById("v-pills-step1").classList.add("show");
-    console.log("prev is clicked");
-  };
-  function next_step_free2(){
-    // remove active class and show class from the ferst div : 
-    document.getElementById("v-pills-step2-tab").classList.remove("active");;
-    document.getElementById("v-pills-step2").classList.remove("active");
-    document.getElementById("v-pills-step2").classList.remove("show");
-    // add show and active  class to seconde div :
-    document.getElementById("v-pills-step3-tab").classList.add("active");
-    document.getElementById("v-pills-step3").classList.add("active");
-    document.getElementById("v-pills-step3").classList.add("show");
-    console.log("prev is clicked");
-  };
-  function prev_step_free3(){
-    // remove active class and show class from the ferst div : 
-    document.getElementById("v-pills-step3-tab").classList.remove("active");;
-    document.getElementById("v-pills-step3").classList.remove("active");
-    document.getElementById("v-pills-step3").classList.remove("show");
-    // add show and active  class to seconde div :
-    document.getElementById("v-pills-step2-tab").classList.add("active");
-    document.getElementById("v-pills-step2").classList.add("active");
-    document.getElementById("v-pills-step2").classList.add("show");
-    console.log("prev is clicked");
-  }
-
-
-
-  // selector elements :
-  const btn_next_free = document.getElementById("next_btn_free_pill");
-  const btn_prev_free_2_to_1 = document.getElementById("btn_prev_free_2");
-  const btn_next_free_2_to_3 = document.getElementById("btn_next_free_2");
-  const btn_prev_free_3_to_2 = document.getElementById("btn_prev_free_3");
-  // add event to elements selected : 
-  btn_next_free.addEventListener("click",next_step_free1,false);
-  btn_prev_free_2_to_1.addEventListener("click",prev_step_free1,false);
-  btn_next_free_2_to_3.addEventListener("click",next_step_free2,false);
-  btn_prev_free_3_to_2.addEventListener("click",prev_step_free3,false);
-</script>
-
+<script src="{{url_for('static', filename='js/home.js')}}"></script>
+<!-- script flash.js-->
+<link rel="stylesheet" href="{{url_for('static', filename='notify.min.css')}}"/>
+<script  src="{{url_for('static', filename='notify.min.js')}}"></script>
 
 
 </html>
