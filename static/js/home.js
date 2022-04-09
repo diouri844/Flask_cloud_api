@@ -112,6 +112,82 @@ function prev_step_free1(){
     console.log("prev 3 is clicked");
   }
 
+  function disabel_all_entry(){
+      document.getElementById("cardname").disabled = !document.getElementById("cardname").disabled;
+      document.getElementById("cardnumber").disabled = !document.getElementById("cardnumber").disabled;
+      document.getElementById("carddate").disabled = !document.getElementById("carddate").disabled;
+      document.getElementById("cardcode").disabled = !document.getElementById("cardcode").disabled;
+  }
+
+
+
+  function next_step_pro1(){
+    // hiding ferst div :  
+    document.getElementById("prim-pills-step1").classList.remove("active");
+    document.getElementById("prim-pills-step1").classList.remove("show");
+    // disabled btn step 1 enable btn step 2:
+    document.getElementById("prim-pills-step1-tab").classList.remove("active");
+    document.getElementById("prim-pills-step1-tab").classList.remove("btn");
+    document.getElementById("prim-pills-step1-tab").classList.remove("btn-outline-secondary");
+    document.getElementById("prim-pills-step2-tab").classList.add("active");
+    document.getElementById("prim-pills-step2-tab").classList.add("btn");
+    document.getElementById("prim-pills-step2-tab").classList.add("btn-outline-secondary");
+    // display seconde div :
+    document.getElementById("prim-pills-step2").classList.add("active");
+    document.getElementById("prim-pills-step2").classList.add("show");
+  }
+
+function prev_step_pro1(){
+    // hiding ferst div :  
+    document.getElementById("prim-pills-step2").classList.remove("active");
+    document.getElementById("prim-pills-step2").classList.remove("show");
+    // disabled btn step 1 enable btn step 2:
+    document.getElementById("prim-pills-step2-tab").classList.remove("active");
+    document.getElementById("prim-pills-step2-tab").classList.remove("btn");
+    document.getElementById("prim-pills-step2-tab").classList.remove("btn-outline-secondary");
+    document.getElementById("prim-pills-step1-tab").classList.add("active");
+    document.getElementById("prim-pills-step1-tab").classList.add("btn");
+    document.getElementById("prim-pills-step1-tab").classList.add("btn-outline-secondary");
+    // display seconde div :
+    document.getElementById("prim-pills-step1").classList.add("active");
+    document.getElementById("prim-pills-step1").classList.add("show");
+}
+
+function next_step_pro2(){
+    // hiding ferst div :  
+    document.getElementById("prim-pills-step2").classList.remove("active");
+    document.getElementById("prim-pills-step2").classList.remove("show");
+    // disabled btn step 1 enable btn step 2:
+    document.getElementById("prim-pills-step2-tab").classList.remove("active");
+    document.getElementById("prim-pills-step2-tab").classList.remove("btn");
+    document.getElementById("prim-pills-step2-tab").classList.remove("btn-outline-secondary");
+    document.getElementById("prim-pills-step3-tab").classList.add("active");
+    document.getElementById("prim-pills-step3-tab").classList.add("btn");
+    document.getElementById("prim-pills-step3-tab").classList.add("btn-outline-secondary");
+    // display seconde div :
+    document.getElementById("prim-pills-step3").classList.add("active");
+    document.getElementById("prim-pills-step3").classList.add("show");
+}
+
+function prev_step_pro2(){
+    // hiding ferst div :  
+    document.getElementById("prim-pills-step3").classList.remove("active");
+    document.getElementById("prim-pills-step3").classList.remove("show");
+    // disabled btn step 1 enable btn step 2:
+    document.getElementById("prim-pills-step3-tab").classList.remove("active");
+    document.getElementById("prim-pills-step3-tab").classList.remove("btn");
+    document.getElementById("prim-pills-step3-tab").classList.remove("btn-outline-secondary");
+    document.getElementById("prim-pills-step2-tab").classList.add("active");
+    document.getElementById("prim-pills-step2-tab").classList.add("btn");
+    document.getElementById("prim-pills-step2-tab").classList.add("btn-outline-secondary");
+    // display seconde div :
+    document.getElementById("prim-pills-step2").classList.add("active");
+    document.getElementById("prim-pills-step2").classList.add("show");
+}
+
+
+
+
 
 
   // selector elements :
@@ -119,8 +195,20 @@ function prev_step_free1(){
   const btn_prev_free_2_to_1 = document.getElementById("btn_prev_free_2");
   const btn_next_free_2_to_3 = document.getElementById("btn_next_free_2");
   const btn_prev_free_3_to_2 = document.getElementById("btn_prev_free_3");
+  // btn of complet edidition account : 
+  const btn_next_pro = document.getElementById("next_btn_pro_pill");
+  const btn_prev_pro_2_to_1 = document.getElementById("btn_prev_pro_2");
+  const btn_next_pro_2_to_3 = document.getElementById("btn_next_pro_2");
+  const btn_prev_pro_3_to_2 = document.getElementById("btn_prev_pro_3");
+  // get chekcbox skip :
+  const skip_btn = document.getElementById("skipCheck")
+  skip_btn.addEventListener("click",disabel_all_entry,false);
   // add event to elements selected : 
   btn_next_free.addEventListener("click",next_step_free1,false);
   btn_prev_free_2_to_1.addEventListener("click",prev_step_free1,false);
   btn_next_free_2_to_3.addEventListener("click",next_step_free2,false);
   btn_prev_free_3_to_2.addEventListener("click",prev_step_free3,false);
+  btn_next_pro.addEventListener("click",next_step_pro1,false);
+  btn_prev_pro_2_to_1.addEventListener("click",prev_step_pro1,false);
+  btn_next_pro_2_to_3.addEventListener("click",next_step_pro2,false);
+  btn_prev_pro_3_to_2.addEventListener("click",prev_step_pro2,false);

@@ -267,6 +267,10 @@
                         <label for="cardcode" class="form-label">Security code</label>
                         <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-primary" id="cardcode" aria-describedby="emailHelp" placeholder="CVC" required>
                       </div>
+                      <div class="mb-3 form-check ms-5 me-5">
+                        <input type="checkbox" class="form-check-input" id="skipCheck">
+                        <label class="form-check-label" for="skipCheck">Skip for now!</label>
+                      </div>
                       <button type="button" id="btn_prev_free_3" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
                       <button type="button" class="btn btn-outline-warning ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-check"></i>Confirm</button>
                     </form>
@@ -289,12 +293,123 @@
               <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-smile"></i> 100 hours per month</p>
               <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-smile"></i> limited storage space in 30 GB</p>
               <p class="card-text mx-5 text-muted d-none d-lg-block"><i class="fad fa-smile"></i> more available services for you</p>
-              <a href="#" class="btn btn-outline-secondary btn-lg mt-3">
+              <a class="btn btn-outline-secondary btn-lg mt-3" data-bs-toggle="modal" href="#primuimModalstep1">
                 Buy Now
               </a>
             </div>
           </div>
         </div>
+        <!-- modal of premium account create -->
+        <div class="modal fade container-lg" id="primuimModalstep1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-secondary">
+              <div class="modal-header bg-secondary text-light">
+                <h5 class="modal-title" id="exampleModalToggleLabel"><i class="fad fa-pen"></i> Complet Edition account </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body d-flex align-items-start">
+                <!-- multi steps bar -->
+                <div class="nav flex-column nav-pills me-3 my-5" id="p-pills-tab" role="tablist" aria-orientation="vertical">
+                  <label class="btn btn-outline-secondary active ms-0 ps-0" id="prim-pills-step1-tab" type="label" aria-selected="true"><span class="text-info fw-bold">1</span> account setup</label>
+                  <label class="ms-0 ps-0 border-0 my-2" id="prim-pills-step2-tab" type="label" aria-selected="false"><span class="text-info fw-bold">2</span> account details</label>
+                  <label class="ms-0 ps-0 border-0" id="prim-pills-step3-tab" type="label" aria-selected="false"><span class="text-info fw-bold">3</span> payment details</label>
+                </div>
+                <!-- multi steps bar end-->
+                <div class="tab-content" id="v-pills-tabContent">
+                  <!-- ferst pro step start -->
+                  <div class="tab-pane fade show active" id="prim-pills-step1" role="tabpanel" aria-labelledby="prim-pills-step1-tab">
+                    <form>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="proInputname" class="form-label">User name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="proInputname" aria-describedby="emailHelp" placeholder="Your user name here" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="proInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="proInputEmail1" placeholder="username@exemple.exemple" aria-describedby="emailHelp" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="proInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="proInputPassword1" placeholder="a-z,A-Z,0-9,@#$£...." required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="proInputPassword2" class="form-label">Confirm your password</label>
+                        <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="proInputPassword2" placeholder="Confirme your password" required>
+                      </div>
+                      <div class="mb-3 form-check ms-5 me-5">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                      </div>
+                      <button type="button" id="next_btn_pro_pill" class="btn btn-outline-secondary ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#prim-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
+                    </form>
+                  </div>
+                  <!-- ferst pro step end -->
+                  <!-- seconde pro step start -->
+                  <div class="tab-pane fade" id="prim-pills-step2" role="tabpanel" aria-labelledby="prim-pills-step2-tab">
+                    <form>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userprofname" class="form-label">Ferst name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="userprofname" aria-describedby="emailHelp" placeholder="Your ferst name " required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userprolname" class="form-label">Last name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="userprolname" aria-describedby="emailHelp" placeholder="Your Last name " required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userprophone" class="form-label">Phone number</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="userprophone" aria-describedby="emailHelp" placeholder="+212 000000 " required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userproadrs" class="form-label">Adress</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="userproadrs" aria-describedby="emailHelp" placeholder="optional">
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userprodate" class="form-label">Birthday</label>
+                        <input type="date" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="userprodate" aria-describedby="emailHelp" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="userproobjective" class="form-label">why you create an account </label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="userproobjective" aria-describedby="emailHelp" placeholder="optional">
+                      </div>
+                      <button type="button" id="btn_prev_pro_2" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
+                      <button type="button" id="btn_next_pro_2" class="btn btn-outline-secondary ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
+                    </form>
+                  </div>
+                  <!-- seconde pro step end -->
+                  <!-- last pro step start -->
+                  <div class="tab-pane fade" id="prim-pills-step3" role="tabpanel" aria-labelledby="prim-pills-step3-tab">
+                    <form>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="cardproname" class="form-label">Name</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="cardproname" aria-describedby="emailHelp" placeholder="Name on card " required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="cardpronumber" class="form-label">Credit card number</label>
+                        <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="cardpronumber" aria-describedby="emailHelp" placeholder="9999 9999 9999 9999" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="cardprodate" class="form-label">Expiration date</label>
+                        <input type="date" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="cardprodate" aria-describedby="emailHelp" placeholder="9999 9999 9999 9999" required>
+                      </div>
+                      <div class="mb-3 ms-5 me-5">
+                        <label for="cardprocode" class="form-label">Security code</label>
+                        <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-secondary" id="cardprocode" aria-describedby="emailHelp" placeholder="CVC" required>
+                      </div>
+                      <button type="button" id="btn_prev_pro_3" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
+                      <button type="button" class="btn btn-outline-warning ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#prim-pills-step2"><i class="fad fa-check"></i>Confirm</button>
+                    </form>
+                  </div>
+
+
+                  <!-- last pro step end -->
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- modal of premium account create -->
 
         <div class="col-8 col-lg-4 col-xl-3">
           <div class="card border-0">
