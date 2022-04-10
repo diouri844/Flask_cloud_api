@@ -122,19 +122,49 @@ function prev_step_free1(){
 
 
   function next_step_pro1(){
-    // hiding ferst div :  
-    document.getElementById("prim-pills-step1").classList.remove("active");
-    document.getElementById("prim-pills-step1").classList.remove("show");
-    // disabled btn step 1 enable btn step 2:
-    document.getElementById("prim-pills-step1-tab").classList.remove("active");
-    document.getElementById("prim-pills-step1-tab").classList.remove("btn");
-    document.getElementById("prim-pills-step1-tab").classList.remove("btn-outline-secondary");
-    document.getElementById("prim-pills-step2-tab").classList.add("active");
-    document.getElementById("prim-pills-step2-tab").classList.add("btn");
-    document.getElementById("prim-pills-step2-tab").classList.add("btn-outline-secondary");
-    // display seconde div :
-    document.getElementById("prim-pills-step2").classList.add("active");
-    document.getElementById("prim-pills-step2").classList.add("show");
+    // check if all required input is failed:
+    let nbr_valide = 0;
+    if(document.getElementById("proInputname").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("proInputEmail1").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("proInputPassword1").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("proInputPassword2").value.length!=0){
+        nbr_valide++;
+    }
+    if(nbr_valide===4){
+        if(document.getElementById("proInputPassword1").value===document.getElementById("proInputPassword2").value){
+            // hiding ferst div :  
+            document.getElementById("prim-pills-step1").classList.remove("active");
+            document.getElementById("prim-pills-step1").classList.remove("show");
+            // disabled btn step 1 enable btn step 2:
+            document.getElementById("prim-pills-step1-tab").classList.remove("active");
+            document.getElementById("prim-pills-step1-tab").classList.remove("btn");
+            document.getElementById("prim-pills-step1-tab").classList.remove("btn-outline-secondary");
+            document.getElementById("prim-pills-step2-tab").classList.add("active");
+            document.getElementById("prim-pills-step2-tab").classList.add("btn");
+            document.getElementById("prim-pills-step2-tab").classList.add("btn-outline-secondary");
+            // display seconde div :
+            document.getElementById("prim-pills-step2").classList.add("active");
+            document.getElementById("prim-pills-step2").classList.add("show");
+        }else{
+            notify({
+                message: 'Password and confirmation password must be the same',
+                color: 'success',
+                timeout: 1000
+              });
+        }
+    }else{
+        notify({
+            message: 'all required fields must be completed',
+            color: 'danger',
+            timeout: 2000
+          });
+    }
   }
 
 function prev_step_pro1(){
@@ -154,19 +184,42 @@ function prev_step_pro1(){
 }
 
 function next_step_pro2(){
-    // hiding ferst div :  
-    document.getElementById("prim-pills-step2").classList.remove("active");
-    document.getElementById("prim-pills-step2").classList.remove("show");
-    // disabled btn step 1 enable btn step 2:
-    document.getElementById("prim-pills-step2-tab").classList.remove("active");
-    document.getElementById("prim-pills-step2-tab").classList.remove("btn");
-    document.getElementById("prim-pills-step2-tab").classList.remove("btn-outline-secondary");
-    document.getElementById("prim-pills-step3-tab").classList.add("active");
-    document.getElementById("prim-pills-step3-tab").classList.add("btn");
-    document.getElementById("prim-pills-step3-tab").classList.add("btn-outline-secondary");
-    // display seconde div :
-    document.getElementById("prim-pills-step3").classList.add("active");
-    document.getElementById("prim-pills-step3").classList.add("show");
+    // check if all required input is failed :
+    let nbr_valide = 0;
+    if(document.getElementById("userprofname").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("userprolname").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("userprophone").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("userprodate").value.length!=0){
+        nbr_valide++;
+    }
+    if(nbr_valide===4){
+        // hiding ferst div :  
+        document.getElementById("prim-pills-step2").classList.remove("active");
+        document.getElementById("prim-pills-step2").classList.remove("show");
+        // disabled btn step 1 enable btn step 2:
+        document.getElementById("prim-pills-step2-tab").classList.remove("active");
+        document.getElementById("prim-pills-step2-tab").classList.remove("btn");
+        document.getElementById("prim-pills-step2-tab").classList.remove("btn-outline-secondary");
+        document.getElementById("prim-pills-step3-tab").classList.add("active");
+        document.getElementById("prim-pills-step3-tab").classList.add("btn");
+        document.getElementById("prim-pills-step3-tab").classList.add("btn-outline-secondary");
+        // display seconde div :
+        document.getElementById("prim-pills-step3").classList.add("active");
+        document.getElementById("prim-pills-step3").classList.add("show");
+        }else{
+            document.getElementById("primuimModalstep1").style.transform = "translateY(-45px)";
+            notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+            });
+    }
 }
 
 function prev_step_pro2(){
