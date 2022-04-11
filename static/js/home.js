@@ -41,8 +41,6 @@ function next_step_free1(){
     }
   };
 
-
-
 function prev_step_free1(){
     // remove active class and show class from the ferst div : 
     document.getElementById("v-pills-step2-tab").classList.remove("active");;
@@ -54,12 +52,6 @@ function prev_step_free1(){
     document.getElementById("v-pills-step1").classList.add("show");
     console.log("prev is clicked");
 };
-
-
-
-
-
-
 
   function next_step_free2(){
     var nbr_valide = 0;
@@ -94,12 +86,6 @@ function prev_step_free1(){
     }
   };
 
-
-
-
-
-
-
   function prev_step_free3(){
     // remove active class and show class from the ferst div : 
     document.getElementById("v-pills-step3-tab").classList.remove("active");;
@@ -118,8 +104,6 @@ function prev_step_free1(){
       document.getElementById("carddate").disabled = !document.getElementById("carddate").disabled;
       document.getElementById("cardcode").disabled = !document.getElementById("cardcode").disabled;
   }
-
-
 
   function next_step_pro1(){
     // check if all required input is failed:
@@ -238,10 +222,96 @@ function prev_step_pro2(){
     document.getElementById("prim-pills-step2").classList.add("show");
 }
 
-
-
-
-
+function next_step_ninja1(){
+    // check if all required input is failed :
+    let nbr_valide = 0;
+    if(document.getElementById("ninjaInputname").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("ninjaInputEmail1").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("ninjaInputPassword1").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("ninjaInputPassword2").value.length!=0){
+        nbr_valide++;
+    }
+    if(nbr_valide===4){
+        if(document.getElementById("ninjaInputPassword1").value===document.getElementById("ninjaInputPassword2").value){
+            // hiding ferst div :
+            document.getElementById("ninja-pills-step1").classList.remove("active");
+            document.getElementById("ninja-pills-step1").classList.remove("show");
+            // disabled btn step 1 enable btn step 2:
+            document.getElementById("ninja-pills-step1-tab").classList.remove("active");
+            document.getElementById("ninja-pills-step1-tab").classList.remove("btn");
+            document.getElementById("ninja-pills-step1-tab").classList.remove("btn-outline-warning");
+            document.getElementById("ninja-pills-step2-tab").classList.add("active");
+            document.getElementById("ninja-pills-step2-tab").classList.add("btn");
+            document.getElementById("ninja-pills-step2-tab").classList.add("btn-outline-warning");
+            // display seconde div :
+            document.getElementById("ninja-pills-step2").classList.add("active");
+            document.getElementById("ninja-pills-step2").classList.add("show");
+        }else{
+            notify({
+                message: 'Password and confirmation password must be the same',
+                color: 'success',
+                timeout: 1000
+              });
+        }
+    }else{
+        notify({
+            message: 'all required fields must be completed',
+            color: 'danger',
+            timeout: 2000
+        });
+    }
+}
+function prev_step_ninja1(){
+     // hiding ferst div :
+     document.getElementById("ninja-pills-step2").classList.remove("active");
+     document.getElementById("ninja-pills-step2").classList.remove("show");
+     // disabled btn step 1 enable btn step 2:
+     document.getElementById("ninja-pills-step2-tab").classList.remove("active");
+     document.getElementById("ninja-pills-step2-tab").classList.remove("btn");
+     document.getElementById("ninja-pills-step2-tab").classList.remove("btn-outline-warning");
+     document.getElementById("ninja-pills-step1-tab").classList.add("active");
+     document.getElementById("ninja-pills-step1-tab").classList.add("btn");
+     document.getElementById("ninja-pills-step1-tab").classList.add("btn-outline-warning");
+     // display seconde div :
+     document.getElementById("ninja-pills-step1").classList.add("active");
+     document.getElementById("ninja-pills-step1").classList.add("show");
+}
+function next_step_ninja2(){
+    // hiding ferst div :
+    document.getElementById("ninja-pills-step2").classList.remove("active");
+    document.getElementById("ninja-pills-step2").classList.remove("show");
+    // disabled btn step 1 enable btn step 2:
+    document.getElementById("ninja-pills-step2-tab").classList.remove("active");
+    document.getElementById("ninja-pills-step2-tab").classList.remove("btn");
+    document.getElementById("ninja-pills-step2-tab").classList.remove("btn-outline-warning");
+    document.getElementById("ninja-pills-step3-tab").classList.add("active");
+    document.getElementById("ninja-pills-step3-tab").classList.add("btn");
+    document.getElementById("ninja-pills-step3-tab").classList.add("btn-outline-warning");
+    // display seconde div :
+    document.getElementById("ninja-pills-step3").classList.add("active");
+    document.getElementById("ninja-pills-step3").classList.add("show");
+}
+function prev_step_ninja2(){
+    // hiding ferst div :
+    document.getElementById("ninja-pills-step3").classList.remove("active");
+    document.getElementById("ninja-pills-step2").classList.remove("show");
+    // disabled btn step 1 enable btn step 2:
+    document.getElementById("ninja-pills-step3-tab").classList.remove("active");
+    document.getElementById("ninja-pills-step3-tab").classList.remove("btn");
+    document.getElementById("ninja-pills-step3-tab").classList.remove("btn-outline-warning");
+    document.getElementById("ninja-pills-step2-tab").classList.add("active");
+    document.getElementById("ninja-pills-step2-tab").classList.add("btn");
+    document.getElementById("ninja-pills-step2-tab").classList.add("btn-outline-warning");
+    // display seconde div :
+    document.getElementById("ninja-pills-step2").classList.add("active");
+    document.getElementById("ninja-pills-step2").classList.add("show");
+}
 
   // selector elements :
   const btn_next_free = document.getElementById("next_btn_free_pill");
@@ -253,6 +323,11 @@ function prev_step_pro2(){
   const btn_prev_pro_2_to_1 = document.getElementById("btn_prev_pro_2");
   const btn_next_pro_2_to_3 = document.getElementById("btn_next_pro_2");
   const btn_prev_pro_3_to_2 = document.getElementById("btn_prev_pro_3");
+  // btn of ninja edidition account :
+  const btn_next_ninja = document.getElementById("next_btn_ninja_pill");
+  const btn_prev_ninja_2_to_1 = document.getElementById("btn_prev_ninja_2");
+  const btn_next_ninja_2_to_3 = document.getElementById("btn_next_ninja_2");
+  const btn_prev_ninja_3_to_2 = document.getElementById("btn_prev_ninja_3");
   // get chekcbox skip :
   const skip_btn = document.getElementById("skipCheck")
   skip_btn.addEventListener("click",disabel_all_entry,false);
@@ -265,3 +340,7 @@ function prev_step_pro2(){
   btn_prev_pro_2_to_1.addEventListener("click",prev_step_pro1,false);
   btn_next_pro_2_to_3.addEventListener("click",next_step_pro2,false);
   btn_prev_pro_3_to_2.addEventListener("click",prev_step_pro2,false);
+  btn_next_ninja.addEventListener("click",next_step_ninja1,false);
+  btn_prev_ninja_2_to_1.addEventListener("click",prev_step_ninja1,false);
+  btn_next_ninja_2_to_3.addEventListener("click",next_step_ninja2,false);
+  btn_prev_ninja_3_to_2.addEventListener("click",prev_step_ninja2,false)

@@ -440,7 +440,7 @@
               <!-- multi steps bar end-->
               <div class="tab-content" id="v-pills-tabContent">
                 <!-- ferst pro step start -->
-                <div class="tab-pane fade" id="ninja-pills-step1" role="tabpanel" aria-labelledby="ninja-pills-step1-tab">
+                <div class="tab-pane fade show active" id="ninja-pills-step1" role="tabpanel" aria-labelledby="ninja-pills-step1-tab">
                   <form>
                     <div class="mb-3 ms-5 me-5">
                       <label for="ninjaInputname" class="form-label">User name</label>
@@ -465,7 +465,7 @@
                     <button type="button" id="next_btn_ninja_pill" class="btn btn-outline-warning ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#prim-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
                   </form>
                 </div>
-                <div class="tab-pane fade show active" id="ninja-pills-step2" role="tabpanel" aria-labelledby="ninja-pills-step2-tab">
+                <div class="tab-pane fade" id="ninja-pills-step2" role="tabpanel" aria-labelledby="ninja-pills-step2-tab">
                   <form>
                     <div class="mb-3 ms-5 me-5">
                       <label for="userninjafname" class="form-label">Ferst name</label>
@@ -487,15 +487,35 @@
                       <label for="userninjadate" class="form-label">Birthday</label>
                       <input type="date" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-warning" id="userninjadate" aria-describedby="emailHelp" required>
                     </div>
-                    <div class="mb-3 ms-5 me-5">
-                      <label for="userninjaobjective" class="form-label">why you create an account </label>
-                      <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-warning" id="userninjaobjective" aria-describedby="emailHelp" placeholder="optional">
-                    </div>
                     <button type="button" id="btn_prev_ninja_2" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
                     <button type="button" id="btn_next_ninja_2" class="btn btn-outline-warning ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
                   </form>
                 </div>
-                <!-- seconde pro step end -->
+                <!-- seconde ninja step end -->
+                <!-- last ninja step start -->
+                <div class="tab-pane fade" id="ninja-pills-step3" role="tabpanel" aria-labelledby="ninja-pills-step3-tab">
+                  <form>
+                    <div class="mb-3 ms-5 me-5">
+                      <label for="cardninjaname" class="form-label">Name</label>
+                      <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-warning" id="cardninjaname" aria-describedby="emailHelp" placeholder="Name on card " required>
+                    </div>
+                    <div class="mb-3 ms-5 me-5">
+                      <label for="cardninjanumber" class="form-label">Credit card number</label>
+                      <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-warning" id="cardninjanumber" aria-describedby="emailHelp" placeholder="9999 9999 9999 9999" required>
+                    </div>
+                    <div class="mb-3 ms-5 me-5">
+                      <label for="cardninjadate" class="form-label">Expiration date</label>
+                      <input type="date" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-warning" id="cardninjadate" aria-describedby="emailHelp" placeholder="9999 9999 9999 9999" required>
+                    </div>
+                    <div class="mb-3 ms-5 me-5">
+                      <label for="cardninjacode" class="form-label">Security code</label>
+                      <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-warning" id="cardninjacode" aria-describedby="emailHelp" placeholder="CVC" required>
+                    </div>
+                    <button type="button" id="btn_prev_ninja_3" class="btn btn-outline-danger ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#v-pills-step2"><i class="fad fa-hand-point-left"></i> Previous</button>
+                    <button type="button" class="btn btn-outline-warning ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#prim-pills-step2"><i class="fad fa-check"></i>Confirm</button>
+                  </form>
+                </div>
+                <!-- last ninja step end -->
           </div>
         </div>
       </div>
