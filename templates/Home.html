@@ -144,13 +144,8 @@
         </div>
       </div>
 </div>
-
-
-
-
-
-  </section>
-  <!--about section end -->
+</section>
+<!--about section end -->
 
   <!-- pricing section -->
   <section id="pricing" class="bg-light mt-5">
@@ -529,23 +524,40 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <div>
-        Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-      </div>
-      <div class="dropdown mt-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-          Dropdown button
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
-      </div>
+      <form>
+        <div class="mb-3 ms-5 me-5">
+          <label for="ninjaInputname" class="form-label">User name</label>
+          <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="ninjaInputname" aria-describedby="emailHelp" placeholder="Your user name here (optional)">
+        </div>
+        <div class="mb-3 ms-5 me-5">
+          <label for="ninjaInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="ninjaInputEmail1" placeholder="username@exemple.exemple" aria-describedby="emailHelp" required>
+        </div>
+        <div class="mb-3 ms-5 me-5">
+          <label for="ninjaInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="ninjaInputPassword1" placeholder="a-z,A-Z,0-9,@#$£...." required>
+        </div>
+        <button type="button" id="next_btn_ninja_pill" class="btn btn-outline-dark ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#prim-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
+      </form>
+      
     </div>
   </div>
   <!-- offcanvas login system end -->
-
+<section>
+  <div class="container-lg mt-5 fixed-center">
+    <div class="row g-4 justify-content-center align-items-center">
+        <div class="col-md-4 text-center d-none d-md-block">
+          <img src="{{url_for('static', filename='avatar-5261896_640.png')}}" class="img-fluid">
+        </div>
+        <div class="col-md-8 text-center text-md-start">
+          <h1>
+            <div class="display-2  ms-5">Already  have an account?</div>
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" class="display-5 text-muted  ms-5"><i class="fad fa-arrow-right"></i> Log-in Now</a>
+          </h1>
+        </div>
+      </div>
+</div>
+</section>
 
 
 
