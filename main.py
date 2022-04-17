@@ -6,7 +6,13 @@ my_app = Flask(__name__)
 def home():
     # home function body :
     return render_template('Home.html')
-
+#create account link controler :
+@my_app.route('/singup',methods=['POST'])
+def singup_controler():
+    if request.method == 'POST':
+        user_data = request.form.to_dict()
+        print(user_data)
+    return user_data
 
 
 

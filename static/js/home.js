@@ -24,6 +24,13 @@ function next_step_free1(){
             document.getElementById("v-pills-step2-tab").classList.add("active");
             document.getElementById("v-pills-step2").classList.add("active");
             document.getElementById("v-pills-step2").classList.add("show");
+            // adding user data to the formdata :
+            free_user_data = {
+                "name":document.getElementById("exampleInputname").value,
+                "Email":document.getElementById("exampleInputEmail1").value,
+                "Password":document.getElementById("exampleInputPassword1").value,
+                "confirme":document.getElementById("exampleInputPassword1").value,
+            }
         }else{
             notify({
                 message: 'Password and confirmation password must be the same',
@@ -54,6 +61,7 @@ function prev_step_free1(){
 };
 
   function next_step_free2(){
+    console.log(free_user_data);
     var nbr_valide = 0;
     if(document.getElementById("userfname").value.length!=0){
         nbr_valide++;
@@ -76,6 +84,19 @@ function prev_step_free1(){
         document.getElementById("v-pills-step3-tab").classList.add("active");
         document.getElementById("v-pills-step3").classList.add("active");
         document.getElementById("v-pills-step3").classList.add("show");
+        // add data : 
+        free_user_data['ferstname'] = document.getElementById("userfname").value;
+        free_user_data['lastname'] = document.getElementById("userlname").value;
+        free_user_data['phonenumber'] = document.getElementById("userphone").value;
+        free_user_data['date'] = document.getElementById("userdate").value;
+        // check if optional data fields:
+        if(document.getElementById("useradrs").value.length!=0){
+            free_user_data['adresse'] = document.getElementById("useradrs").value;
+        }
+        if(document.getElementById("userobjective").value.length!=0){
+            free_user_data['objective'] = document.getElementById("userobjective").value ;
+        }
+        
     }else{
         document.getElementById("freeModalstep1").style.transform = "translateY(-45px)";
         notify({
@@ -85,6 +106,54 @@ function prev_step_free1(){
           });
     }
   };
+  function send_free_form_data(){
+    // get chekcbox value : 
+    if(document.getElementById("skipCheck").checked===true){
+        // skipe card credit for now 
+    }else{
+        // check if all required input is failed :
+        let nbr_valide = 0;
+        if(document.getElementById("cardname").value.length!=0){
+            nbr_valide++;
+        }
+        if(document.getElementById("cardnumber").value.length!=0){
+            nbr_valide++;
+        }
+        if(document.getElementById("carddate").value.length!=0){
+            nbr_valide++;
+        }
+        if(document.getElementById("cardcode").value.length!=0){
+            nbr_valide++;
+        }
+        if(nbr_valide===4){
+            // add data :
+            free_user_data['CreditCardName'] = document.getElementById("cardname").value;
+            free_user_data['CreditCardNumber'] = document.getElementById("cardnumber").value;
+            free_user_data['CreditCardDate'] = document.getElementById("carddate").value;
+            free_user_data['CreditCardPassword'] = document.getElementById("cardcode").value;
+            console.log(free_user_data);
+            // send data to the back end side :
+            let config = {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+            }
+            axios.defaults.baseURL = 'https://api.example.com';
+            axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            axios.post('/singup',free_user_data,config);
+        }else{
+            notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+              });
+        }
+    }
+  }
+
+
+
 
   function prev_step_free3(){
     // remove active class and show class from the ferst div : 
@@ -267,6 +336,7 @@ function next_step_ninja1(){
         });
     }
 }
+
 function prev_step_ninja1(){
      // hiding ferst div :
      document.getElementById("ninja-pills-step2").classList.remove("active");
@@ -282,6 +352,7 @@ function prev_step_ninja1(){
      document.getElementById("ninja-pills-step1").classList.add("active");
      document.getElementById("ninja-pills-step1").classList.add("show");
 }
+
 function next_step_ninja2(){
     // hiding ferst div :
     document.getElementById("ninja-pills-step2").classList.remove("active");
@@ -297,6 +368,7 @@ function next_step_ninja2(){
     document.getElementById("ninja-pills-step3").classList.add("active");
     document.getElementById("ninja-pills-step3").classList.add("show");
 }
+
 function prev_step_ninja2(){
     // hiding ferst div :
     document.getElementById("ninja-pills-step3").classList.remove("active");
@@ -312,12 +384,16 @@ function prev_step_ninja2(){
     document.getElementById("ninja-pills-step2").classList.add("active");
     document.getElementById("ninja-pills-step2").classList.add("show");
 }
-
+   // global formdata :
+   var free_user_data = {};
+   var pro_user_data = {};
+   var ninja_user_data = {};
   // selector elements :
   const btn_next_free = document.getElementById("next_btn_free_pill");
   const btn_prev_free_2_to_1 = document.getElementById("btn_prev_free_2");
   const btn_next_free_2_to_3 = document.getElementById("btn_next_free_2");
   const btn_prev_free_3_to_2 = document.getElementById("btn_prev_free_3");
+  const btn_submit_free = document.getElementById("btn_submit_free");
   // btn of complet edidition account : 
   const btn_next_pro = document.getElementById("next_btn_pro_pill");
   const btn_prev_pro_2_to_1 = document.getElementById("btn_prev_pro_2");
@@ -336,6 +412,8 @@ function prev_step_ninja2(){
   btn_prev_free_2_to_1.addEventListener("click",prev_step_free1,false);
   btn_next_free_2_to_3.addEventListener("click",next_step_free2,false);
   btn_prev_free_3_to_2.addEventListener("click",prev_step_free3,false);
+  btn_submit_free.addEventListener("click",send_free_form_data,false);
+
   btn_next_pro.addEventListener("click",next_step_pro1,false);
   btn_prev_pro_2_to_1.addEventListener("click",prev_step_pro1,false);
   btn_next_pro_2_to_3.addEventListener("click",next_step_pro2,false);
