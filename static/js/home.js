@@ -60,7 +60,7 @@ function prev_step_free1(){
     console.log("prev is clicked");
 };
 
-  function next_step_free2(){
+function next_step_free2(){
     console.log(free_user_data);
     var nbr_valide = 0;
     if(document.getElementById("userfname").value.length!=0){
@@ -105,8 +105,9 @@ function prev_step_free1(){
             timeout: 2000
           });
     }
-  };
-  function send_free_form_data(){
+};
+
+function send_free_form_data(){
     // get chekcbox value : 
     if(document.getElementById("skipCheck").checked===true){
         // skipe card credit for now 
@@ -138,8 +139,7 @@ function prev_step_free1(){
                   'Content-Type': 'multipart/form-data'
                 }
             }
-            axios.defaults.baseURL = 'https://api.example.com';
-            axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+            axios.defaults.baseURL = 'http://127.0.0.1:5000';
             axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
             axios.post('/singup',free_user_data,config);
         }else{
@@ -151,8 +151,6 @@ function prev_step_free1(){
         }
     }
   }
-
-
 
 
   function prev_step_free3(){

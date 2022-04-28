@@ -11,7 +11,20 @@ def home():
 def singup_controler():
     if request.method == 'POST':
         user_data = request.form.to_dict()
-        print(user_data)
+        user_name = user_data['name']
+        user_email = user_data['Email']
+        user_pswd = user_data['Password']
+        user_fname = user_data['ferstname']
+        user_lname = user_data['lastname']
+        user_phone = user_data['phonenumber']
+        user_date_join = user_data['date']
+        if len(user_data)==12:
+            #send all data includ credit card data :
+            user_card_name = user_data['CreditCardName']
+            user_card_number = user_data['CreditCardNumber']
+            user_card_date = user_data['CreditCardDate']
+            user_card_pswd = user_data['CreditCardPassword']
+        print(len(user_data))
     return user_data
 
 
