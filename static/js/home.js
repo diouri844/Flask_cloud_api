@@ -132,6 +132,8 @@ function send_free_form_data(){
             free_user_data['CreditCardNumber'] = document.getElementById("cardnumber").value;
             free_user_data['CreditCardDate'] = document.getElementById("carddate").value;
             free_user_data['CreditCardPassword'] = document.getElementById("cardcode").value;
+            // define state of account : 
+            free_user_data['state_account']="free trial"
             console.log(free_user_data);
             // send data to the back end side :
             let config = {
