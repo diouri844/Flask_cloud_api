@@ -135,7 +135,19 @@ function send_free_form_data(){
             // define state of account : 
             free_user_data['state_account']="free trial"
             console.log(free_user_data);
-            // send data to the back end side :
+            // send data to the back end side : 
+            let current_date = new Date();
+            let card_date =  new Date(document.getElementById("carddate").value);
+            console.log(card_date,current_date);
+            if(card_date < current_date){
+                // credit date expired :
+                console.log(document.getElementById("carddate").value,current_date);
+                notify({
+                    message: 'credit card date expired',
+                    color: 'danger',
+                    timeout: 2000
+                  });
+            }
             let config = {
                 headers: {
                   'Content-Type': 'multipart/form-data'

@@ -22,14 +22,14 @@ def get_user_by_id(user_key):
 def check_user_account(username,email,phone):
     # check if user_name or user_email or user_phone already exist :
     try:
-        with sqlite3.connect("../DBA_config/DBA_Temp.db") as connexion:
-            with connexion.cursor() as cursor:
-                command = "SELECT count(*) FROM User WHERE User.Name='"+str(username)+"' or User.Email='"+str(email)+"' or User.Phone='"+str(phone)+"'"
-                command = cursor.execute(command)
-                result = command.fetchall()[0]
-                if result == 0:
-                    return True
-                else:
-                    return False
+        connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
+        cursor = connexion.cursor()
+        command = "SELECT count(*) FROM User WHERE User.Name='"+str(username)+"' or User.Email='"+str(email)+"' or User.Phone='"+str(phone)+"'"
+        command = cursor.execute(command)
+        result = command.fetchall()[0]
+        print("[fetch user result ] : "+str(result))
+        if result[0] == 0:
+            return False
     except Exception as e:
-        print("[fetch user error ]: "+str(e))        
+        print("[fetch user error ]: "+str(e))       
+    return True
