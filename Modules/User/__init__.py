@@ -1,19 +1,22 @@
 import sqlite3
 
 def create_user(username,email,password,fname,lname,phone,date_s,date_l,type_account):
+    message = ""
     try:
-        connexion = sqlite3.connect("../DBA_config/DBA_Temp.db")
+        connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
         cursor = connexion.cursor()
-        command = "INSERT INTO User VALUES (Null,'"+str(username)+"','"+str(email)+"','"+str(password)+"','"+str(fname)+"','"+str(lastname)+"','"+str(phone)+"','"+str(date_s)+"','"+str(date_s)+"','"+str(type_account)+"')"
+        command = "INSERT INTO User VALUES (Null,'"+str(username)+"','"+str(email)+"','"+str(password)+"','"+str(fname)+"','"+str(lname)+"','"+str(phone)+"','"+str(date_s)+"','"+str(date_s)+"','"+str(type_account)+"',Null,Null,Null,Null)"
         command = cursor.execute(command)
         connexion.commit()
+        message = "New account created successfully :)"
     except Exception as e:
         print("[User create error ]: "+str(e))
         connexion.rollback()
+        message = "Create new account is failed" 
     finally:
         cursor.close()
         connexion.close()
-    return
+    return message
 
 def get_user_by_id(user_key):
     #user key => user_name or user_email or user_phone:

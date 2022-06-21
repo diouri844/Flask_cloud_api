@@ -155,7 +155,11 @@ function send_free_form_data(){
             }
             axios.defaults.baseURL = 'http://127.0.0.1:5000';
             axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-            axios.post('/singup',free_user_data,config);
+            axios.post('/singup',free_user_data,config).then(response=>{
+                console.log(response);
+            }).catch(error=>{
+                console.error(error);
+            });
         }else{
             notify({
                 message: 'all required fields must be completed',

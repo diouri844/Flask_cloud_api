@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify
 from Modules.User import *
 
 my_app = Flask(__name__)
@@ -28,10 +28,15 @@ def singup_controler():
             user_card_pswd = user_data['CreditCardPassword']
         #check user account :
         if check_user_account(user_name,user_email,user_phone) == True:
-            print("account already exist :) ")
+            return jsonify({'Response message':"account already exist :) "}) 
         else:
-            print("new account data :) ")
-    return user_data
+            # create new account : 
+
+            #if len(data )==12 : ==> credit card info is inserted 
+            # step 1 : create user basic data 
+            # step 2 : update credit card info 
+            message = create_user(user_name,user_email,user_pswd,user_fname,user_lname,user_phone,user_date_join,None,user_account_type)
+            return jsonify({'response message':" new account data :) "+str(message)})
 
 
 
