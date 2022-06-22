@@ -110,7 +110,19 @@ function next_step_free2(){
 function send_free_form_data(){
     // get chekcbox value : 
     if(document.getElementById("skipCheck").checked===true){
-        // skipe card credit for now 
+        // skipe card credit for now
+        let config = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        }
+        axios.defaults.baseURL = 'http://127.0.0.1:5000';
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.post('/singup',free_user_data,config).then(response=>{
+            console.log(response);
+        }).catch(error=>{
+            console.error(error);
+        });
     }else{
         // check if all required input is failed :
         let nbr_valide = 0;
