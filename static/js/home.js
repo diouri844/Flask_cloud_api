@@ -16,14 +16,6 @@ function next_step_free1(){
     }
     if(nbr_valide===4){
         if(document.getElementById("exampleInputPassword1").value===document.getElementById("exampleInputPassword2").value){
-            // remove active class and show class from the ferst div : 
-            document.getElementById("v-pills-step1-tab").classList.remove("active");;
-            document.getElementById("v-pills-step1").classList.remove("active");
-            document.getElementById("v-pills-step1").classList.remove("show");
-            // add show and active  class to seconde div :
-            document.getElementById("v-pills-step2-tab").classList.add("active");
-            document.getElementById("v-pills-step2").classList.add("active");
-            document.getElementById("v-pills-step2").classList.add("show");
             // adding user data to the formdata :
             free_user_data = {
                 "name":document.getElementById("exampleInputname").value,
@@ -31,6 +23,33 @@ function next_step_free1(){
                 "Password":document.getElementById("exampleInputPassword1").value,
                 "confirme":document.getElementById("exampleInputPassword1").value,
             }
+            // send request to the server :
+            axios.defaults.baseURL = 'http://127.0.0.1:5000';
+            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            axios.post('/singup/Account_setup',free_user_data,config)
+            .then(response=>{
+                notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+                if(response.data.state === "success"){
+                    setTimeout(
+                        ()=>{
+                            // remove active class and show class from the ferst div : 
+                            document.getElementById("v-pills-step1-tab").classList.remove("active");;
+                            document.getElementById("v-pills-step1").classList.remove("active");
+                            document.getElementById("v-pills-step1").classList.remove("show");
+                            // add show and active  class to seconde div :
+                            document.getElementById("v-pills-step2-tab").classList.add("active");
+                            document.getElementById("v-pills-step2").classList.add("active");
+                            document.getElementById("v-pills-step2").classList.add("show");
+                        },1500
+                    );
+                }
+            }).catch(error=>{
+                console.error(error);
+            });
         }else{
             notify({
                 message: 'Password and confirmation password must be the same',
@@ -111,13 +130,13 @@ function send_free_form_data(){
     // get chekcbox value : 
     if(document.getElementById("skipCheck").checked===true){
         // skipe card credit for now
+        free_user_data['state_account']="free trial"
         let config = {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
         }
-        axios.defaults.baseURL = 'http://127.0.0.1:5000';
-        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        
         axios.post('/singup',free_user_data,config).then(response=>{
             console.log(response);
         }).catch(error=>{
@@ -167,8 +186,14 @@ function send_free_form_data(){
             }
             axios.defaults.baseURL = 'http://127.0.0.1:5000';
             axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-            axios.post('/singup',free_user_data,config).then(response=>{
-                console.log(response);
+            axios.post('/singup',free_user_data,config)
+            .then(response=>{
+                // notify :
+                notify({
+                    message: response.data.response_message,
+                    color: 'danger',
+                    timeout: 2000
+                  });
             }).catch(error=>{
                 console.error(error);
             });
@@ -412,10 +437,17 @@ function prev_step_ninja2(){
     document.getElementById("ninja-pills-step2").classList.add("active");
     document.getElementById("ninja-pills-step2").classList.add("show");
 }
-   // global formdata :
+// global formdata :
    var free_user_data = {};
    var pro_user_data = {};
    var ninja_user_data = {};
+   var config = {};
+// setup my axios config header :
+    config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    };
   // selector elements :
   const btn_next_free = document.getElementById("next_btn_free_pill");
   const btn_prev_free_2_to_1 = document.getElementById("btn_prev_free_2");

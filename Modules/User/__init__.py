@@ -1,5 +1,25 @@
 import sqlite3
 
+
+def account_setup(user_name, user_email, user_pswd):
+    response = 0
+    try:
+        connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
+        cursor = connexion.cursor()
+        command = "INSERT INTO User_account VALUES (Null,'"+str(user_name)+"','"+str(user_email)+"','"+str(user_pswd)+"')"
+        command = cursor.execute(command)
+        connexion.commit()
+        response = 1
+    except Exception as e:
+        print("[User_account create error ]: "+str(e))
+        connexion.rollback()
+        response = -1
+    finally:
+        cursor.close()
+        connexion.close()
+    return response
+
+
 def create_user(username,email,password,fname,lname,phone,date_s,date_l,type_account):
     message = ""
     try:
