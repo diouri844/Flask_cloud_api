@@ -19,21 +19,36 @@ def singup_controler(subject):
             user_name = user_data['name']
             user_email = user_data['Email']
             user_pswd = user_data['Password']
-            response_account_setup = account_setup(user_name,user_email,user_pswd)
-            if response_account_setup == 1:
-                response_message = "You have successfully set up your account."
+            #check user account :
+            if check_user_account(user_name, user_email) == True:
+                response_message = "Account already exist "
+                response_state = "danger"
+            else:
+                response_account_setup = account_setup(user_name,user_email,user_pswd)
+                if response_account_setup == 1:
+                    response_message = "You have successfully set up your account."
+                    response_state = "success"
+                else:
+                    response_message = "Failed to set up your account, try again."
+                    response_state = "danger"
+        if subject == index_subject[1]:
+            user_data = request.form.to_dict()
+            user_fname = user_data['ferstname']
+            user_lname = user_data['lastname']
+            user_phone = user_data['phonenumber']
+            user_date_join = user_data['date']
+            user_name = user_data['name']
+            user_account_type = user_data['state_account']
+            user_id = get_user_id_by_username(user_name)
+            reponse_user_details = set_account_details(user_fname,user_lname,user_phone,user_date_join,user_id,user_account_type)
+            if reponse_user_details == 1:
+                response_message = "You have succeeded in configuring your personal information."
                 response_state = "success"
             else:
-                response_message = "Failed to set up your account, try again."
+                response_message = "Failed to configure your personal data, retry."
                 response_state = "danger"
         return jsonify({'message': response_message, 'state': response_state})
     '''
-        user_fname = user_data['ferstname']
-        user_lname = user_data['lastname']
-        user_phone = user_data['phonenumber']
-        user_date_join = user_data['date']
-        user_account_type = user_data['state_account']
-        if len(user_data)>9:
             #send all data includ credit card data :
             user_card_name = user_data['CreditCardName']
             user_card_number = user_data['CreditCardNumber']

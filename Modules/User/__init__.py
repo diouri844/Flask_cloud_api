@@ -1,6 +1,6 @@
 import sqlite3
 
-
+# step  1: create user account 
 def account_setup(user_name, user_email, user_pswd):
     response = 0
     try:
@@ -12,6 +12,26 @@ def account_setup(user_name, user_email, user_pswd):
         response = 1
     except Exception as e:
         print("[User_account create error ]: "+str(e))
+        connexion.rollback()
+        response = -1
+    finally:
+        cursor.close()
+        connexion.close()
+    return response
+# setep 2 : add user details
+
+def set_account_details(fname,lname,phone,date_l,id,type_account):
+    response = 0
+    try:
+        connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
+        cursor = connexion.cursor()
+        command = "INSERT INTO User_details (Id,FerstName,LastNAme,Phone,DateSingup,UserType,UserId) VALUES (Null,'"+str(
+            fname)+"','"+str(lname)+"','"+str(phone)+"','"+str(date_l)+"','"+str(type_account)+"',"+str(id)+")"
+        command = cursor.execute(command)
+        connexion.commit()
+        response = 1
+    except Exception as e:
+        print("[User_details create error ]: "+str(e))
         connexion.rollback()
         response = -1
     finally:
@@ -55,15 +75,15 @@ def add_credit_card_info(user_id,card_name,card_number,card_date,card_cvc):
         connexion.close()
     return message
 
-def get_user_id_by_phone(user_phone):
+def get_user_id_by_username(user_name):
     try:
         connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
         cursor = connexion.cursor()
-        command = "SELECT User.id FROM User WHERE User.Phone="+str(user_phone)
+        command = "SELECT Id FROM User_account WHERE Name='"+str(user_name)+"'"
         command = cursor.execute(command)
-        id_result = command.fetchall()
+        id_result = command.fetchall()[0][0]
     except Exception as e:
-        print("[error fetch user-id by phone-key ] :  "+str(e))
+        print("[error fetch user-id by name-key ] :  "+str(e))
         id_result = -1
     finally:
         cursor.close()
@@ -79,7 +99,8 @@ def get_user_by_id(user_id):
     try:
         connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
         cursor = connexion.cursor()
-        command = "SELECT * FROM User WHERE User.id="+str(user_id)
+        command = "SELECT * FROM User_account WHERE User_account.id=" + \
+            str(user_id)
         command = cursor.execute(command)
         resultat = command.fetchall()[0]
     except  Exception as e:
@@ -90,12 +111,13 @@ def get_user_by_id(user_id):
         connexion.close()
     return resultat
 
-def check_user_account(username,email,phone):
+def check_user_account(username,email):
     # check if user_name or user_email or user_phone already exist :
     try:
         connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
         cursor = connexion.cursor()
-        command = "SELECT count(*) FROM User WHERE User.Name='"+str(username)+"' or User.Email='"+str(email)+"' or User.Phone='"+str(phone)+"'"
+        command = "SELECT count(*) FROM User_account WHERE User_account.Name='" + \
+            str(username)+"' or User_account.Email='"+str(email)+"'"
         command = cursor.execute(command)
         result = command.fetchall()[0]
         print("[fetch user result ] : "+str(result))

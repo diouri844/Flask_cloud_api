@@ -95,29 +95,43 @@ function next_step_free2(){
         nbr_valide++;
     }
     if(nbr_valide===4){
-        // remove active class and show class from the ferst div : 
-        document.getElementById("v-pills-step2-tab").classList.remove("active");;
-        document.getElementById("v-pills-step2").classList.remove("active");
-        document.getElementById("v-pills-step2").classList.remove("show");
-        // add show and active  class to seconde div :
-        document.getElementById("v-pills-step3-tab").classList.add("active");
-        document.getElementById("v-pills-step3").classList.add("active");
-        document.getElementById("v-pills-step3").classList.add("show");
+        
         // add data : 
-        free_user_data['ferstname'] = document.getElementById("userfname").value;
-        free_user_data['lastname'] = document.getElementById("userlname").value;
-        free_user_data['phonenumber'] = document.getElementById("userphone").value;
-        free_user_data['date'] = document.getElementById("userdate").value;
-        // check if optional data fields:
-        if(document.getElementById("useradrs").value.length!=0){
-            free_user_data['adresse'] = document.getElementById("useradrs").value;
-        }
-        if(document.getElementById("userobjective").value.length!=0){
-            free_user_data['objective'] = document.getElementById("userobjective").value ;
-        }
+        let user_free_details = new FormData();
+        user_free_details.append('ferstname',document.getElementById("userfname").value);
+        user_free_details.append('lastname',document.getElementById("userlname").value);
+        user_free_details.append('phonenumber',document.getElementById("userphone").value);
+        user_free_details.append('date',document.getElementById("userdate").value);
+        user_free_details.append('state_account',"free trial");
+        user_free_details.append('name',free_user_data['name']);
+        // send data to to backend api :
+        axios.defaults.baseURL = 'http://127.0.0.1:5000';
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.post('/singup/Personal_data',user_free_details,config)
+        .then(response=>{
+            if(response.data.state === 'success' ){
+                // remove active class and show class from the ferst div : 
+                document.getElementById("v-pills-step2-tab").classList.remove("active");;
+                document.getElementById("v-pills-step2").classList.remove("active");
+                document.getElementById("v-pills-step2").classList.remove("show");
+                // add show and active  class to seconde div :
+                document.getElementById("v-pills-step3-tab").classList.add("active");
+                document.getElementById("v-pills-step3").classList.add("active");
+                document.getElementById("v-pills-step3").classList.add("show");
+            }
+            setTimeout(()=>{
+                notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+            },1500);
+        })
+        .catch(error => {
+
+        });
         
     }else{
-        document.getElementById("freeModalstep1").style.transform = "translateY(-45px)";
         notify({
             message: 'all required fields must be completed',
             color: 'danger',
@@ -130,18 +144,7 @@ function send_free_form_data(){
     // get chekcbox value : 
     if(document.getElementById("skipCheck").checked===true){
         // skipe card credit for now
-        free_user_data['state_account']="free trial"
-        let config = {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-        }
-        
-        axios.post('/singup',free_user_data,config).then(response=>{
-            console.log(response);
-        }).catch(error=>{
-            console.error(error);
-        });
+        document.getElementById("close_btn_free").click();
     }else{
         // check if all required input is failed :
         let nbr_valide = 0;
@@ -166,43 +169,12 @@ function send_free_form_data(){
             // define state of account : 
             free_user_data['state_account']="free trial"
             console.log(free_user_data);
-            // send data to the back end side : 
-            let current_date = new Date();
-            let card_date =  new Date(document.getElementById("carddate").value);
-            console.log(card_date,current_date);
-            if(card_date < current_date){
-                // credit date expired :
-                console.log(document.getElementById("carddate").value,current_date);
-                notify({
-                    message: 'credit card date expired',
-                    color: 'danger',
-                    timeout: 2000
-                  });
-            }
-            let config = {
-                headers: {
-                  'Content-Type': 'multipart/form-data'
-                }
-            }
-            axios.defaults.baseURL = 'http://127.0.0.1:5000';
-            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-            axios.post('/singup',free_user_data,config)
-            .then(response=>{
-                // notify :
-                notify({
-                    message: response.data.response_message,
-                    color: 'danger',
-                    timeout: 2000
-                  });
-            }).catch(error=>{
-                console.error(error);
-            });
         }else{
             notify({
                 message: 'all required fields must be completed',
                 color: 'danger',
                 timeout: 2000
-              });
+            });
         }
     }
   }
@@ -221,6 +193,7 @@ function send_free_form_data(){
   }
 
   function disabel_all_entry(){
+      state = true;
       document.getElementById("cardname").disabled = !document.getElementById("cardname").disabled;
       document.getElementById("cardnumber").disabled = !document.getElementById("cardnumber").disabled;
       document.getElementById("carddate").disabled = !document.getElementById("carddate").disabled;
@@ -442,6 +415,7 @@ function prev_step_ninja2(){
    var pro_user_data = {};
    var ninja_user_data = {};
    var config = {};
+   var state = false;
 // setup my axios config header :
     config = {
         headers: {
@@ -450,9 +424,9 @@ function prev_step_ninja2(){
     };
   // selector elements :
   const btn_next_free = document.getElementById("next_btn_free_pill");
-  const btn_prev_free_2_to_1 = document.getElementById("btn_prev_free_2");
+  //const btn_prev_free_2_to_1 = document.getElementById("btn_prev_free_2");
   const btn_next_free_2_to_3 = document.getElementById("btn_next_free_2");
-  const btn_prev_free_3_to_2 = document.getElementById("btn_prev_free_3");
+  //const btn_prev_free_3_to_2 = document.getElementById("btn_prev_free_3");
   const btn_submit_free = document.getElementById("btn_submit_free");
   // btn of complet edidition account : 
   const btn_next_pro = document.getElementById("next_btn_pro_pill");
@@ -469,9 +443,9 @@ function prev_step_ninja2(){
   skip_btn.addEventListener("click",disabel_all_entry,false);
   // add event to elements selected : 
   btn_next_free.addEventListener("click",next_step_free1,false);
-  btn_prev_free_2_to_1.addEventListener("click",prev_step_free1,false);
+  //btn_prev_free_2_to_1.addEventListener("click",prev_step_free1,false);
   btn_next_free_2_to_3.addEventListener("click",next_step_free2,false);
-  btn_prev_free_3_to_2.addEventListener("click",prev_step_free3,false);
+  //btn_prev_free_3_to_2.addEventListener("click",prev_step_free3,false);
   btn_submit_free.addEventListener("click",send_free_form_data,false);
 
   btn_next_pro.addEventListener("click",next_step_pro1,false);
