@@ -235,19 +235,46 @@ function send_free_form_data(){
     }
     if(nbr_valide===4){
         if(document.getElementById("proInputPassword1").value===document.getElementById("proInputPassword2").value){
-            // hiding ferst div :  
-            document.getElementById("prim-pills-step1").classList.remove("active");
-            document.getElementById("prim-pills-step1").classList.remove("show");
-            // disabled btn step 1 enable btn step 2:
-            document.getElementById("prim-pills-step1-tab").classList.remove("active");
-            document.getElementById("prim-pills-step1-tab").classList.remove("btn");
-            document.getElementById("prim-pills-step1-tab").classList.remove("btn-outline-secondary");
-            document.getElementById("prim-pills-step2-tab").classList.add("active");
-            document.getElementById("prim-pills-step2-tab").classList.add("btn");
-            document.getElementById("prim-pills-step2-tab").classList.add("btn-outline-secondary");
-            // display seconde div :
-            document.getElementById("prim-pills-step2").classList.add("active");
-            document.getElementById("prim-pills-step2").classList.add("show");
+            // adding user data to the formdata :
+            free_user_data = {
+                "name":document.getElementById("proInputname").value,
+                "Email":document.getElementById("proInputEmail1").value,
+                "Password":document.getElementById("proInputPassword2").value
+            };
+            // send request to the server :
+            axios.defaults.baseURL = 'http://127.0.0.1:5000';
+            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            axios.post('/singup/Account_setup',free_user_data,config)
+            .then(response => {
+                notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+                if(response.data.state === "success"){
+                    setTimeout(
+                        ()=>{
+                            // hiding ferst div :  
+                            document.getElementById("prim-pills-step1").classList.remove("active");
+                            document.getElementById("prim-pills-step1").classList.remove("show");
+                            // disabled btn step 1 enable btn step 2:
+                            document.getElementById("prim-pills-step1-tab").classList.remove("active");
+                            document.getElementById("prim-pills-step1-tab").classList.remove("btn");
+                            document.getElementById("prim-pills-step1-tab").classList.remove("btn-outline-secondary");
+                            document.getElementById("prim-pills-step2-tab").classList.add("active");
+                            document.getElementById("prim-pills-step2-tab").classList.add("btn");
+                            document.getElementById("prim-pills-step2-tab").classList.add("btn-outline-secondary");
+                            // display seconde div :
+                            document.getElementById("prim-pills-step2").classList.add("active");
+                            document.getElementById("prim-pills-step2").classList.add("show");
+                        },1500
+                    );
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            
         }else{
             notify({
                 message: 'Password and confirmation password must be the same',
@@ -296,19 +323,47 @@ function next_step_pro2(){
         nbr_valide++;
     }
     if(nbr_valide===4){
-        // hiding ferst div :  
-        document.getElementById("prim-pills-step2").classList.remove("active");
-        document.getElementById("prim-pills-step2").classList.remove("show");
-        // disabled btn step 1 enable btn step 2:
-        document.getElementById("prim-pills-step2-tab").classList.remove("active");
-        document.getElementById("prim-pills-step2-tab").classList.remove("btn");
-        document.getElementById("prim-pills-step2-tab").classList.remove("btn-outline-secondary");
-        document.getElementById("prim-pills-step3-tab").classList.add("active");
-        document.getElementById("prim-pills-step3-tab").classList.add("btn");
-        document.getElementById("prim-pills-step3-tab").classList.add("btn-outline-secondary");
-        // display seconde div :
-        document.getElementById("prim-pills-step3").classList.add("active");
-        document.getElementById("prim-pills-step3").classList.add("show");
+        // add data : 
+        let user_free_details = new FormData();
+        user_free_details.append('ferstname',document.getElementById("userprofname").value);
+        user_free_details.append('lastname',document.getElementById("userprolname").value);
+        user_free_details.append('phonenumber',document.getElementById("userprophone").value);
+        var d = new Date();
+        user_free_details.append('date',d.getDay()+"/"+d.getMonth()+"/"+d.getFullYear());
+        user_free_details.append('state_account',"Complet edition");
+        user_free_details.append('name',free_user_data['name']);
+        // send data to to backend api :
+        axios.defaults.baseURL = 'http://127.0.0.1:5000';
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.post('/singup/Personal_data',user_free_details,config)
+        .then(response => {
+            if(response.data.state === 'success' ){
+                // hiding ferst div :  
+                    document.getElementById("prim-pills-step2").classList.remove("active");
+                    document.getElementById("prim-pills-step2").classList.remove("show");
+                    // disabled btn step 1 enable btn step 2:
+                    document.getElementById("prim-pills-step2-tab").classList.remove("active");
+                    document.getElementById("prim-pills-step2-tab").classList.remove("btn");
+                    document.getElementById("prim-pills-step2-tab").classList.remove("btn-outline-secondary");
+                    document.getElementById("prim-pills-step3-tab").classList.add("active");
+                    document.getElementById("prim-pills-step3-tab").classList.add("btn");
+                    document.getElementById("prim-pills-step3-tab").classList.add("btn-outline-secondary");
+                    // display seconde div :
+                    document.getElementById("prim-pills-step3").classList.add("active");
+                    document.getElementById("prim-pills-step3").classList.add("show");        
+            }
+            setTimeout(()=>{
+                notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+            },1500);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+        
         }else{
             document.getElementById("primuimModalstep1").style.transform = "translateY(-45px)";
             notify({
@@ -318,6 +373,56 @@ function next_step_pro2(){
             });
     }
 }
+
+
+function send_pro_form_data(){
+    // check if all required input is failed :
+        let nbr_valide = 0;
+        if(document.getElementById("cardproname").value.length!=0){
+            nbr_valide++;
+        }
+        if(document.getElementById("cardpronumber").value.length!=0){
+            nbr_valide++;
+        }
+        if(document.getElementById("cardprodate").value.length!=0){
+            nbr_valide++;
+        }
+        if(document.getElementById("cardprocode").value.length!=0){
+            nbr_valide++;
+        }
+        if(nbr_valide===4){
+             // add data :
+            let credit_card_info = new FormData();
+            credit_card_info.append('CreditCardName',document.getElementById("cardproname").value);
+            credit_card_info.append('CreditCardNumber',document.getElementById("cardpronumber").value);
+            credit_card_info.append('CreditCardDate',document.getElementById("cardprodate").value);
+            credit_card_info.append('CreditCardPassword',document.getElementById("cardprocode").value);
+            credit_card_info.append('name',free_user_data['name']);
+            // send credit card data to the backend server :
+            axios.defaults.baseURL = 'http://127.0.0.1:5000';
+            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            axios.post('/singup/Payment_details',credit_card_info,config)
+            .then(response => {
+                notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+                if (response.data.state === "success"){
+                    const btnlogin = document.getElementById("btn_login_link");
+                    document.getElementById("btn-close-pro").click();
+                    btnlogin.click();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+}
+
+
+
+
 
 function prev_step_pro2(){
     // hiding ferst div :  
@@ -448,14 +553,20 @@ function prev_step_ninja2(){
   const btn_submit_free = document.getElementById("btn_submit_free");
   // btn of complet edidition account : 
   const btn_next_pro = document.getElementById("next_btn_pro_pill");
-  const btn_prev_pro_2_to_1 = document.getElementById("btn_prev_pro_2");
+  //const btn_prev_pro_2_to_1 = document.getElementById("btn_prev_pro_2");
   const btn_next_pro_2_to_3 = document.getElementById("btn_next_pro_2");
-  const btn_prev_pro_3_to_2 = document.getElementById("btn_prev_pro_3");
+  //const btn_prev_pro_3_to_2 = document.getElementById("btn_prev_pro_3");
+  const btn_submit_pro = document.getElementById("btn-submit-pro-plan");
+  
+  
   // btn of ninja edidition account :
   const btn_next_ninja = document.getElementById("next_btn_ninja_pill");
-  const btn_prev_ninja_2_to_1 = document.getElementById("btn_prev_ninja_2");
+  //const btn_prev_ninja_2_to_1 = document.getElementById("btn_prev_ninja_2");
   const btn_next_ninja_2_to_3 = document.getElementById("btn_next_ninja_2");
-  const btn_prev_ninja_3_to_2 = document.getElementById("btn_prev_ninja_3");
+  //const btn_prev_ninja_3_to_2 = document.getElementById("btn_prev_ninja_3");
+  const btn_submit_ninja = document.getElementById("btn-submit-ninja");
+  
+  
   // get chekcbox skip :
   const skip_btn = document.getElementById("skipCheck")
   skip_btn.addEventListener("click",disabel_all_entry,false);
@@ -467,10 +578,12 @@ function prev_step_ninja2(){
   btn_submit_free.addEventListener("click",send_free_form_data,false);
 
   btn_next_pro.addEventListener("click",next_step_pro1,false);
-  btn_prev_pro_2_to_1.addEventListener("click",prev_step_pro1,false);
+  //btn_prev_pro_2_to_1.addEventListener("click",prev_step_pro1,false);
   btn_next_pro_2_to_3.addEventListener("click",next_step_pro2,false);
-  btn_prev_pro_3_to_2.addEventListener("click",prev_step_pro2,false);
+  //btn_prev_pro_3_to_2.addEventListener("click",prev_step_pro2,false);
+  btn_submit_pro.addEventListener("click",send_pro_form_data,false);
+  
   btn_next_ninja.addEventListener("click",next_step_ninja1,false);
-  btn_prev_ninja_2_to_1.addEventListener("click",prev_step_ninja1,false);
+  //btn_prev_ninja_2_to_1.addEventListener("click",prev_step_ninja1,false);
   btn_next_ninja_2_to_3.addEventListener("click",next_step_ninja2,false);
-  btn_prev_ninja_3_to_2.addEventListener("click",prev_step_ninja2,false)
+  //btn_prev_ninja_3_to_2.addEventListener("click",prev_step_ninja2,false)
