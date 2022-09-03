@@ -75,6 +75,27 @@ def add_credit_card_info(user_id,card_name,card_number,card_date,card_cvc):
         connexion.close()
     return message
 
+
+def set_payment_details(name, number,date, pswd, user_id):
+    response = 0
+    try:
+        connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
+        cursor = connexion.cursor()
+        command = "INSERT INTO Payment_details VALUES (Null,'"+str(name)+"','"+str(number)+"','"+str(date)+"','"+str(pswd)+"',"+str(user_id)+")"
+        command = cursor.execute(command)
+        connexion.commit()
+        response = 1
+    except Exception as e:
+        print("[User_details create error ]: "+str(e))
+        connexion.rollback()
+        response = -1
+    finally:
+        cursor.close()
+        connexion.close()
+    return response
+
+
+
 def get_user_id_by_username(user_name):
     try:
         connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
@@ -91,7 +112,20 @@ def get_user_id_by_username(user_name):
     return id_result
 
 
-
+def get_personal_details_by_id(user_id):
+    try:
+        connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
+        cursor = connexion.cursor()
+        command = "SELECT Id FROM User_details WHERE UserId="+str(user_id)+""
+        command = cursor.execute(command)
+        id_dtails = command.fetchall()[0][0]
+    except Exception as e:
+        print("[error fetch details-id by id-key ] :  "+str(e))
+        id_dtails = -1
+    finally:
+        cursor.close()
+        connexion.close()
+    return id_dtails
 
 
 def get_user_by_id(user_id):

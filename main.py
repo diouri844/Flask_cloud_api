@@ -47,33 +47,24 @@ def singup_controler(subject):
             else:
                 response_message = "Failed to configure your personal data, retry."
                 response_state = "danger"
-        return jsonify({'message': response_message, 'state': response_state})
-    '''
-            #send all data includ credit card data :
-            user_card_name = user_data['CreditCardName']
-            user_card_number = user_data['CreditCardNumber']
-            user_card_date = user_data['CreditCardDate']
-            user_card_pswd = user_data['CreditCardPassword']
-        #check user account :
-        if check_user_account(user_name,user_email,user_phone) == True:
-            response_message = "account already exist "
-            response_state = "danger"
-        else:
-            # create new account : 
-            #if len(data )==12 : ==> credit card info is inserted 
-            # step 1 : create user basic data  
-            message = create_user(user_name,user_email,user_pswd,user_fname,user_lname,user_phone,user_date_join,None,user_account_type)
-            if len(user_data)>9:
-                # step 2 : update credit card info
-                created_user_id = get_user_id_by_phone(user_phone)
-                print("created user id :  "+str(created_user_id))
-                credit_card_message = add_credit_card_info(created_user_id,user_card_name,user_card_number,user_card_date,user_card_pswd)
-                response_message = " new account data  "
+        if subject == index_subject[2]:
+            credit_card_info = request.form.to_dict()
+            card_name = credit_card_info['CreditCardName']
+            card_number = credit_card_info['CreditCardNumber']
+            card_date = credit_card_info['CreditCardDate']
+            card_pswd = credit_card_info['CreditCardPassword']
+            user_name = credit_card_info['name']
+            user_id = get_user_id_by_username(user_name)
+            #details_id = get_personal_details_by_id(user_id)
+            response_payment_details = set_payment_details(card_name, card_number,
+                                                            card_date, card_pswd, user_id)
+            if response_payment_details == 1:
+                response_message = "Congratulations, your account has been created."
+                response_state = "success"
             else:
-                return jsonify({'response_message':" new account data :) "+str(message)})
-    return jsonify({'message': response_message, 'state':response_state})'''
-
-
+                response_message = "Failed to complete payment details, please try again."
+                response_state = "danger"
+        return jsonify({'message': response_message, 'state': response_state})
 
 
 

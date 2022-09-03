@@ -95,13 +95,13 @@ function next_step_free2(){
         nbr_valide++;
     }
     if(nbr_valide===4){
-        
         // add data : 
         let user_free_details = new FormData();
         user_free_details.append('ferstname',document.getElementById("userfname").value);
         user_free_details.append('lastname',document.getElementById("userlname").value);
         user_free_details.append('phonenumber',document.getElementById("userphone").value);
-        user_free_details.append('date',document.getElementById("userdate").value);
+        var d = new Date();
+        user_free_details.append('date',d.getDay()+"/"+d.getMonth()+"/"+d.getFullYear());
         user_free_details.append('state_account',"free trial");
         user_free_details.append('name',free_user_data['name']);
         // send data to to backend api :
@@ -128,7 +128,7 @@ function next_step_free2(){
             },1500);
         })
         .catch(error => {
-
+            console.error(error);
         });
         
     }else{
@@ -162,13 +162,31 @@ function send_free_form_data(){
         }
         if(nbr_valide===4){
             // add data :
-            free_user_data['CreditCardName'] = document.getElementById("cardname").value;
-            free_user_data['CreditCardNumber'] = document.getElementById("cardnumber").value;
-            free_user_data['CreditCardDate'] = document.getElementById("carddate").value;
-            free_user_data['CreditCardPassword'] = document.getElementById("cardcode").value;
-            // define state of account : 
-            free_user_data['state_account']="free trial"
-            console.log(free_user_data);
+            let credit_card_info = new FormData();
+            credit_card_info.append('CreditCardName',document.getElementById("cardname").value);
+            credit_card_info.append('CreditCardNumber',document.getElementById("cardnumber").value);
+            credit_card_info.append('CreditCardDate',document.getElementById("carddate").value);
+            credit_card_info.append('CreditCardPassword',document.getElementById("cardcode").value);
+            credit_card_info.append('name',free_user_data['name']);
+            // send credit card data to the backend server :
+            axios.defaults.baseURL = 'http://127.0.0.1:5000';
+            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            axios.post('/singup/Payment_details',credit_card_info,config)
+            .then(response => {
+                notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+                if (response.data.state === "success"){
+                    const btnlogin = document.getElementById("btn_login_link");
+                    document.getElementById("close_btn_free").click();
+                    btnlogin.click();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            })
         }else{
             notify({
                 message: 'all required fields must be completed',
