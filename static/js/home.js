@@ -417,6 +417,12 @@ function send_pro_form_data(){
             .catch(error => {
                 console.error(error);
             });
+        }else{
+            notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+            });
         }
 }
 
@@ -457,19 +463,45 @@ function next_step_ninja1(){
     }
     if(nbr_valide===4){
         if(document.getElementById("ninjaInputPassword1").value===document.getElementById("ninjaInputPassword2").value){
-            // hiding ferst div :
-            document.getElementById("ninja-pills-step1").classList.remove("active");
-            document.getElementById("ninja-pills-step1").classList.remove("show");
-            // disabled btn step 1 enable btn step 2:
-            document.getElementById("ninja-pills-step1-tab").classList.remove("active");
-            document.getElementById("ninja-pills-step1-tab").classList.remove("btn");
-            document.getElementById("ninja-pills-step1-tab").classList.remove("btn-outline-warning");
-            document.getElementById("ninja-pills-step2-tab").classList.add("active");
-            document.getElementById("ninja-pills-step2-tab").classList.add("btn");
-            document.getElementById("ninja-pills-step2-tab").classList.add("btn-outline-warning");
-            // display seconde div :
-            document.getElementById("ninja-pills-step2").classList.add("active");
-            document.getElementById("ninja-pills-step2").classList.add("show");
+            // adding user data to the formdata :
+            free_user_data = {
+                "name":document.getElementById("ninjaInputname").value,
+                "Email":document.getElementById("ninjaInputEmail1").value,
+                "Password":document.getElementById("ninjaInputPassword1").value,
+            }
+            // send request to the server :
+            axios.defaults.baseURL = 'http://127.0.0.1:5000';
+            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            axios.post('/singup/Account_setup',free_user_data,config)
+            .then( response => {
+                notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+                if(response.data.state === "success"){
+                    setTimeout(
+                        ()=>{
+                            // hiding ferst div :
+                            document.getElementById("ninja-pills-step1").classList.remove("active");
+                            document.getElementById("ninja-pills-step1").classList.remove("show");
+                            // disabled btn step 1 enable btn step 2:
+                            document.getElementById("ninja-pills-step1-tab").classList.remove("active");
+                            document.getElementById("ninja-pills-step1-tab").classList.remove("btn");
+                            document.getElementById("ninja-pills-step1-tab").classList.remove("btn-outline-warning");
+                            document.getElementById("ninja-pills-step2-tab").classList.add("active");
+                            document.getElementById("ninja-pills-step2-tab").classList.add("btn");
+                            document.getElementById("ninja-pills-step2-tab").classList.add("btn-outline-warning");
+                            // display seconde div :
+                            document.getElementById("ninja-pills-step2").classList.add("active");
+                            document.getElementById("ninja-pills-step2").classList.add("show");             
+                        },1500
+                    );
+                }
+            })
+            .catch( error => {
+                console.error(error);
+            });
         }else{
             notify({
                 message: 'Password and confirmation password must be the same',
@@ -503,20 +535,121 @@ function prev_step_ninja1(){
 }
 
 function next_step_ninja2(){
-    // hiding ferst div :
-    document.getElementById("ninja-pills-step2").classList.remove("active");
-    document.getElementById("ninja-pills-step2").classList.remove("show");
-    // disabled btn step 1 enable btn step 2:
-    document.getElementById("ninja-pills-step2-tab").classList.remove("active");
-    document.getElementById("ninja-pills-step2-tab").classList.remove("btn");
-    document.getElementById("ninja-pills-step2-tab").classList.remove("btn-outline-warning");
-    document.getElementById("ninja-pills-step3-tab").classList.add("active");
-    document.getElementById("ninja-pills-step3-tab").classList.add("btn");
-    document.getElementById("ninja-pills-step3-tab").classList.add("btn-outline-warning");
-    // display seconde div :
-    document.getElementById("ninja-pills-step3").classList.add("active");
-    document.getElementById("ninja-pills-step3").classList.add("show");
+    //check input :
+    let nbr_valide = 0;
+    if(document.getElementById("userninjafname").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("userninjalname").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("userninjaphone").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("userninjadate").value.length!=0){
+        nbr_valide++;
+    }
+    if(nbr_valide === 4){
+        let user_free_details = new FormData();
+        user_free_details.append('ferstname',document.getElementById("userninjafname").value);
+        user_free_details.append('lastname',document.getElementById("userninjalname").value);
+        user_free_details.append('phonenumber',document.getElementById("userninjaphone").value);
+        var d = new Date();
+        user_free_details.append('date',d.getDay()+"/"+d.getMonth()+"/"+d.getFullYear());
+        user_free_details.append('state_account',"Ultimate Edition");
+        user_free_details.append('name',free_user_data['name']);
+        // send data to to backend api :
+        axios.defaults.baseURL = 'http://127.0.0.1:5000';
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.post('/singup/Personal_data',user_free_details,config)
+        .then(response => {
+             if(response.data.state === 'success' ){
+                    // hiding ferst div :
+                    document.getElementById("ninja-pills-step2").classList.remove("active");
+                    document.getElementById("ninja-pills-step2").classList.remove("show");
+                    // disabled btn step 1 enable btn step 2:
+                    document.getElementById("ninja-pills-step2-tab").classList.remove("active");
+                    document.getElementById("ninja-pills-step2-tab").classList.remove("btn");
+                    document.getElementById("ninja-pills-step2-tab").classList.remove("btn-outline-warning");
+                    document.getElementById("ninja-pills-step3-tab").classList.add("active");
+                    document.getElementById("ninja-pills-step3-tab").classList.add("btn");
+                    document.getElementById("ninja-pills-step3-tab").classList.add("btn-outline-warning");
+                    // display seconde div :
+                    document.getElementById("ninja-pills-step3").classList.add("active");
+                    document.getElementById("ninja-pills-step3").classList.add("show");
+            }
+            setTimeout(()=>{
+                notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+            },1500);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }else{
+        notify({
+            message: 'all required fields must be completed',
+            color: 'danger',
+            timeout: 2000
+          });
+    }
 }
+
+
+function send_ninja_form_data(){
+    let nbr_valide = 0;
+    if(document.getElementById("cardninjaname").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("cardninjanumber").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("cardninjadate").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("cardninjacode").value.length!=0){
+        nbr_valide++;
+    }
+    if(nbr_valide === 4){
+        // add data :
+        let credit_card_info = new FormData();
+        credit_card_info.append('CreditCardName',document.getElementById("cardninjaname").value);
+        credit_card_info.append('CreditCardNumber',document.getElementById("cardninjanumber").value);
+        credit_card_info.append('CreditCardDate',document.getElementById("cardninjadate").value);
+        credit_card_info.append('CreditCardPassword',document.getElementById("cardninjacode").value);
+        credit_card_info.append('name',free_user_data['name']);
+        // send credit card data to the backend server :
+        axios.defaults.baseURL = 'http://127.0.0.1:5000';
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.post('/singup/Payment_details',credit_card_info,config)
+        .then( response => {
+            notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+                if (response.data.state === "success"){
+                    const btnlogin = document.getElementById("btn_login_link");
+                    document.getElementById("btn-close-ninja").click();
+                    btnlogin.click();
+                }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }else{
+        notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+            });
+    }
+}
+
+
 
 function prev_step_ninja2(){
     // hiding ferst div :
@@ -533,6 +666,49 @@ function prev_step_ninja2(){
     document.getElementById("ninja-pills-step2").classList.add("active");
     document.getElementById("ninja-pills-step2").classList.add("show");
 }
+
+function login_in_now(){
+    let nbr_valide = 0;
+    if(document.getElementById("LoginInputname").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("LoginInputEmail1").value.length!=0){
+        nbr_valide++;
+    }
+    if(document.getElementById("LoginInputPassword1").value.length!=0){
+        nbr_valide++;
+    }
+    if( nbr_valide === 3){
+        let login_data = new FormData();
+        login_data.append('UserName',document.getElementById("LoginInputname").value);
+        login_data.append('UserEmail',document.getElementById("LoginInputEmail1").value);
+        login_data.append('UserPassword',document.getElementById("LoginInputPassword1").value);
+        axios.defaults.baseURL = 'http://127.0.0.1:5000';
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.post('/singin',login_data,config)
+        .then( response => {
+            notify({
+                    message: response.data.message,
+                    color: response.data.state,
+                    timeout: 2000
+                });
+        })
+        .catch(error => {
+            console.error(error);
+        })
+    }else{
+        notify({
+            message: 'all required fields must be completed',
+            color: 'danger',
+            timeout: 2000
+        });
+    }
+}
+
+
+
+
+
 // global formdata :
    var free_user_data = {};
    var pro_user_data = {};
@@ -559,10 +735,15 @@ function prev_step_ninja2(){
   const btn_submit_pro = document.getElementById("btn-submit-pro-plan");
   
   
+ const bnt_login_user = document.getElementById("Login_in");
+ gbnt_login_user.addEventListener("click",login_in_now,false);
+
+
+
   // btn of ninja edidition account :
   const btn_next_ninja = document.getElementById("next_btn_ninja_pill");
   //const btn_prev_ninja_2_to_1 = document.getElementById("btn_prev_ninja_2");
-  const btn_next_ninja_2_to_3 = document.getElementById("btn_next_ninja_2");
+  const btn_next_ninja_2_to_3 = document.getElementById("btn_next_ninja_e2");
   //const btn_prev_ninja_3_to_2 = document.getElementById("btn_prev_ninja_3");
   const btn_submit_ninja = document.getElementById("btn-submit-ninja");
   
@@ -587,3 +768,4 @@ function prev_step_ninja2(){
   //btn_prev_ninja_2_to_1.addEventListener("click",prev_step_ninja1,false);
   btn_next_ninja_2_to_3.addEventListener("click",next_step_ninja2,false);
   //btn_prev_ninja_3_to_2.addEventListener("click",prev_step_ninja2,false)
+  btn_submit_ninja.addEventListener("click",send_ninja_form_data,false);

@@ -37,7 +37,11 @@
                 <a class="nav-link" href="#reviews"><i class="fad fa-person-booth"></i> Reviews</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#contact"><i class="fad fa-phone"></i> Get in Touch</a>
+                <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" 
+                  id="btn_login_link" 
+                  aria-controls="offcanvasExample" href="#">
+                  <i class="fas fa-user-tie"></i>
+                  Log In</a>
               </li>
               <li class="nav-item d-md-none">
                 <a class="nav-link" href="#pricing"><i class="fad fa-dolly"></i> Pricing</a>
@@ -411,7 +415,7 @@
           <div class="modal-content text-warning">
             <div class="modal-header bg-warning text-light">
               <h5 class="modal-title" id="exampleModalToggleLabel"><i class="fad fa-pen"></i> Ninja Edition account </h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" id="btn-close-ninja" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body d-flex align-items-start">
               <!-- multi steps bar -->
@@ -513,39 +517,21 @@
       <form>
         <div class="mb-3 ms-5 me-5">
           <label for="ninjaInputname" class="form-label">User name</label>
-          <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="ninjaInputname" aria-describedby="emailHelp" placeholder="Your user name here (optional)">
+          <input type="text" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="LoginInputname" aria-describedby="emailHelp" placeholder="Your user name here (optional)">
         </div>
         <div class="mb-3 ms-5 me-5">
           <label for="ninjaInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="ninjaInputEmail1" placeholder="username@exemple.exemple" aria-describedby="emailHelp" required>
+          <input type="email" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="LoginInputEmail1" placeholder="username@exemple.exemple" aria-describedby="emailHelp" required>
         </div>
         <div class="mb-3 ms-5 me-5">
           <label for="ninjaInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="ninjaInputPassword1" placeholder="a-z,A-Z,0-9,@#$£...." required>
+          <input type="password" class="form-control border-top-0 border-end-0 border-bottom-0 border-5 border-start border-dark" id="LoginInputPassword1" placeholder="a-z,A-Z,0-9,@#$£...." required>
         </div>
-        <button type="button" id="next_btn_ninja_pill" class="btn btn-outline-dark ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#prim-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
+        <button type="button" id="Login_in" class="btn btn-outline-dark ms-5 align-items-end" data-bs-toggle="pill" role="tab" data-bs-target="#prim-pills-step2"><i class="fad fa-hand-point-right"></i> Next</button>
       </form>
       
     </div>
   </div>
-  <!-- offcanvas login system end -->
-<section>
-  <div class="container-lg mt-5 fixed-center">
-    <div class="row g-4 justify-content-center align-items-center">
-        <div class="col-md-4 text-center d-none d-md-block">
-          <img src="{{url_for('static', filename='avatar-5261896_640.png')}}" class="img-fluid">
-        </div>
-        <div class="col-md-8 text-center text-md-start">
-          <h1>
-            <div class="display-2  ms-5">Already  have an account?</div>
-            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" id="btn_login_link" aria-controls="offcanvasExample" class="display-5 text-muted  ms-5"><i class="fad fa-arrow-right"></i> Log-in Now</a>
-          </h1>
-        </div>
-      </div>
-</div>
-</section>
-
-
 
 </body>
 <script src="{{url_for('static', filename='js/home.js')}}"></script>

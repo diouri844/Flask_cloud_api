@@ -66,7 +66,28 @@ def singup_controler(subject):
                 response_state = "danger"
         return jsonify({'message': response_message, 'state': response_state})
 
-
+@my_app.route('/singin',methods=['POST'])
+def singin_controler():
+    if request.method == 'POST':
+        response_message = ""
+        response_state = ""
+        user_data = request.form.to_dict()
+        print(user_data)
+        user_name = user_data['UserName']
+        user_email = user_data['UserEmail']
+        user_pswd = user_data['UserPassword']
+        if check_user_account(user_name, user_email) == True:
+            #account existe 
+            # step 2 : check password :
+            user_id =  get_user_id_by_username(user_name)
+            user_pswd_index = get_user_by_id(user_id)[3]
+            if user_pswd == user_pswd_index:
+                response_message = "Welcome back "+str(user_name)
+                response_state = "success"
+            else:
+                response_message = "Invalid username or e-mail address/password retry."
+                response_state = "danger"
+        return jsonify({'message': response_message, 'state': response_state})
 
 if __name__ == '__main__':
     my_app.secret_key = 'super secret key'
