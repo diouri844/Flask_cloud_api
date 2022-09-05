@@ -511,7 +511,7 @@
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"data-bs-scroll="true"  aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title ms-5" id="offcanvasExampleLabel"><i class="fad fa-arrow-right"></i> Login now </h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close text-reset" id="btn_close_login" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
       <form>
@@ -538,6 +538,11 @@
 <!-- script flash.js-->
 <link rel="stylesheet" href="{{url_for('static', filename='notify.min.css')}}"/>
 <script  src="{{url_for('static', filename='notify.min.js')}}"></script>
+<!-- popup simpliy js -->
+<link rel="stylesheet" href="{{url_for('static', filename='dist/notiflix-3.2.5.min.css')}}" />
+<script  src="{{url_for('static', filename='dist/notiflix-3.2.5.min.js')}}"></script>
+<script src="{{url_for('static', filename='dist/notiflix-report-aio-3.2.5.min.js')}}"></script>
+
 <!-- axios cdn -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 

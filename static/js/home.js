@@ -1,4 +1,5 @@
 
+
 function next_step_free1(){
     let nbr_valide = 0;
     // test if all required input is failed :
@@ -687,11 +688,33 @@ function login_in_now(){
         axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
         axios.post('/singin',login_data,config)
         .then( response => {
-            notify({
-                    message: response.data.message,
-                    color: response.data.state,
-                    timeout: 2000
-                });
+            let notif_object = "";
+            let calback_function = "";
+            if (response.data.state === "success"){
+                notif_object = Notiflix.Report.success;
+                calback_function = ()=>{
+                    // in succus we will redirect at home => close the modal user login :
+                    document.getElementById("btn_close_login").click();
+                    var host = window.location.host;
+                    console.log(host);
+                    console.log(response.data.url);
+                    window.location = 'http://127.0.0.1:5000/'+response.data.url;
+                }; 
+            }
+            else{
+                notif_object = Notiflix.Report.failure;
+                calback_function = ()=>{
+                    // clear all input :
+                    document.getElementById("LoginInputname").value = "";
+                    document.getElementById("LoginInputPassword1").value = "";
+                };
+            }
+            notif_object(
+                'User Authentication System (UAS) information.',
+                response.data.message,
+                'Okay',
+                calback_function()
+            );
         })
         .catch(error => {
             console.error(error);
@@ -736,7 +759,7 @@ function login_in_now(){
   
   
  const bnt_login_user = document.getElementById("Login_in");
- gbnt_login_user.addEventListener("click",login_in_now,false);
+ bnt_login_user.addEventListener("click",login_in_now,false);
 
 
 

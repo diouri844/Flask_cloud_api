@@ -72,7 +72,6 @@ def singin_controler():
         response_message = ""
         response_state = ""
         user_data = request.form.to_dict()
-        print(user_data)
         user_name = user_data['UserName']
         user_email = user_data['UserEmail']
         user_pswd = user_data['UserPassword']
@@ -84,10 +83,21 @@ def singin_controler():
             if user_pswd == user_pswd_index:
                 response_message = "Welcome back "+str(user_name)
                 response_state = "success"
+                session['id'] = user_id
+                session['User'] = get_user_by_id(user_id)
+                url_redirect = "/Dashbroad/"+str(user_name)
             else:
                 response_message = "Invalid username or e-mail address/password retry."
                 response_state = "danger"
-        return jsonify({'message': response_message, 'state': response_state})
+            return jsonify({'message': response_message, 'state': response_state , 'url':url_redirect})
+
+
+@my_app.route("/Dashbroad/<user_name>")
+def get_home(user_name):
+    if 'User' in session:
+        return render_template("Dashbroad.html",User=session['User'])
+    else:
+        return render_template("Error_Handler.html")
 
 if __name__ == '__main__':
     my_app.secret_key = 'super secret key'
