@@ -1,5 +1,6 @@
 
 
+
 function next_step_free1(){
     let nbr_valide = 0;
     // test if all required input is failed :
@@ -680,6 +681,9 @@ function login_in_now(){
         nbr_valide++;
     }
     if( nbr_valide === 3){
+
+        Notiflix.Loading.dots(
+            "Login in ");
         let login_data = new FormData();
         login_data.append('UserName',document.getElementById("LoginInputname").value);
         login_data.append('UserEmail',document.getElementById("LoginInputEmail1").value);
@@ -688,36 +692,41 @@ function login_in_now(){
         axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
         axios.post('/singin',login_data,config)
         .then( response => {
-            let notif_object = "";
-            let calback_function = "";
-            if (response.data.state === "success"){
-                notif_object = Notiflix.Report.success;
-                calback_function = ()=>{
-                    // in succus we will redirect at home => close the modal user login :
-                    document.getElementById("btn_close_login").click();
-                    var host = window.location.host;
-                    console.log(host);
-                    console.log(response.data.url);
-                    window.location = 'http://127.0.0.1:5000/'+response.data.url;
-                }; 
-            }
-            else{
-                notif_object = Notiflix.Report.failure;
-                calback_function = ()=>{
-                    // clear all input :
-                    document.getElementById("LoginInputname").value = "";
-                    document.getElementById("LoginInputPassword1").value = "";
-                };
-            }
-            notif_object(
-                'User Authentication System (UAS) information.',
-                response.data.message,
-                'Okay',
-                calback_function()
-            );
+            Notiflix.Loading.remove(2500);
+            setTimeout(()=>{
+                let notif_object = "";
+                let calback_function = "";
+                if (response.data.state === "success"){
+                    notif_object = Notiflix.Report.success;
+                    calback_function = ()=>{
+                        // in succus we will redirect at home => close the modal user login :
+                        document.getElementById("btn_close_login").click();
+                        var host = window.location.host;
+                        setTimeout(()=>
+                        {
+                            window.location = 'http://127.0.0.1:5000/'+response.data.url;
+                        },2500);
+                    };
+                }
+                else{
+                    notif_object = Notiflix.Report.failure;
+                    calback_function = ()=>{
+                        // clear all input :
+                        document.getElementById("LoginInputname").value = "";
+                        document.getElementById("LoginInputPassword1").value = "";
+                    };
+                }
+                notif_object(
+                        'User Authentication (UAS) information.',
+                        response.data.message,
+                        'Confirme',
+                        calback_function()
+                );
+            },2500);
+            
         })
         .catch(error => {
-            console.error(error);
+           console.log(error); 
         })
     }else{
         notify({

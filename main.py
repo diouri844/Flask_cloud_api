@@ -75,6 +75,7 @@ def singin_controler():
         user_name = user_data['UserName']
         user_email = user_data['UserEmail']
         user_pswd = user_data['UserPassword']
+        url_redirect = ""
         if check_user_account(user_name, user_email) == True:
             #account existe 
             # step 2 : check password :
@@ -85,11 +86,11 @@ def singin_controler():
                 response_state = "success"
                 session['id'] = user_id
                 session['User'] = get_user_by_id(user_id)
-                url_redirect = "/Dashbroad/"+str(user_name)
+                url_redirect = "Dashbroad/"+str(user_name)
             else:
                 response_message = "Invalid username or e-mail address/password retry."
                 response_state = "danger"
-            return jsonify({'message': response_message, 'state': response_state , 'url':url_redirect})
+        return jsonify({'message': response_message, 'state': response_state , 'url':url_redirect})
 
 
 @my_app.route("/Dashbroad/<user_name>")
