@@ -15,38 +15,58 @@
 <body>
 	{% block body %}
 	<!-- Navbar -->
-	<nav>
-        <div class="nav-center">
-            <div class="nav-header">
-                <h3 class="logo">{{ User[1] }} </h3>
-                <button class="nav-toggle">
-                  <i class="fas fa-bars"></i>
-                </button>
-            </div>
-            <!-- links -->
-                  <ul class="links">
-                    <li>
-                      <a href="index.html">home</a>
-                    </li>
-                    <li>
-                      <a href="about.html">about</a>
-                    </li>
-                    <li>
-                      <a href="projects.html">projects</a>
-                    </li>
-                    <li>
-                      <a href="contact.html">contact</a>
-                    </li>
-                  </ul>
-                  <!-- social media -->
-                  <ul class="social-icons">
-                  </ul>
-        </div>
-    </nav>
+	<nav class="navbar">
+  		<!-- Navbar content -->
+		<div class="navbar-header">
+			<div class="btn-group">
+				<h4 class="nav_profile" id="nav_profile">
+					<i class="fas fa-cloud-download"></i>
+					cloud disk
+				</h4>
+			</div>
+		</div>
+		<div class="navbar-services">
+			<ul class="nav justify-content-end">
+			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="New folder">
+  				<i class="fas fa-plus-circle"></i>
+			</li>
+			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="upload file">
+  				<i class="fas fa-file-plus"></i>
+			</li>
+			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="upload folder">
+  				<i class="fas fa-folder-plus"></i>
+			</li>
+			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="search">
+				<i class="fas fa-search"></i>
+			</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="user_services">
+			<ul class="u_serv_list">
+				<li class="u_serv_item"><i class="fas fa-user-edit"></i> Profile </li>
+				<li class="u_serv_item"><i class="fas fa-clock"></i> Récent </li>
+				<li class="u_serv_item"><i class="fas fa-trash-restore"></i> Corbeille </li>
+				<li class="u_serv_item"><i class="fas fa-folder"></i> Folders </li>
+				<li class="u_serv_item"><i class="fas fa-link"></i> Links </li>
+				<li class="u_serv_item"><i class="fas fa-door-open"></i> Logout </li>
+			</ul>
+		</div>
 <!-- Navbar -->
-<div class="container-lg mt-5 fixed-center">
-	<h5> welcome back {{ User[1] }} </h5>
-</div>    
+<div class="container-lg mt-5 fixed-center container-welcome">
+	<div class="btn_group_management">
+			<i class="fas fa-photo-video"> 0</i>
+			<i class="fas fa-folder folder_icon"> 0</i>
+			<i class="fas fa-trash-restore trach_icon"> 0</i>
+			<i class="fas fa-clock clock_icon"> 0</i>
+			<i class="fas fa-eye"> 0</i>
+	</div>
+	<h3 class="Welcome_handler">  welcom bac to your cloud account <span class="user_name"> {{ User[1] }} </span></h3>
+</div>
+<!-- offcanvas ended -->
+
+
+
 	
 {% endblock %}
 </body>
