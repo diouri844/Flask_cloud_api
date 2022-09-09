@@ -2,7 +2,6 @@
     background-color:#333333;
 }
 
-
 .navbar{
     /*background-color: #333333;*/
     color:#fff;
@@ -20,17 +19,16 @@
     cursor:pointer;
 }
 .nav_profile:hover {
-    color:#eee;
     font-size: 25px;
 }
 .btn-services{
-    color:#fff;
+    color:#797270;
     cursor:pointer;
     background:transparent;
 }
 
 .btn-services:hover{
-    background-color : #000;
+    color: #ccc;
     border-radius: 20px;
 }
 
@@ -50,8 +48,7 @@
     margin-bottom: 10px;
 }
 .u_serv_item:hover{
-    background-color: #000;
-    border-radius: 20px;
+    color: #A7A7A9;
     padding:3px 10px;
 }
 .container-welcome{
@@ -60,7 +57,7 @@
 }
 
 .Welcome_handler{
-    color:#eee;
+    color:#797270;
     position:absolute;
     text-transform: capitalize;
     letter-spacing: 1px;
@@ -69,7 +66,7 @@
     margin-top: 5%;
 }
 .user_name{
-    color:#83E8BA;
+    color:#A7A7A9;
     text-transform: uppercase;
 }
 .btn_group_management{
@@ -80,7 +77,7 @@
 .fa-photo-video, .folder_icon, .trach_icon, .clock_icon, .fa-eye{
     position: relative;
     top: -20px;
-    color:#83E8BA;
+    color:#A7A7A9;
     margin-left: 10px;
     cursor: pointer;
 }

@@ -27,7 +27,11 @@
 		</div>
 		<div class="navbar-services">
 			<ul class="nav justify-content-end">
-			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="New folder">
+			<li type="button" class="btn-services btn-sm" 
+				data-bs-toggle="tooltip"
+				id="create_new_folder" 
+				data-bs-placement="top" 
+				title="New folder">
   				<i class="fas fa-plus-circle"></i>
 			</li>
 			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="upload file">
@@ -66,10 +70,41 @@
 <!-- offcanvas ended -->
 
 
+<!-- popup create new user folder -->
+<div class="popup-create_folder">
+	<div class="popup-header">
+		<h4 class="popup-header_handler"><i class="fas fa-plus-circle"></i> Add folder </h4>
+		<button type="button" class="btn-close" aria-label="Close"></button>
+	</div>
+	<div class="popup-form">
+		<i class="fas fa-folder"></i>
+		<input type="text" class="folder_name"  id="folder_name_input"/>
+	</div>
+	<div class="popup-btns">
+		<button class="btn-send"> create </button>
+		<button class="btn-cancel"> cancel </button> 
+	</div>
+</div>
+
+
+
+
+
+<!-- popup create new user folder -->
+
 
 	
 {% endblock %}
 </body>
+
 <link rel="stylesheet" href="{{url_for('static', filename='css/dahsbroad.css')}}"/>
 <script src="{{url_for('static', filename='js/dashbroad.js')}}"></script>
+<!-- popup simpliy js -->
+<link rel="stylesheet" href="{{url_for('static', filename='dist/notiflix-3.2.5.min.css')}}" />
+<script  src="{{url_for('static', filename='dist/notiflix-3.2.5.min.js')}}"></script>
+<script src="{{url_for('static', filename='dist/notiflix-report-aio-3.2.5.min.js')}}"></script>
+<script src="{{url_for('static', filename='dist/notiflix-loading-aio-3.2.5.min.js')}}"></script>
+<script src="{{url_for('static', filename='dist/notiflix-confirm-aio-3.2.5.min.js')}}"></script>
 
+<!-- axios cdn -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
