@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify
 from Modules.User import *
+from Modules.Folder.FolderManager import Folder
 
 my_app = Flask(__name__)
 # home page :   

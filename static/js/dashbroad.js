@@ -24,14 +24,34 @@ function toggle_my_links(){
 
 function create_folder() {
   console.log("create folder fired clicked ");
-
+  // displaye modal :
+  document.querySelector(".modal-overlay").classList.add("open-modal");
+  document.querySelector(".folder_name").focus();
 };
 
+function insertNewFolder(){
+  const folder_name = document.getElementById("folder_name_input").value;
+  console.log("create :  "+folder_name);
+}
+
+
+function close_add_folder(){
+  document.querySelector(".modal-overlay").classList.remove("open-modal");
+}
 
 
 
-
-
-// global btns services :
+// ======================       global btns services :    =======================================================
 const btn_add_folder = document.getElementById("create_new_folder");
 btn_add_folder.addEventListener("click",create_folder,false);
+
+// all folder services :
+const btn_close_add_folder = document.querySelector(".btn-close");
+btn_close_add_folder.addEventListener("click",close_add_folder,false);
+
+
+const btn_cancel_add_folder = document.querySelector(".btn-cancel");
+btn_cancel_add_folder.addEventListener("click",close_add_folder,false);
+
+const btn_new_folder = document.querySelector(".btn-send");
+btn_new_folder.addEventListener("click",insertNewFolder,false);

@@ -81,3 +81,82 @@
     margin-left: 10px;
     cursor: pointer;
 }
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    visibility: hidden;
+    z-index: -10;
+}
+
+.open-modal {
+    visibility: visible;
+    z-index: 10;
+}
+
+.modal-container {
+    border-radius: 20px;
+    padding:10px 10px;
+    width: 40%;
+    height: auto;
+    position: relative;
+    text-transform: capitalize;
+    color:#ccc;
+}
+.popup-header{
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+.popup-form{
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+.folder_name{
+    border-left:0px;
+    border-right: 0px;
+    border-top: 0px;
+    border-bottom: 2px solid #333333;
+    outline: none;
+    color:#ccc;
+}
+
+.folder_name:focus{
+    border-bottom: 2px solid #ccc;
+}
+
+.popup-btns{
+    margin-left: 5%;
+}
+.btn-send{
+    color:#ccc;
+    background:transparent;
+    padding:5px 8px;
+    text-transform:capitalize;
+    border : 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 13px;
+}
+
+.btn-send:hover , .btn-send:focus{
+    color:#fff;
+    border: 1px solid #fff;
+}
+
+.btn-cancel{
+    background: transparent;
+    padding: 5px 8px;
+    text-transform: capitalize;
+    border: none;
+    color:#ccc;
+    font-size: 13px;
+}
+.btn-cancel:hover, .btn-cancel:focus{
+    color: #fff;
+}
+
+
