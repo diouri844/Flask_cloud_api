@@ -32,6 +32,17 @@ function create_folder() {
 function insertNewFolder(){
   const folder_name = document.getElementById("folder_name_input").value;
   console.log("create :  "+folder_name);
+  let folder_data = new FormData();
+  folder_data.append('FolderName',folder_name);
+  axios.defaults.baseURL = 'http://127.0.0.1:5000';
+  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+  axios.post('/Folder',folder_data,config)
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.error(error);
+  });
 }
 
 
@@ -42,6 +53,16 @@ function close_add_folder(){
 
 
 // ======================       global btns services :    =======================================================
+var config = {};
+config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+};
+
+
+
+
 const btn_add_folder = document.getElementById("create_new_folder");
 btn_add_folder.addEventListener("click",create_folder,false);
 

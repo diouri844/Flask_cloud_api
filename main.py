@@ -94,6 +94,25 @@ def singin_controler():
         return jsonify({'message': response_message, 'state': response_state , 'url':url_redirect})
 
 
+@my_app.route("/Folder",methods=['POST','GET'])
+def FolderHandler():
+    if request.method == 'POST':
+        response_message = ""
+        response_state = ""
+        data = request.form.to_dict()
+        print("\n data sended :   ",data)
+        folder = Folder()
+        folder.connect()
+        print("\n User connected :   ",session['User'])
+        find_folder = folder.getFolder(session['User'][1],data['FolderName'])
+        if len(find_folder)!=0:
+            response_message = " Folder Already created "
+            response_state = "error"
+        else:
+            response_message = " Creating new Folder :  "+str(data['FolderName'])
+            response_state = "succus"
+        return jsonify({'message': response_message, 'state': response_state})
+
 @my_app.route("/Dashbroad/<user_name>")
 def get_home(user_name):
     if 'User' in session:

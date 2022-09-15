@@ -8,12 +8,12 @@ import os
  
 class Folder:
     def __init__(self,formdata={}):
-        self.Name = formdata['Name']
-        self.Owner = formdata['Owner']
-        self.CreateAt = formdata['CreateAt']
-        self.Size = formdata['Size']
-        self.Content = formdata['Content']
-        self.LastUpdate = formdata['LastUpdate']
+        self.Name = ''  #formdata['Name']''
+        self.Owner = '' #formdata['Owner']
+        self.CreateAt = "" #formdata['CreateAt']
+        self.Size = "" #formdata['Size']
+        self.Content = ""  # formdata['Content']
+        self.LastUpdate = ""  # formdata['LastUpdate']
     def connect(self):
         path = dirname(abspath(__file__)) + '/.env'
         load_dotenv(path)
@@ -31,4 +31,18 @@ class Folder:
             )
         )[0]
         return folderData
+    def getFolder(self,username="",foldername=""):
+        # check if already exist an folder with the same name : 
+        fetch_result = list(
+            self.my_db.Folders.find(
+                {
+                    'Name':foldername,
+                    'Owner':username
+                }
+            )
+        )
+        if len(fetch_result) != 0:
+            return fetch_result[0]
+        return {}
+    
 
