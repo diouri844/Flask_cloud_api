@@ -159,4 +159,42 @@
     color: #fff;
 }
 
+.folder-handler{
+    width:60%;
+    padding: 5px 10px;
+    margin-top: 13%;
+}
 
+.folder-item{
+    padding: 5px 10px;
+    color:#797270;
+    margin-bottom: 3%;
+}
+
+.creating-date{
+    color: #A7A7A9;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    right:0;
+    float: right;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.folder-item-date{
+    bottom: 0;
+    float: bottom;
+    margin-top:1%;
+}
+
+.folder-item-Name:hover{
+    color: #fff;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+
+.folder-item-date:hover {
+    color:#fff;
+    text-decoration: underline;
+}

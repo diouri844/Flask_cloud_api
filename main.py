@@ -87,6 +87,10 @@ def singin_controler():
                 response_state = "success"
                 session['id'] = user_id
                 session['User'] = get_user_by_id(user_id)
+                user_folder = Folder()
+                user_folder.connect()
+                session['Folders'] = user_folder.getAllFolders(user_name)
+                print("User Connected Folder list is :    ",session['Folders'])
                 url_redirect = "Dashbroad/"+str(user_name)
             else:
                 response_message = "Invalid username or e-mail address/password retry."
@@ -100,10 +104,9 @@ def FolderHandler():
         response_message = ""
         response_state = ""
         data = request.form.to_dict()
-        print("\n data sended :   ",data)
         folder = Folder()
         folder.connect()
-        print("\n User connected :   ",session['User'])
+        #print("\n User connected :   ",session['User'])
         find_folder = folder.getFolder(session['User'][1],data['FolderName'])
         if len(find_folder)!=0:
             response_message = " Folder Already exist "

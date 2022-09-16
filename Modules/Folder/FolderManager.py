@@ -16,7 +16,7 @@ class Folder:
         self.Content = ""  # formdata['Content']
         self.LastUpdate = ""  # formdata['LastUpdate']
     def connect(self):
-        path = dirname(abspath(__file__)) + '/.env'
+        path = '../../.env'
         load_dotenv(path)
         self.connexion_url = os.getenv('DB_URL')
         # get connexion with atlas mongodb :
@@ -62,4 +62,18 @@ class Folder:
             print("[ insert folder error ]: "+str(e))
             response =  - 1
         return response
+
+    def getAllFolders(self,username=""):
+        # get list of folders :
+        folders = list(
+            self.my_db.Folders.find(
+                {
+                    'Owner': username
+                },
+                {
+                    '_id':0
+                }
+            )
+        )
+        return folders
 

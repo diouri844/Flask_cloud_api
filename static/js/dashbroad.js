@@ -31,19 +31,19 @@ function create_folder() {
 
 function insertNewFolder(){
   const folder_name = document.getElementById("folder_name_input").value;
-  console.log("create :  "+folder_name);
   let folder_data = new FormData();
   folder_data.append('FolderName',folder_name);
   axios.defaults.baseURL = 'http://127.0.0.1:5000';
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
   axios.post('/Folder',folder_data,config)
   .then(response => {
-    console.log(response);
     notify({
             message: response.data.message,
             color: 'custom',
             timeout: 2500
     });
+    // close the popup :
+    close_add_folder()
   })
   .catch(error => {
     console.error(error);
@@ -58,12 +58,27 @@ function close_add_folder(){
 
 
 // ======================       global btns services :    =======================================================
+
+// global state manager :
+
+setInterval(()=>{
+    let data = sessionStorage;
+    console.log(data);
+  },1000);
+
+
+
+
 var config = {};
 config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
 };
+
+
+
+
 
 
 
