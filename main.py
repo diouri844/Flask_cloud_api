@@ -106,10 +106,18 @@ def FolderHandler():
         print("\n User connected :   ",session['User'])
         find_folder = folder.getFolder(session['User'][1],data['FolderName'])
         if len(find_folder)!=0:
-            response_message = " Folder Already created "
+            response_message = " Folder Already exist "
             response_state = "error"
         else:
-            response_message = " Creating new Folder :  "+str(data['FolderName'])
+            data_to_insert = {
+                'Name':data['FolderName'],
+                'Owner':session['User'][1]
+            }
+            response_insert_folder = folder.insertFolder(data_to_insert)
+            if response_insert_folder == 1:
+                response_message = str(data['FolderName'])+" Created succuefly "
+            else:
+                response_message = "Failed to create folder, try later."
             response_state = "succus"
         return jsonify({'message': response_message, 'state': response_state})
 

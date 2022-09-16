@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
 import os
+import datetime
 
 # define an folder class :
  
@@ -44,5 +45,21 @@ class Folder:
         if len(fetch_result) != 0:
             return fetch_result[0]
         return {}
-    
+    def insertFolder(self,folderdata):
+        response = 0
+        date = str(datetime.datetime.now()).split(" ")[0]
+        try:
+            self.my_db.Folders.insert_one({
+                    "Name": folderdata['Name'],
+                    "CreateAt": date,
+                    "Size": 0,
+                    "Owner": folderdata['Owner'],
+                    "Content": [],
+                    "LastUpdate": date
+            })
+            response =  1
+        except Exception as e:
+            print("[ insert folder error ]: "+str(e))
+            response =  - 1
+        return response
 

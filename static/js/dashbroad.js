@@ -39,6 +39,11 @@ function insertNewFolder(){
   axios.post('/Folder',folder_data,config)
   .then(response => {
     console.log(response);
+    notify({
+            message: response.data.message,
+            color: 'custom',
+            timeout: 2500
+    });
   })
   .catch(error => {
     console.error(error);
