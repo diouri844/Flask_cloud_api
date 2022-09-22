@@ -24,7 +24,7 @@ function toggle_my_links(){
 
 function create_folder() {
   console.log("create folder fired clicked ");
-  // displaye modal :
+  // display modal :
   document.querySelector(".modal-overlay").classList.add("open-modal");
   document.querySelector(".folder_name").focus();
 };
@@ -44,9 +44,10 @@ function insertNewFolder(){
     });
     // close the popup :
     close_add_folder()
+    loading = true;
   })
-  .catch(error => {
-    console.error(error);
+  .catch(err=> {
+    console.error(err);
   });
 }
 
@@ -55,18 +56,73 @@ function close_add_folder(){
   document.querySelector(".modal-overlay").classList.remove("open-modal");
 }
 
+function handlerFolderClick(e){
+  console.log(e,"  clicked detected :)   ");
+}
 
 
 // ======================       global btns services :    =======================================================
 
 // global state manager :
 
+function displayFoldeItems(folder_items){
+  let displaye = folder_items.map(function(item){
+    /*
+    Content: []
+    CreateAt: "2022-09-22"  
+    LastUpdate: "2022-09-22"
+    Name: "last teste"
+    Owner: "chopen"
+    Size: 0
+    */
+    return `<div class="folder-item">
+    <h4 class="folder-item-Name"> 
+    <i class="fas fa-folder"></i>
+    ${item.Name}
+    <span class="creating-date">${ item.CreateAt }</span>
+    </h4>
+    <h7 class="folder-item-date"><i class="fas fa-clock"></i> Last update :  ${ item.LastUpdate }</h7>
+    </div>`;
+  });
+  return displaye;
+};
+
+
+
+function getAllFolders(){
+  // send get request to the backend api : 
+  axios.defaults.baseURL = 'http://127.0.0.1:5000';
+  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+  axios.get("/Folder",config)
+  .then( response => {
+    //console.log(response.data.Folders);
+    let liste_folders = response.data.Folders;
+    // get the div target :
+    const div_list_folders = document.querySelector(".folder-handler");
+    div_list_folders.innerHTML = displayFoldeItems(liste_folders).join("");
+    const folders_target = document.querySelectorAll(".folder-item-Name");
+    folders_target.forEach(folder_div => {
+    folder_div.addEventListener("click",handlerFolderClick,false);
+    });
+    loading = false;
+  })
+  .catch(error => {
+    console.error(error);
+    loading = false;
+  });
+}
+
+let loading = false;
+//let my_session = sessionStorage;
+
 setInterval(()=>{
-    let data = sessionStorage;
-    console.log(data);
-  },1000);
+  if(loading){
+    getAllFolders();
+    loading = false;
+  }
+},1000)
 
-
+getAllFolders();
 
 
 var config = {};
@@ -96,3 +152,4 @@ btn_cancel_add_folder.addEventListener("click",close_add_folder,false);
 
 const btn_new_folder = document.querySelector(".btn-send");
 btn_new_folder.addEventListener("click",insertNewFolder,false);
+

@@ -106,7 +106,6 @@ def FolderHandler():
         data = request.form.to_dict()
         folder = Folder()
         folder.connect()
-        #print("\n User connected :   ",session['User'])
         find_folder = folder.getFolder(session['User'][1],data['FolderName'])
         if len(find_folder)!=0:
             response_message = " Folder Already exist "
@@ -119,17 +118,27 @@ def FolderHandler():
             response_insert_folder = folder.insertFolder(data_to_insert)
             if response_insert_folder == 1:
                 response_message = str(data['FolderName'])+" Created succuefly "
+                user_folder = Folder()
+                user_folder.connect()
+                session['Folders'] = user_folder.getAllFolders(session['User'][1])
             else:
                 response_message = "Failed to create folder, try later."
             response_state = "succus"
         return jsonify({'message': response_message, 'state': response_state})
+    if request.method == "GET":
+        user_name = session['User'][1]
+        folder = Folder()
+        folder.connect()
+        data = folder.getAllFolders(user_name)
+        return jsonify({'Folders':data})
+
 
 @my_app.route("/Dashbroad/<user_name>")
 def get_home(user_name):
     if 'User' in session:
         return render_template("Dashbroad.html",User=session['User'])
     else:
-        return render_template("Error_Handler.html")
+        return render_template("Error_Handler.html",user=user_name)
 
 if __name__ == '__main__':
     my_app.secret_key = 'super secret key'

@@ -68,16 +68,6 @@
 	<h3 class="Welcome_handler">  welcom bac to your cloud account <span class="user_name"> {{ User[1] }} </span></h3>
 </div>
 <div class="container-lg folder-handler">
-		{% for folder in session['Folders'] %}
-			<div class="folder-item">
-				<h4 class="folder-item-Name">
-					<i class="fas fa-folder"></i>
-					 {{ folder['Name'] }}       
-					<span class="creating-date">{{ folder['CreateAt'] }}</span>
-				</h4>
-				<h7 class="folder-item-date"><i class="fas fa-clock"></i> Last update :  {{ folder['LastUpdate'] }}</h7>
-			</div>
-		{% endfor %}
 </div>
 
 <!-- offcanvas ended -->
@@ -114,11 +104,12 @@
 {% endblock %}
 </body>
 
+<!-- axios cdn -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <link rel="stylesheet" href="{{url_for('static', filename='css/dahsbroad.css')}}"/>
 <script src="{{url_for('static', filename='js/dashbroad.js')}}"></script>
 <!-- popup simpliy js -->
 <link rel="stylesheet" href="{{url_for('static', filename='notify.min.css')}}"/>
 <script  src="{{url_for('static', filename='notify.min.js')}}"></script>
 
-<!-- axios cdn -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
