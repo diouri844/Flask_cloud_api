@@ -56,8 +56,32 @@ function close_add_folder(){
   document.querySelector(".modal-overlay").classList.remove("open-modal");
 }
 
-function handlerFolderClick(e){
-  console.log(e,"  clicked detected :)   ");
+function handlerFolderClick(event){
+  const target_folder_id = event.path[1].id;
+  //var target_ui = document.getElementById("btn-serve-"+target_folder_id);
+  var target_ui = document.getElementById("btn-serve-"+target_folder_id);
+  const parent_div = document.getElementById(target_folder_id)
+  // add bottons  :  
+  if (target_ui.style.display === "none"){
+    target_ui.style.display = "flex";
+    // detect evenet : 
+    const btn_open_current_folder = document.getElementById("btn-open-"+target_folder_id);
+    const btn_delete_current_folder = document.getElementById("btn-delete-"+target_folder_id);
+    const btn_share_current_folder = document.getElementById("btn-share-"+target_folder_id);
+    // disabled the global div event listener :
+    btn_open_current_folder.addEventListener("click",(event)=>{
+      console.log(" open : ",event.path[1].id);
+    },false);
+    btn_delete_current_folder.addEventListener("click", (event)=>{
+      console.log(" delete : ",event.path[1].id);
+    },false);
+    btn_share_current_folder.addEventListener("click", (event)=>{
+      console.log(" share : ",event.path[1].id);
+    },false);
+  }
+  else{
+    target_ui.style.display = "none";
+  }
 }
 
 
@@ -75,13 +99,18 @@ function displayFoldeItems(folder_items){
     Owner: "chopen"
     Size: 0
     */
-    return `<div class="folder-item">
-    <h4 class="folder-item-Name"> 
+    return `<div class="folder-item" id="${item.Name}">
+    <h4 class="folder-item-Name" "> 
     <i class="fas fa-folder"></i>
     ${item.Name}
     <span class="creating-date">${ item.CreateAt }</span>
     </h4>
     <h7 class="folder-item-date"><i class="fas fa-clock"></i> Last update :  ${ item.LastUpdate }</h7>
+    <div class="btn-serv-folder" id="btn-serve-${ item.Name}">
+      <button class="btn-open-folder" id="btn-open-${ item.Name}"><i class="fas fa-folder-open"></i></button>
+      <button class="btn-delete-folder" id="btn-delete-${ item.Name}"><i class="fas fa-trash"></i></button>
+      <button class="btn-share-folder" id="btn-share-${ item.Name}"><i class="fas fa-share"></i></button>  
+  </div>
     </div>`;
   });
   return displaye;
@@ -100,7 +129,7 @@ function getAllFolders(){
     // get the div target :
     const div_list_folders = document.querySelector(".folder-handler");
     div_list_folders.innerHTML = displayFoldeItems(liste_folders).join("");
-    const folders_target = document.querySelectorAll(".folder-item-Name");
+    const folders_target = document.querySelectorAll(".folder-item");
     folders_target.forEach(folder_div => {
     folder_div.addEventListener("click",handlerFolderClick,false);
     });

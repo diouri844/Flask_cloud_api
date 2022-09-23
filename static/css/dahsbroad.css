@@ -161,8 +161,9 @@
 
 .folder-handler{
     width:60%;
-    height: 300px;
+    height: 350px;
     overflow-y: auto;
+    animation: bounceIn 3s;
     padding: 5px 10px;
     margin-top: 13%;
 }
@@ -181,11 +182,28 @@
     background: #797270;;
 }
 
+/* animation key */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 
 .folder-item{
     padding: 5px 10px;
     color:#797270;
-    margin-bottom: 3%;
+    margin-bottom: 2%;
 }
 
 .creating-date{
@@ -196,6 +214,7 @@
     float: right;
     text-decoration: underline;
     cursor: pointer;
+    animation: bounceIn 3s;
 }
 
 .folder-item-date{
@@ -214,4 +233,29 @@
 .folder-item-date:hover {
     color:#fff;
     text-decoration: underline;
+}
+
+
+.btn-serv-folder{
+    margin-top: 3%;
+    display:none;
+    float: center;
+    align-items: center;
+    align-content: center;
+    justify-content:center;
+    animation: bounceIn 2.5s;
+}
+
+.btn-open-folder ,.btn-delete-folder, .btn-share-folder{
+    border:none;
+    margin-right:15px;
+    color:#797270;
+}
+
+.btn-open-folder:hover,
+.btn-delete-folder:hover,
+.btn-share-folder:hover{
+    color:#A7A7A9;
+    font-size: 17px;
+    cursor: pointer;
 }
