@@ -70,11 +70,59 @@ function handlerFolderClick(event){
     const btn_share_current_folder = document.getElementById("btn-share-"+target_folder_id);
     // disabled the global div event listener :
     btn_open_current_folder.addEventListener("click",(event)=>{
-      console.log(" open : ",event.path[1].id);
+      //console.log(" open : ",target_folder_id,event);
+      //console.log(FOLDER_LIST);
+      let current_folder = FOLDER_LIST.filter((iterator)=>{
+        return iterator.Name === target_folder_id
+      })[0];
+      console.log(current_folder);
+      const target = document.querySelector(".open-modal-overlay");
+      // show the target div : 
+      target.classList.add("open-modal");
+      const header_div = document.querySelector(".open-folder-header");
+      const body_div = document.querySelector(".open-folder-body");
+      // add some html : 
+      header_div.innerHTML = `
+        <h4 class="opened-folder_name"><i class="fas fa-folder-open"></i> ${ current_folder.Name } </h4>
+        <button type="button" class="btn-close close-opened-folder" aria-label="Close"></button>
+      `;
+      body_div.innerHTML = `
+      <div class="opened-folder-details">
+          <h6><i class="fas fa-clock"></i> ${ current_folder.CreateAt } </h6>
+          <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="find">
+              <input class="sub-search-input" type="text" placeholder="Search" >
+              <i class="fas fa-search"></i>
+              </h6>
+          <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="add folder">
+  				    <i class="fas fa-folder-plus"></i>
+			    </h6>
+          <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="remove folder">
+  				    <i class="fas fa-folder-minus"></i>
+			    </h6>
+          <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="sort by">
+  				    <i class="fas fa-bars"></i>
+			    </h6>
+      </div>
+      `;
+      // manage the close button : 
+      const btn_close = document.querySelector(".close-opened-folder");
+      btn_close.addEventListener("click",()=>{
+        target.classList.remove("open-modal");
+      },false);
+
+
+
     },false);
+
+
+
     btn_delete_current_folder.addEventListener("click", (event)=>{
       console.log(" delete : ",event.path[1].id);
     },false);
+    
+    
+    
+    
     btn_share_current_folder.addEventListener("click", (event)=>{
       console.log(" share : ",event.path[1].id);
     },false);
@@ -126,6 +174,7 @@ function getAllFolders(){
   .then( response => {
     //console.log(response.data.Folders);
     let liste_folders = response.data.Folders;
+    FOLDER_LIST = response.data.Folders;
     // get the div target :
     const div_list_folders = document.querySelector(".folder-handler");
     div_list_folders.innerHTML = displayFoldeItems(liste_folders).join("");
@@ -167,7 +216,10 @@ config = {
 
 
 
+// global folders list :
 
+
+let FOLDER_LIST = []; 
 const btn_add_folder = document.getElementById("create_new_folder");
 btn_add_folder.addEventListener("click",create_folder,false);
 
