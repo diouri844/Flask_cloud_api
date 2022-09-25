@@ -23,7 +23,6 @@ function toggle_my_links(){
 // services functions :
 
 function create_folder() {
-  console.log("create folder fired clicked ");
   // display modal :
   document.querySelector(".modal-overlay").classList.add("open-modal");
   document.querySelector(".folder_name").focus();
@@ -81,6 +80,7 @@ function handlerFolderClick(event){
       target.classList.add("open-modal");
       const header_div = document.querySelector(".open-folder-header");
       const body_div = document.querySelector(".open-folder-body");
+      const body_details = document.querySelector(".open-folder-body-data");
       // add some html : 
       header_div.innerHTML = `
         <h4 class="opened-folder_name"><i class="fas fa-folder-open"></i> ${ current_folder.Name } </h4>
@@ -104,6 +104,25 @@ function handlerFolderClick(event){
 			    </h6>
       </div>
       `;
+      // get all content of the selected folder : 
+      if (current_folder.Content.length != 0){
+        let content_display = current_folder.Content.map((sub_element)=>{
+        return `
+        <div class="sub-folder-item">
+          <h6 class="sub-item-name"> ${sub_element.Name }</h6>
+          <h6 class="sub-item-type"> ${sub_element.Type }</h6>
+          <h6 class="sub-item-date"> ${sub_element.Date }</h6>
+        </div>
+        `;
+      });
+      body_details.innerHTML = content_display.join("");
+      }else{
+        body_details.innerHTML = `
+        <div class="sub-folder-item">
+          <h5> Your folder does not have files yet </h5>
+        </div>
+        `;
+      }
       // manage the close button : 
       const btn_close = document.querySelector(".close-opened-folder");
       btn_close.addEventListener("click",()=>{
