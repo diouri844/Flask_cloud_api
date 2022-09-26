@@ -90,8 +90,8 @@ function handlerFolderClick(event){
       <div class="opened-folder-details">
           <h6><i class="fas fa-clock"></i> ${ current_folder.CreateAt } </h6>
           <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="find">
-              <input class="sub-search-input" type="text" placeholder="Search" >
-              <i class="fas fa-search"></i>
+              <input class="sub-search-input" type="text" placeholder="Search" id="search-folder-data-input">
+              <i class="fas fa-search" id="search-folder-data-btn"></i>
               </h6>
           <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="add folder">
   				    <i class="fas fa-folder-plus"></i>
@@ -123,20 +123,60 @@ function handlerFolderClick(event){
         </div>
         `;
       }
+      // fonctionne search services : 
+      const btn_search_sub_item = document.getElementById("search-folder-data-btn");
+      btn_search_sub_item.addEventListener("click",()=>{
+        // get the input : 
+        const search_target = document.getElementById("search-folder-data-input").value;
+        console.log("search for : ",search_target," in ",current_folder.Content);
+        // filter array of sub items : 
+        let result_of_search  = current_folder.Content.find((item)=>{
+          return item.Name === search_target;
+        });
+        console.log(result_of_search);
+        let search_display ="";
+        if(result_of_search){
+        search_display  = `
+          <div class="sub-folder-item">
+            <h6 class="sub-item-name"> ${result_of_search.Name }</h6>
+            <h6 class="sub-item-type"> ${result_of_search.Type }</h6>
+            <h6 class="sub-item-date"> ${result_of_search.Date }</h6>
+          </div>
+        `;
+        }else{
+        search_display = `
+          <div class="sub-folder-item">
+            <h6> No search result founded       <i class="fas fa-frown"></i></h6> 
+          </div>
+        `;
+        }
+        // display  result of search : 
+        const body_details = document.querySelector(".open-folder-body-data");
+        setTimeout(()=>{
+          target.classList.remove("open-modal");  
+        },3500);
+        body_details.innerHTML = search_display;
+      },false);
       // manage the close button : 
       const btn_close = document.querySelector(".close-opened-folder");
       btn_close.addEventListener("click",()=>{
         target.classList.remove("open-modal");
       },false);
-
-
-
     },false);
 
 
 
     btn_delete_current_folder.addEventListener("click", (event)=>{
       console.log(" delete : ",event.path[1].id);
+      // filter array and delete the target 
+      FOLDER_LIST = FOLDER_LIST.filter((iterator)=>{
+        return iterator.Name != target_folder_id
+      });
+      console.log(FOLDER_LIST);
+      const div_list_folders = document.querySelector(".folder-handler");
+      // send delete request to the backend api : 
+      
+      div_list_folders.innerHTML = displayFoldeItems(FOLDER_LIST).join("");
     },false);
     
     
