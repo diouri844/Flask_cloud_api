@@ -175,13 +175,10 @@ function handlerFolderClick(event){
       console.log(FOLDER_LIST);
       const div_list_folders = document.querySelector(".folder-handler");
       // send delete request to the backend api : 
-      
       div_list_folders.innerHTML = displayFoldeItems(FOLDER_LIST).join("");
     },false);
     
-    
-    
-    
+  
     btn_share_current_folder.addEventListener("click", (event)=>{
       console.log(" share : ",event.path[1].id);
     },false);
@@ -249,6 +246,20 @@ function getAllFolders(){
   });
 }
 
+// user settings : 
+
+function display_user_profile(){
+  console.log("show profile ");
+  // add the display class : 
+  document.querySelector(".update-modal-overlay").classList.add("open-modal");
+  document.querySelector(".close-Update").addEventListener("click",()=>{
+    document.querySelector(".update-modal-overlay").classList.remove("open-modal");
+  },false);
+}
+
+
+
+
 let loading = false;
 //let my_session = sessionStorage;
 
@@ -270,11 +281,6 @@ config = {
 };
 
 
-
-
-
-
-
 // global folders list :
 
 
@@ -293,3 +299,10 @@ btn_cancel_add_folder.addEventListener("click",close_add_folder,false);
 const btn_new_folder = document.querySelector(".btn-send");
 btn_new_folder.addEventListener("click",insertNewFolder,false);
 
+
+
+// user settings and profile : 
+
+const btn_display_profile = document.getElementById("btn-show-user-profile");
+
+btn_display_profile.addEventListener("click",display_user_profile,false);
