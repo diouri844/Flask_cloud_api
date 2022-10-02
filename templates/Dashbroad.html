@@ -48,7 +48,7 @@
 	</nav>
 	<div class="user_services">
 			<ul class="u_serv_list">
-				<li class="u_serv_item"><i class="fas fa-user-edit"></i> Profile </li>
+				<li class="u_serv_item" id="btn-show-user-profile"><i class="fas fa-user-edit"></i> Profile </li>
 				<li class="u_serv_item"><i class="fas fa-clock"></i> Récent </li>
 				<li class="u_serv_item"><i class="fas fa-trash-restore"></i> Corbeille </li>
 				<li class="u_serv_item"><i class="fas fa-folder"></i> Folders </li>
@@ -71,6 +71,47 @@
 </div>
 
 <!-- offcanvas ended -->
+
+
+<!---  Profile update and manage modal -->
+
+<div class="update-modal-overlay">
+	<div class="update-modal-container">
+		<div class="popup-update-profile">
+			<div class="popup-update-header">
+				<h3 class="popup-header_handler">
+					<i class="fas fa-user"></i>
+					 Your Profile 
+				</h3> 
+			</div>
+			<div class="popup-update-form">
+				<div class="form-router">
+					<i class="fal fa-address-card" data-bs-toggle="tooltip" data-bs-placement="left" title="user profile"></i>
+					<i class="fal fa-file-user" data-bs-toggle="tooltip" data-bs-placement="left" title="personal data"></i>
+					<i class="fal fa-credit-card" data-bs-toggle="tooltip" data-bs-placement="left" title=" your credit card"></i>
+				</div>	
+				<div class="update-form-body">
+
+				</div>
+			</div>
+			<div class="popup-btns">
+				<button class="btn-send"> Save  </button>
+				<button class="btn-cancel close-Update"> Close </button> 
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!---  Profile update and manage modal -->
+
+
+
+
+
+
+
+
 
 
 <!-- popup create new user folder -->
