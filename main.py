@@ -140,6 +140,18 @@ def get_home(user_name):
     else:
         return render_template("Error_Handler.html",user=user_name)
 
+
+@my_app.route("/Profile")
+def get_User_Profile():
+    if request.method == 'GET':
+        #check if already session is opened : 
+        response_state = 501
+        response_data = {}
+        if 'User' in session:
+            response_state = 200
+            response_data = session['User']
+        return jsonify({'state': response_state, 'data':response_data})
+
 if __name__ == '__main__':
     my_app.secret_key = 'super secret key'
     my_app.config['SESSION_TYPE'] = 'filesystem'
