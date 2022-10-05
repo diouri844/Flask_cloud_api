@@ -93,11 +93,11 @@ function handlerFolderClick(event){
               <input class="sub-search-input" type="text" placeholder="Search" id="search-folder-data-input">
               <i class="fas fa-search" id="search-folder-data-btn"></i>
               </h6>
-          <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="add folder">
-  				    <i class="fas fa-folder-plus"></i>
+          <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="add to the folder ">
+  				    <i class="fas fa-plus"></i>
 			    </h6>
-          <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="remove folder">
-  				    <i class="fas fa-folder-minus"></i>
+          <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="remove from the folder">
+  				    <i class="fas fa-minus"></i>
 			    </h6>
           <h6 type="button" class="folder-services" data-bs-toggle="tooltip" data-bs-placement="top" title="sort by">
   				    <i class="fas fa-bars"></i>
@@ -249,15 +249,77 @@ function getAllFolders(){
 // user settings : 
 
 function display_user_profile(){
-  console.log("show profile ");
+
   // add the display class : 
   document.querySelector(".update-modal-overlay").classList.add("open-modal");
   document.querySelector(".close-Update").addEventListener("click",()=>{
-    document.querySelector(".update-modal-overlay").classList.remove("open-modal");
+  document.querySelector(".update-modal-overlay").classList.remove("open-modal");
   },false);
+  check_display_content();
+  // setup the switch :
+  const btn_show_profile = document.querySelector(".fa-address-card");
+  const btn_show_data = document.querySelector(".fa-file-user");
+  const btn_show_credit = document.querySelector(".fa-credit-card");
+  btn_show_profile.addEventListener("click",()=>{
+    DISPLAY_USER_PROFILE = true;
+    DISPLAY_USER_DATA = false;
+    DISPLAY_USER_CREDIT_CARD = false;
+    check_display_content();
+  },false);
+  btn_show_data.addEventListener("click",()=>{
+    DISPLAY_USER_PROFILE = false;
+    DISPLAY_USER_DATA = true;
+    DISPLAY_USER_CREDIT_CARD = false;
+    check_display_content()
+  },false);
+  btn_show_credit.addEventListener("click",()=>{
+    DISPLAY_USER_PROFILE = false;
+    DISPLAY_USER_DATA = false;
+    DISPLAY_USER_CREDIT_CARD = true;
+    check_display_content()
+  },false);
+  //
 }
 
-
+function check_display_content(){
+  console.log(
+      DISPLAY_USER_PROFILE,
+      DISPLAY_USER_DATA,
+      DISPLAY_USER_CREDIT_CARD
+      );
+  //step 1: active user profile router :
+  if(DISPLAY_USER_PROFILE === true){
+    document.querySelector(".fa-address-card").classList.add("active-fal");
+    document.querySelector(".fa-file-user").classList.remove("active-fal");
+    document.querySelector(".fa-credit-card").classList.remove("active-fal");
+    //step 2: get user data from endpoint :
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    axios.get("/Profile",config)
+    .then( response => {
+      if(response.data.state === 200){
+        // user exist and data geted : 
+        document.querySelector(".update-form-body").innerHTML  = `
+        <input type="text" class="UpdateProfileName" value=${response.data.data[1]} placeholder="User Name"/>
+        <input type="email" class="UpdateProfileEmail" value=${response.data.data[2]} placeholder="Email"/>
+        <input type="password" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Password"/>
+        `;
+      }
+    });
+  }
+  if(DISPLAY_USER_DATA === true){
+    document.querySelector(".fa-address-card").classList.remove("active-fal");
+    document.querySelector(".fa-file-user").classList.add("active-fal");
+    document.querySelector(".fa-credit-card").classList.remove("active-fal");
+    document.querySelector(".update-form-body").innerHTML  =``;
+  }
+  if(DISPLAY_USER_CREDIT_CARD === true){
+    document.querySelector(".fa-address-card").classList.remove("active-fal");
+    document.querySelector(".fa-file-user").classList.remove("active-fal");
+    document.querySelector(".fa-credit-card").classList.add("active-fal");
+    document.querySelector(".update-form-body").innerHTML  =``;
+  }
+}
 
 
 let loading = false;
@@ -279,6 +341,14 @@ config = {
           'Content-Type': 'multipart/form-data'
         }
 };
+
+
+// global switch buttons : 
+
+let DISPLAY_USER_PROFILE = true;
+let DISPLAY_USER_DATA = false;
+let DISPLAY_USER_CREDIT_CARD = false;
+
 
 
 // global folders list :
