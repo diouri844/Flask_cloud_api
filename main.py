@@ -141,15 +141,25 @@ def get_home(user_name):
         return render_template("Error_Handler.html",user=user_name)
 
 
-@my_app.route("/Profile")
-def get_User_Profile():
+@my_app.route("/Profile/<target>")
+def get_User_Profile(target):
     if request.method == 'GET':
+        target_dispo = ["Profile","Details","Credit"]
         #check if already session is opened : 
         response_state = 501
         response_data = {}
-        if 'User' in session:
+        if target == target_dispo[0] and 'User' in session:
             response_state = 200
             response_data = session['User']
+        if target == target_dispo[1] and 'User' in session:
+            #get the personnel data of the connected user : 
+            # fetch user personal data by id = session User 0:
+            response_state = 200
+            details_id = get_personal_details_by_id(session['User'][0])
+            response_data = get_details_by_id(details_id)
+        if target == target_dispo[2] and 'User' in session:
+            response_state = 200
+            response_data = get_payment_details_by_id(session['User'][0])
         return jsonify({'state': response_state, 'data':response_data})
 
 if __name__ == '__main__':
