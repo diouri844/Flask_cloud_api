@@ -95,6 +95,21 @@ def set_payment_details(name, number,date, pswd, user_id):
     return response
 
 
+def get_payment_details_by_id(user_id):
+    try:
+        connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
+        cursor = connexion.cursor()
+        command = "SELECT * from Payment_details where Payment_details.UserId="+str(user_id)+""
+        command = cursor.execute(command)
+        details = command.fetchall()[0]
+    except Exception as e:
+        print(" [ error get User Payment_details ] :  "+str(e))
+        details = {}
+    finally:
+        cursor.close()
+        connexion.close()
+    return details
+
 
 def get_user_id_by_username(user_name):
     try:
@@ -126,6 +141,25 @@ def get_personal_details_by_id(user_id):
         cursor.close()
         connexion.close()
     return id_dtails
+
+def get_details_by_id(details_id):
+    try:
+        connexion = sqlite3.connect("Modules\DBA_config\DBA_Temp.db")
+        cursor = connexion.cursor()
+        command = "SELECT * from User_details where User_details.Id= "+str(details_id)+"";
+        command = cursor.execute(command)
+        details = command.fetchall()[0]
+    except Exception as e:
+        print(" [ error get User detials ] :  "+str(e))
+        details = {}
+    finally:
+        cursor.close()
+        connexion.close()
+    return details
+    return
+
+
+
 
 
 def get_user_by_id(user_id):
