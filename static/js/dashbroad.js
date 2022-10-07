@@ -295,7 +295,7 @@ function check_display_content(){
     //step 2: get user data from endpoint :
     axios.defaults.baseURL = 'http://127.0.0.1:5000';
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-    axios.get("/Profile",config)
+    axios.get("/Profile/Profile",config)
     .then( response => {
       if(response.data.state === 200){
         // user exist and data geted : 
@@ -311,13 +311,63 @@ function check_display_content(){
     document.querySelector(".fa-address-card").classList.remove("active-fal");
     document.querySelector(".fa-file-user").classList.add("active-fal");
     document.querySelector(".fa-credit-card").classList.remove("active-fal");
-    document.querySelector(".update-form-body").innerHTML  =``;
+    //send get request to get the user personal details : 
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    axios.get("/Profile/Details",config)
+    .then( response => {
+      //check if response state is 200 : 
+      if ( response.data.state === 200){
+            //display contnet to the target div :
+            let singup_date = new Date(response.data.data[4]);
+            let day = singup_date.getDay();
+            let month = singup_date.getMonth();
+            let year = singup_date.getFullYear();
+            document.querySelector(".update-form-body").innerHTML  =`
+            <input type="text" class="UpdateProfileName" value=${response.data.data[1].replaceAll(" ", "-")} placeholder="Ferst name"/>
+            <input type="text" class="UpdateProfileEmail" value=${response.data.data[2]} placeholder="Last name "/>
+            <input type="phone" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Phone"/>
+            <input type="date" class="UpdateProfilePassword" value=${year+'-0'+month+'-0'+day} placeholder="Phone"/>
+            <select class="UpdateProfilePassword">
+              <option value="">${response.data.data[6].replaceAll(" ", "-")}</option>
+              <option value="free trial">Free Trial</option>
+              <option value="Complet edition">Complet Edition</option>
+              <option value="Ultimate Edition">Ultimate Edition</option>
+            </select>
+            `;
+      }
+    })
   }
   if(DISPLAY_USER_CREDIT_CARD === true){
     document.querySelector(".fa-address-card").classList.remove("active-fal");
     document.querySelector(".fa-file-user").classList.remove("active-fal");
     document.querySelector(".fa-credit-card").classList.add("active-fal");
-    document.querySelector(".update-form-body").innerHTML  =``;
+    // send a get request to get user payment details : 
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    axios.get("/Profile/Credit",config)
+    .then( response => {
+      console.log(response.data.data);
+      // check if user already have an payment details : 
+      if( response.data.data.length === 0){
+        document.querySelector(".update-form-body").innerHTML = `
+            <input type="text" class="UpdateProfileName" placeholder="Card name"/>
+            <input type="text" class="UpdateProfileEmail" placeholder="Card number "/>
+            <input type="date" class="UpdateProfilePassword" placeholder="Card Date"/>
+            <input type="text" class="UpdateProfilePassword" placeholder="Card CVC"/>
+        `;
+      }
+      else{
+        document.querySelector(".update-form-body").innerHTML  =`
+            <input type="text" class="UpdateProfileName" value=${response.data.data[1].replaceAll(" ","-")} placeholder="Card name"/>
+            <input type="text" class="UpdateProfileEmail" value=${response.data.data[2].replaceAll(" ","-")} placeholder="Card number "/>
+            <input type="date" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Card Date"/>
+            <input type="text" class="UpdateProfilePassword" value=${response.data.data[4]} placeholder="Card CVC"/>
+        
+        `;
+      }
+    })
+    
   }
 }
 
