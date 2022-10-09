@@ -282,11 +282,11 @@ function display_user_profile(){
 }
 
 function check_display_content(){
-  console.log(
-      DISPLAY_USER_PROFILE,
-      DISPLAY_USER_DATA,
-      DISPLAY_USER_CREDIT_CARD
-      );
+  // stock the current data : 
+  let origin_user_profile = new FormData();
+  let origin_user_details = new FormData();
+  let origin_user_credit = new FormData();
+  //const btn_save = document.getElementById("btn-update-profile");
   //step 1: active user profile router :
   if(DISPLAY_USER_PROFILE === true){
     document.querySelector(".fa-address-card").classList.add("active-fal");
@@ -299,11 +299,79 @@ function check_display_content(){
     .then( response => {
       if(response.data.state === 200){
         // user exist and data geted : 
+        origin_user_profile.append('userName',response.data.data[1]);
+        origin_user_profile.append('userEmail',response.data.data[2]);
+        origin_user_profile.append('userPassword',response.data.data[3]);
         document.querySelector(".update-form-body").innerHTML  = `
-        <input type="text" class="UpdateProfileName" value=${response.data.data[1]} placeholder="User Name"/>
-        <input type="email" class="UpdateProfileEmail" value=${response.data.data[2]} placeholder="Email"/>
-        <input type="password" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Password"/>
+        <input type="text" id="UserName" class="UpdateProfileName" value=${response.data.data[1]} placeholder="User Name"/>
+        <input type="email" id="UserEmail" class="UpdateProfileEmail" value=${response.data.data[2]} placeholder="Email"/>
+        <input type="password" id="UserPassword" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Password"/>
         `;
+        // add an eventListener  to the save button : 
+        document.getElementById("btn-update-profile").addEventListener("click",()=>{
+          // check changes : 
+          let ToUpdate = new FormData();
+          let checker = 0;
+          let current_user_name = document.getElementById('UserName').value;
+          let current_user_email = document.getElementById('UserEmail').value;
+          let current_user_password = document.getElementById('UserPassword').value;
+          if(current_user_name != origin_user_profile.get('userName')){
+            if ( current_user_name.length === 0 ){
+              document.getElementById('UserName').style.borderColor = "#797270";
+              notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+              });
+              return;
+            }
+              ToUpdate.append('UserName',current_user_name);
+              document.getElementById('UserName').style.borderColor = "#eee";
+              checker +=1;
+          }
+          if(current_user_email != origin_user_profile.get('userEmail')){
+            if ( current_user_email.length === 0 ){
+              document.getElementById('UserEmail').style.borderColor = "#797270";
+              notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+              });
+              return;
+            }
+              ToUpdate.append('UserEmail',current_user_email);
+              document.getElementById('UserEmail').style.borderColor = "#eee";
+              checker +=1;
+          }
+          if(current_user_password != origin_user_profile.get('userPassword')){
+            if ( current_user_password.length === 0 ){
+              document.getElementById('UserPassword').style.borderColor = "#797270";
+              notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+              });
+              return;
+            }
+              ToUpdate.append('UserPassword',current_user_password);
+              document.getElementById('UserPassword').style.borderColor = "#eee";
+              checker +=1;
+          }
+          if( checker === 0 ){
+            notify({
+              message: 'You are up to date',
+              color: 'custom',
+              timeout: 2000
+            });
+            return;
+          }
+          //check if the values not empty : 
+          console.log(ToUpdate);
+          // we have an update of data = > send put request to the backend endpoint :
+
+          // to implement later XD ........
+        },false);
+
       }
     });
   }
@@ -318,17 +386,23 @@ function check_display_content(){
     .then( response => {
       //check if response state is 200 : 
       if ( response.data.state === 200){
+            //save the origin data : 
+            origin_user_details.append('Fname',response.data.data[1]);
+            origin_user_details.append('Lname',response.data.data[2]);
+            origin_user_details.append('Phone',response.data.data[3]);
+            origin_user_details.append('Plan',response.data.data[6]); 
             //display contnet to the target div :
             let singup_date = new Date(response.data.data[4]);
             let day = singup_date.getDay();
             let month = singup_date.getMonth();
             let year = singup_date.getFullYear();
+            document.getElementById("btn-update-profile").classList.add("Button-Update-details");
             document.querySelector(".update-form-body").innerHTML  =`
-            <input type="text" class="UpdateProfileName" value=${response.data.data[1].replaceAll(" ", "-")} placeholder="Ferst name"/>
-            <input type="text" class="UpdateProfileEmail" value=${response.data.data[2]} placeholder="Last name "/>
-            <input type="phone" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Phone"/>
-            <input type="date" class="UpdateProfilePassword" value=${year+'-0'+month+'-0'+day} placeholder="Phone"/>
-            <select class="UpdateProfilePassword">
+            <input type="text" id="UserFname" class="UpdateProfileName" value=${response.data.data[1].replaceAll(" ", "-")} placeholder="Ferst name"/>
+            <input type="text" id="UserLname" class="UpdateProfileEmail" value=${response.data.data[2]} placeholder="Last name "/>
+            <input type="phone" id="UserPhone" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Phone"/>
+            <input type="date" class="UpdateProfilePassword" value=${year+'-0'+month+'-0'+day} />
+            <select  id="UserAccountPlan" class="UpdateProfilePassword">
               <option value="">${response.data.data[6].replaceAll(" ", "-")}</option>
               <option value="free trial">Free Trial</option>
               <option value="Complet edition">Complet Edition</option>
@@ -336,6 +410,77 @@ function check_display_content(){
             </select>
             `;
       }
+      // add event listener to the send butn :
+      // we have the same button with 2 eventlistner generate an beug to fix it later : 
+      document.querySelector('.Button-Update-details').addEventListener("click",()=>{
+        // get the current user data : 
+        let checker = 0;
+        let toUpdate = new FormData();
+        let current_fname = document.getElementById("UserFname").value;
+        let current_lname = document.getElementById("UserLname").value;
+        let current_phone = document.getElementById("UserPhone").value;
+        let current_plane  = document.getElementById("UserAccountPlan").value;
+        // check if we have updated : 
+        if( current_fname != origin_user_details.get('Fname')){
+          // check if the value if empty :
+          if ( current_fname.length === 0){
+            // instructions : 
+            document.getElementById("UserFname").style.borderColor = "#797270";
+            notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+              });
+            return;
+          }
+          document.getElementById("UserFname").style.borderColor = "#eee";
+          toUpdate.append('Fname',current_fname);
+          checker += 1;
+        }
+        if ( current_lname != origin_user_details.get('Lname') ){
+          if( current_lname.length === 0){
+            document.getElementById("UserLname").style.borderColor = "#797270";
+            notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+              });
+            return;
+          }
+          document.getElementById("UserLname").style.borderColor = "#eee";
+          toUpdate.append('Lname',current_lname);
+          checker += 1;
+        }
+        if ( current_phone != origin_user_details.get('Phone') ){
+          if( current_phone.length === 0){
+            document.getElementById("UserPhone").style.borderColor = "#797270";
+            notify({
+                message: 'all required fields must be completed',
+                color: 'danger',
+                timeout: 2000
+              });
+            return;
+          }
+            document.getElementById("UserPhone").style.borderColor = "#eee";
+            toUpdate.append('Phone',current_phone);
+            checker += 1;
+        }
+        // ignore update user plan for the moment XD .......
+        // check checker value :
+        if( checker === 0 ){
+            notify({
+              message: 'You are up to date',
+              color: 'custom',
+              timeout: 2000
+            });
+            return;
+          }
+          //check if the values not empty : 
+          console.log(toUpdate);
+          // we have an update of data = > send put request to the backend endpoint :
+          // to implement later XD ........
+
+      },false);
     })
   }
   if(DISPLAY_USER_CREDIT_CARD === true){
@@ -347,7 +492,6 @@ function check_display_content(){
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     axios.get("/Profile/Credit",config)
     .then( response => {
-      console.log(response.data.data);
       // check if user already have an payment details : 
       if( response.data.data.length === 0){
         document.querySelector(".update-form-body").innerHTML = `
@@ -358,12 +502,16 @@ function check_display_content(){
         `;
       }
       else{
+        //save the origin credit info : 
+        origin_user_credit.append('CardName',response.data.data[1]);
+        origin_user_credit.append('CardNumber',response.data.data[2]);
+        origin_user_credit.append('CardCvc',response.data.data[4]);
+        
         document.querySelector(".update-form-body").innerHTML  =`
             <input type="text" class="UpdateProfileName" value=${response.data.data[1].replaceAll(" ","-")} placeholder="Card name"/>
             <input type="text" class="UpdateProfileEmail" value=${response.data.data[2].replaceAll(" ","-")} placeholder="Card number "/>
             <input type="date" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Card Date"/>
             <input type="text" class="UpdateProfilePassword" value=${response.data.data[4]} placeholder="Card CVC"/>
-        
         `;
       }
     })
