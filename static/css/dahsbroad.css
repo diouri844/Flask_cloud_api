@@ -286,7 +286,7 @@
 .popup-btns{
     margin-left: 5%;
 }
-.btn-send{
+.btn-send, .btn-update{
     color:#ccc;
     background:transparent;
     padding:5px 8px;
@@ -296,7 +296,7 @@
     font-size: 13px;
 }
 
-.btn-send:hover , .btn-send:focus{
+.btn-send:hover ,.btn-update:hover, .btn-send:focus ,.btn-update:focus{
     color:#fff;
     border: 1px solid #fff;
 }
