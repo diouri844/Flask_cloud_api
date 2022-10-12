@@ -144,7 +144,9 @@
 }
 .form-router{
     margin-top: 1%;
+    background:transparent;
     width:60%;
+    padding: 10px 10px;
     margin-left: 10%;
     display:flex;
     justify-content:space-between;
@@ -153,12 +155,18 @@
 .form-router .fal{
     cursor: pointer;
     color:#797270;
+    background-color: #333333;
+    border: 1px solid #797270;
+    padding:5px 10px;
+    border-radius: 50px;
 } 
 .form-router .fal:hover {
     color:#ccc;
+    border: 1px solid #ccc;
 }
 .form-router .active-fal{
     color: #ccc;
+    border: 1px solid #ccc;
 }
 
 .update-form-body{
@@ -286,7 +294,7 @@
 .popup-btns{
     margin-left: 5%;
 }
-.btn-send, .btn-update{
+.btn-send, .btn-update, .Button-Update-details, .Button-Update-credit{
     color:#ccc;
     background:transparent;
     padding:5px 8px;
@@ -296,7 +304,9 @@
     font-size: 13px;
 }
 
-.btn-send:hover ,.btn-update:hover, .btn-send:focus ,.btn-update:focus{
+.btn-send:hover ,.btn-update:hover, .Button-Update-credit:hover,
+.btn-send:focus ,.btn-update:focus, .Button-Update-credit:focus,
+.Button-Update-details:hover , .Button-Update-details:focus{
     color:#fff;
     border: 1px solid #fff;
 }
