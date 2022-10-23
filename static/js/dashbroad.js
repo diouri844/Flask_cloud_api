@@ -601,6 +601,52 @@ function check_display_content(){
 }
 
 
+
+function displayUserUploadForm(){
+  // display an formular : 
+  document.querySelector(".upload-modal-overlay").classList.add('open-modal');
+  // get the close button : 
+  document.querySelector('#btn-close-upload').addEventListener("click",()=>{
+    document.querySelector(".upload-modal-overlay").classList.remove('open-modal');
+  },false);
+  document.querySelector(".btn-cancel-upload").addEventListener("click",()=>{
+    document.querySelector(".upload-modal-overlay").classList.remove('open-modal');
+  },false);
+
+  // add evenet listner to the uplad btn : 
+  document.querySelector('.btn-upload').addEventListener("click",()=>{
+    // check if the input is no epty : 
+    let current_file = document.getElementById('file_to_upload').files[0];
+    console.log(current_file);
+    if ( current_file.length === 0 )
+    {
+      // empty data sended : 
+      notify({
+            message: " You will not be able to load the empty path.",
+            color: 'custom',
+            timeout: 2500
+      });
+    }else{
+      // file successfuly getet : 
+      // step2  : send the current file to the backend api router handler :
+      let data_frame = new FormData();
+      data_frame.append('file',current_file);
+      axios.defaults.baseURL = 'http://127.0.0.1:5000';
+      axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+      axios.post('/Upload/File',data_frame,config)
+      .then( response => {
+        console.log(" response geted :)    ")
+       })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+  },false);  
+}
+
+
+
+
 let loading = false;
 //let my_session = sessionStorage;
 
@@ -648,6 +694,10 @@ btn_cancel_add_folder.addEventListener("click",close_add_folder,false);
 const btn_new_folder = document.querySelector(".btn-send");
 btn_new_folder.addEventListener("click",insertNewFolder,false);
 
+
+const btn_user_upload_data_file = document.getElementById("btn_upload_file");
+// add event listner : 
+btn_user_upload_data_file.addEventListener("click",displayUserUploadForm,false);
 
 
 // user settings and profile : 
