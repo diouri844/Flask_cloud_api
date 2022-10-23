@@ -162,6 +162,22 @@ def get_User_Profile(target):
             response_data = get_payment_details_by_id(session['User'][0])
         return jsonify({'state': response_state, 'data':response_data})
 
+
+@my_app.route("/Upload/<option>",methods=['POST'])
+def upload_now(option):
+    if request.method == 'POST':
+        supported_upload = ['File','Folder']
+        if option in supported_upload:
+            # check uploads 
+            response_message = ""
+            response_state = ""
+            # check option details:
+            if option == supported_upload[0]:
+                # upload file : 
+                target_file = request.files
+                print(target_file)
+    return jsonify({'state': response_state,'message': response_message})
+
 if __name__ == '__main__':
     my_app.secret_key = 'super secret key'
     my_app.config['SESSION_TYPE'] = 'filesystem'
