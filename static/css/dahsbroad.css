@@ -81,7 +81,7 @@
     margin-left: 10px;
     cursor: pointer;
 }
-.modal-overlay, .open-modal-overlay, .update-modal-overlay {
+.modal-overlay, .open-modal-overlay, .update-modal-overlay, .upload-modal-overlay{
     position: fixed;
     top: 0;
     left: 0;
@@ -109,7 +109,7 @@
     align-content: center;
 }
 
-.update-modal-overlay{
+.update-modal-overlay, .upload-modal-container{
     color:#eee;
 }
 
@@ -137,7 +137,7 @@
 }
 
 
-.popup-header, .popup-update-header{
+.popup-header, .popup-update-header, .popup-upload-header{
     display:flex;
     justify-content: space-between;
     margin-bottom: 2%;
@@ -199,11 +199,34 @@
 
 
 
-.popup-form{
+.popup-form, .popup-upload-form{
     margin-left: 5%;
     margin-bottom: 5%;
 }
 
+.popup-upload-form{
+    display:flex;
+    margin-bottom: 5%;
+}
+
+
+.custom-file-upload {
+    border-radius: 50px;
+    padding:5px 5px;
+    color:#797270;
+    color: #eee;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.custom-file-upload::file-selector-button {
+    border: none;
+    color:#797270;
+    padding: .2em .4em;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color: transparent;
+}
 
 .folder_name{
     border-left:0px;
@@ -294,7 +317,7 @@
 .popup-btns{
     margin-left: 5%;
 }
-.btn-send, .btn-update, .Button-Update-details, .Button-Update-credit{
+.btn-send, .btn-update, .Button-Update-details, .Button-Update-credit, .btn-upload{
     color:#ccc;
     background:transparent;
     padding:5px 8px;
@@ -305,13 +328,14 @@
 }
 
 .btn-send:hover ,.btn-update:hover, .Button-Update-credit:hover,
+.btn-upload:hover, .btn-upload:focus,
 .btn-send:focus ,.btn-update:focus, .Button-Update-credit:focus,
 .Button-Update-details:hover , .Button-Update-details:focus{
     color:#fff;
     border: 1px solid #fff;
 }
 
-.btn-cancel{
+.btn-cancel, .btn-cancel-upload{
     background: transparent;
     padding: 5px 8px;
     text-transform: capitalize;
@@ -319,7 +343,9 @@
     color:#ccc;
     font-size: 13px;
 }
-.btn-cancel:hover, .btn-cancel:focus{
+.btn-cancel:hover, .btn-cancel:focus
+.btn-cancel-upload:hover, .btn-cancel-upload:focus
+{
     color: #fff;
 }
 
