@@ -34,7 +34,7 @@
 				title="New folder">
   				<i class="fas fa-plus-circle"></i>
 			</li>
-			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="upload file">
+			<li type="button" class="btn-services btn-sm" id="btn_upload_file" data-bs-toggle="tooltip" data-bs-placement="top" title="upload file">
   				<i class="fas fa-file-plus"></i>
 			</li>
 			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="upload folder">
@@ -148,6 +148,32 @@
 <!--     Open Selected folder :     -->
 
 
+<!--     Modal to uplad a file    -->
+
+<div class="upload-modal-overlay">
+	<div class="upload-modal-container">
+		<div class="popup-upload-file">
+			<div class="popup-upload-header">
+				<h4 class="popup-header_handler"><i class="fas fa-plus-circle"></i> Add  file </h4>
+				<button type="button" class="btn-close" id="btn-close-upload" aria-label="Close"></button>
+			</div>
+			<div class="popup-upload-form">
+				<input class="custom-file-upload" type="file" id="file_to_upload" />	
+			</div>
+			<div class="popup-btns">
+				<button class="btn-upload"> add </button>
+				<button class="btn-cancel-upload"> cancel </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+<!--     Modal to uplad a file    -->
 
 
 {% endblock %}
