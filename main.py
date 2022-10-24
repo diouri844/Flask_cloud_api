@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify
 from Modules.User import *
 from Modules.Folder.FolderManager import Folder
+from werkzeug.utils import secure_filename
 
 my_app = Flask(__name__)
+UploadFolder = "UploadStore/"
+my_app.config['UPLOAD_FOLDER'] = UploadFolder
 # home page :   
 @my_app.route('/')
 def home():
@@ -174,8 +177,19 @@ def upload_now(option):
             # check option details:
             if option == supported_upload[0]:
                 # upload file : 
-                target_file = request.files
+                target_file = request.files.to_dict()
+                origin_data = request.form.to_dict()
                 print(target_file)
+                print("\n ")
+                print(origin_data)
+                # upload file : 
+                target_file['file'].save(my_app.config['UPLOAD_FOLDER']+""+secure_filename(target_file['file'].filename))
+                # manage the data base and the front : 
+                # step 1 : add file name to folder target contenet : 
+                folder = Folder()
+                folder.connect()
+                response_push_content = folder.AddContent(
+                    origin_data['folder'], target_file['file'])
     return jsonify({'state': response_state,'message': response_message})
 
 if __name__ == '__main__':
