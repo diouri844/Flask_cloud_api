@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify
 from Modules.User import *
 from Modules.Folder.FolderManager import Folder
+from Modules.UploadManager.Uploader import UploadManager
 from werkzeug.utils import secure_filename
 
 my_app = Flask(__name__)
-UploadFolder = "UploadStore/"
-my_app.config['UPLOAD_FOLDER'] = UploadFolder
+UploadFolder = "UploadStore"
+my_app.config['UPLOAD_FOLDER'] = UploadFolder+"/"
 # home page :   
 @my_app.route('/')
 def home():
@@ -133,6 +134,20 @@ def FolderHandler():
         folder.connect()
         data = folder.getAllFolders(user_name)
         return jsonify({'Folders':data})
+
+@my_app.route("/Folder/<foldername>",methods=['GET'])
+def FolderMAnager(foldername):
+    if request.method == 'GET':
+        response_message = ""
+        response_state = ""
+        folder_handler = Folder()
+        folder_handler.connect()
+        #response_delete_folder = folder_handler.delete(foldername)
+        my_manager = UploadManager(UploadFolder,session['User'][1])
+        print(my_manager.deleteFolderFiles((foldername)))
+    return jsonify({"message":"","state":""})
+
+
 
 
 @my_app.route("/Dashbroad/<user_name>")
