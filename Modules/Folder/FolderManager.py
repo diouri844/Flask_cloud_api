@@ -23,6 +23,8 @@ class Folder:
         self.my_client = MongoClient(self.connexion_url)
         self.my_db = self.my_client.Flask_Cloud
         return
+    def getOwner(self):
+        return self.Owner
     def getData(self,username=""):
         folderData = list(
             self.my_db.Folders.find(
@@ -76,6 +78,18 @@ class Folder:
             )
         )
         return folders
+    def delete(self,foldername=""):
+        # get connexion :
+        # for now delete functon delete the real folder and his content 
+        # later i will be manage an Corbeille function 
+        try:
+            self.my_db.Folders.delete_one({
+                'Name':foldername
+            })
+            return 1
+        except Exception as e:
+            print(" [ Delete Folder Error ] : "+str(e))
+            return -1
     def AddContent(self,foldername="",fileData={}):
         # create an contene object :
         my_content = {
