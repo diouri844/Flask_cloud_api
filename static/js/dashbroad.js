@@ -167,11 +167,24 @@ function handlerFolderClick(event){
 
 
     btn_delete_current_folder.addEventListener("click", (event)=>{
-      console.log(" delete : ",event.path[1].id);
+      //console.log(" delete : ",event.path[1].id);
       // filter array and delete the target 
       FOLDER_LIST = FOLDER_LIST.filter((iterator)=>{
         return iterator.Name != target_folder_id
       });
+      // send delete request to folder endpoint : 
+      //console.log(target_folder_id);
+      let data_frame = new FormData();
+      data_frame.append("Target",target_folder_id);
+      axios.defaults.baseURL = 'http://127.0.0.1:5000';
+      axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+      axios.get("/Folder/"+target_folder_id,config)
+      .then( response => {
+
+      })
+      .catch( error => { 
+        console.error(error);
+      })
       setTimeout(()=>{
         loading = true;
       },100);
