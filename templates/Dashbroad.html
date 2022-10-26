@@ -60,7 +60,7 @@
 <div class="container-lg mt-5 fixed-center container-welcome">
 	<div class="btn_group_management">
 			<i class="fas fa-photo-video"> 0</i>
-			<i class="fas fa-folder folder_icon"> 0</i>
+			<i class="fas fa-folder folder_icon" id="user_folder_count"></i>
 			<i class="fas fa-trash-restore trach_icon"> 0</i>
 			<i class="fas fa-clock clock_icon"> 0</i>
 			<i class="fas fa-eye"> 0</i>
@@ -157,9 +157,7 @@
 				<h4 class="popup-header_handler"><i class="fas fa-plus-circle"></i> Add  file </h4>
 				<button type="button" class="btn-close" id="btn-close-upload" aria-label="Close"></button>
 			</div>
-			<div class="popup-upload-form">
-				<input class="custom-file-upload" type="file" id="file_to_upload" />	
-			</div>
+			<div class="popup-upload-form"></div>
 			<div class="popup-btns">
 				<button class="btn-upload"> add </button>
 				<button class="btn-cancel-upload"> cancel </button>

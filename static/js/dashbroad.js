@@ -172,7 +172,10 @@ function handlerFolderClick(event){
       FOLDER_LIST = FOLDER_LIST.filter((iterator)=>{
         return iterator.Name != target_folder_id
       });
-      console.log(FOLDER_LIST);
+      setTimeout(()=>{
+        loading = true;
+      },100);
+      loading = false;
       const div_list_folders = document.querySelector(".folder-handler");
       // send delete request to the backend api : 
       div_list_folders.innerHTML = displayFoldeItems(FOLDER_LIST).join("");
@@ -239,6 +242,8 @@ function getAllFolders(){
     folder_div.addEventListener("click",handlerFolderClick,false);
     });
     loading = false;
+    USER_FOLDER_COUNTER = FOLDER_LIST.length;
+    document.getElementById("user_folder_count").innerHTML = `  ${USER_FOLDER_COUNTER}`;
   })
   .catch(error => {
     console.error(error);
@@ -252,7 +257,9 @@ function display_user_profile(){
 
   // add the display class : 
   document.querySelector(".update-modal-overlay").classList.add("open-modal");
-  
+  /*document.querySelector(".close-Update").addEventListener("click",()=>{
+  document.querySelector(".update-modal-overlay").classList.remove("open-modal");
+  },false);*/
   check_display_content();
   // setup the switch :
   const btn_show_profile = document.querySelector(".fa-address-card");
@@ -305,15 +312,8 @@ function check_display_content(){
         <input type="email" id="UserEmail" class="UpdateProfileEmail" value=${response.data.data[2]} placeholder="Email"/>
         <input type="password" id="UserPassword" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Password"/>
         `;
-        document.querySelector('.popup-btns').innerHTML = `
-          <button class="btn-update" id="btn-update-profile"> Save  </button>
-          <button class="btn-cancel close-Update"> Close </button>
-        `;
-        document.querySelector(".close-Update").addEventListener("click",()=>{
-            document.querySelector(".update-modal-overlay").classList.remove("open-modal");
-        },false);
         // add an eventListener  to the save button : 
-        document.getElementById("btn-update-profile").addEventListener("click",()=>{
+        /*document.getElementById("btn-update-profile").addEventListener("click",()=>{
           // check changes : 
           let ToUpdate = new FormData();
           let checker = 0;
@@ -375,7 +375,7 @@ function check_display_content(){
           // we have an update of data = > send put request to the backend endpoint :
 
           // to implement later XD ........
-        },false);
+        },false);*/
 
       }
     });
@@ -392,10 +392,10 @@ function check_display_content(){
       //check if response state is 200 : 
       if ( response.data.state === 200){
             //save the origin data : 
-            origin_user_details.append('Fname',response.data.data[1].replaceAll(" ", "-"));
-            origin_user_details.append('Lname',response.data.data[2].replaceAll(" ", "-"));
-            origin_user_details.append('Phone',response.data.data[3].replaceAll(" ", "-"));
-            origin_user_details.append('Plan',response.data.data[6].replaceAll(" ", "-")); 
+            origin_user_details.append('Fname',response.data.data[1]);
+            origin_user_details.append('Lname',response.data.data[2]);
+            origin_user_details.append('Phone',response.data.data[3]);
+            origin_user_details.append('Plan',response.data.data[6]); 
             //display contnet to the target div :
             let singup_date = new Date(response.data.data[4]);
             let day = singup_date.getDay();
@@ -414,17 +414,10 @@ function check_display_content(){
               <option value="Ultimate Edition">Ultimate Edition</option>
             </select>
             `;
-            document.querySelector('.popup-btns').innerHTML = `
-                <button class="Button-Update-details"> Save  </button>
-                <button class="btn-cancel close-Update"> Close </button>
-            `;
-            document.querySelector(".close-Update").addEventListener("click",()=>{
-                document.querySelector(".update-modal-overlay").classList.remove("open-modal");
-            },false);
       }
       // add event listener to the send butn :
       // we have the same button with 2 eventlistner generate an beug to fix it later : 
-      document.querySelector('.Button-Update-details').addEventListener("click",()=>{
+      /*document.querySelector('.Button-Update-details').addEventListener("click",()=>{
         // get the current user data : 
         let checker = 0;
         let toUpdate = new FormData();
@@ -492,7 +485,7 @@ function check_display_content(){
           // we have an update of data = > send put request to the backend endpoint :
           // to implement later XD ........
 
-      },false);
+      },false);*/
     })
   }
   if(DISPLAY_USER_CREDIT_CARD === true){
@@ -515,86 +508,17 @@ function check_display_content(){
       }
       else{
         //save the origin credit info : 
-        origin_user_credit.append('CardName',response.data.data[1].replaceAll(' ','-'));
-        origin_user_credit.append('CardNumber',response.data.data[2].replaceAll(" ","-"));
+        origin_user_credit.append('CardName',response.data.data[1]);
+        origin_user_credit.append('CardNumber',response.data.data[2]);
         origin_user_credit.append('CardCvc',response.data.data[4]);
         
         document.querySelector(".update-form-body").innerHTML  =`
-            <input type="text" class="UpdateProfileName" id="cardName" value=${response.data.data[1].replaceAll(" ","-")} placeholder="Card name"/>
-            <input type="text" class="UpdateProfileEmail" id="cardNumber" value=${response.data.data[2].replaceAll(" ","-")} placeholder="Card number "/>
-            <input type="date" class="UpdateProfilePassword" id="cardDate" value=${response.data.data[3]} placeholder="Card Date"/>
-            <input type="text" class="UpdateProfilePassword" id="cardCvc" value=${response.data.data[4]} placeholder="Card CVC"/>
+            <input type="text" class="UpdateProfileName" value=${response.data.data[1].replaceAll(" ","-")} placeholder="Card name"/>
+            <input type="text" class="UpdateProfileEmail" value=${response.data.data[2].replaceAll(" ","-")} placeholder="Card number "/>
+            <input type="date" class="UpdateProfilePassword" value=${response.data.data[3]} placeholder="Card Date"/>
+            <input type="text" class="UpdateProfilePassword" value=${response.data.data[4]} placeholder="Card CVC"/>
         `;
       }
-      document.querySelector('.popup-btns').innerHTML = `
-          <button class="Button-Update-credit"> Save  </button>
-          <button class="btn-cancel close-Update"> Close </button>
-      `;
-      document.querySelector(".close-Update").addEventListener("click",()=>{
-           document.querySelector(".update-modal-overlay").classList.remove("open-modal");
-      },false);
-      document.querySelector('.Button-Update-credit').addEventListener('click',()=>{
-        let checker = 0;
-        let toUpdate = new FormData();
-        let current_card_name = document.getElementById("cardName").value;
-        let current_card_number =  document.getElementById("cardNumber").value;
-        //let current_card_date =  document.getElementById("cardDate").value;
-        let current_card_cvc =  document.getElementById("cardCvc").value;
-        // check the current updated values :
-        if ( current_card_name != origin_user_credit.get('CardName')){
-          // check if the updated value is it empty : 
-          if ( current_card_name.length === 0 ){
-            document.getElementById("cardName").style.borderColor = "#797270";
-            notify({
-                message: 'all required fields must be completed',
-                color: 'danger',
-                timeout: 2000
-              });
-            return;
-          }
-          document.getElementById("cardName").style.borderColor = "#eee";
-          toUpdate.append('CardName',current_card_name);
-          checker +=1;
-        }
-        if ( current_card_number != origin_user_credit.get('CardNumber')){
-          // check if the updated value is it empty : 
-          if ( current_card_number.length === 0 ){
-            document.getElementById("cardNumber").style.borderColor = "#797270";
-            notify({
-                message: 'all required fields must be completed',
-                color: 'danger',
-                timeout: 2000
-              });
-            return;
-          }
-          document.getElementById("cardNumber").style.borderColor = "#eee";
-          toUpdate.append('CardName', current_card_number);
-          checker +=1;
-        }
-        if ( current_card_cvc != origin_user_credit.get('CardCvc') ) {
-          if ( current_card_cvc.length === 0){
-            document.getElementById("cardCvc").style.borderColor = "#797270";
-            notify({
-                message: 'all required fields must be completed',
-                color: 'danger',
-                timeout: 2000
-              });
-            return;
-          }
-          document.getElementById("cardCvc").style.borderColor = "#eee";
-          toUpdate.append('CardCvc',current_card_cvc);
-          checker += 1;
-        }
-        // check the value of checker : 
-        if ( checker === 0 ){
-          notify({
-              message: 'You are up to date',
-              color: 'custom',
-              timeout: 2000
-            });
-            return;
-        }
-      },false);
     })
     
   }
@@ -613,12 +537,23 @@ function displayUserUploadForm(){
     document.querySelector(".upload-modal-overlay").classList.remove('open-modal');
   },false);
 
+  // add new select boc to select the target folder to uload file : 
+  document.querySelector('.popup-upload-form').innerHTML = `
+  <label for="file_to_upload" class="custom-file-upload-label" > Click to select file : </label>
+  <input type="file" class="custom-file-upload" id="file_to_upload" />
+    <select name="folder" id="selected_folders_to_upload" class="folder_list_select">
+    ${ FOLDER_LIST.map(function(folder_item){
+      return `<option value=${ folder_item.Name }>${ folder_item.Name }</option>`
+    })}
+    </select>
+  `;
   // add evenet listner to the uplad btn : 
   document.querySelector('.btn-upload').addEventListener("click",()=>{
     // check if the input is no epty : 
     let current_file = document.getElementById('file_to_upload').files[0];
-    console.log(current_file);
-    if ( current_file.length === 0 )
+    let folder_target = document.getElementById('selected_folders_to_upload').value;
+    console.log(current_file, folder_target);
+    if (!current_file )
     {
       // empty data sended : 
       notify({
@@ -630,12 +565,25 @@ function displayUserUploadForm(){
       // file successfuly getet : 
       // step2  : send the current file to the backend api router handler :
       let data_frame = new FormData();
+      // add target file object :
       data_frame.append('file',current_file);
+      // add target v-folder :
+      data_frame.append('folder',folder_target); 
       axios.defaults.baseURL = 'http://127.0.0.1:5000';
       axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
       axios.post('/Upload/File',data_frame,config)
       .then( response => {
-        console.log(" response geted :)    ")
+        console.log(response);
+        notify({
+            message: response.data.message,
+            color: response.data.state,
+            timeout: 2500
+        });
+        // update the global state : 
+        setTimeout(()=>{
+          loading = true;
+        },1000);
+        loading = false;
        })
       .catch(error => {
         console.error(error);
@@ -653,6 +601,7 @@ let loading = false;
 setInterval(()=>{
   if(loading){
     getAllFolders();
+    USER_FOLDER_COUNTER = FOLDER_LIST.length;
     loading = false;
   }
 },1000)
@@ -680,6 +629,7 @@ let DISPLAY_USER_CREDIT_CARD = false;
 
 
 let FOLDER_LIST = []; 
+let USER_FOLDER_COUNTER = 0
 const btn_add_folder = document.getElementById("create_new_folder");
 btn_add_folder.addEventListener("click",create_folder,false);
 

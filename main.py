@@ -93,7 +93,6 @@ def singin_controler():
                 user_folder = Folder()
                 user_folder.connect()
                 session['Folders'] = user_folder.getAllFolders(user_name)
-                print("User Connected Folder list is :    ",session['Folders'])
                 url_redirect = "Dashbroad/"+str(user_name)
             else:
                 response_message = "Invalid username or e-mail address/password retry."
@@ -190,7 +189,18 @@ def upload_now(option):
                 folder.connect()
                 response_push_content = folder.AddContent(
                     origin_data['folder'], target_file['file'])
-    return jsonify({'state': response_state,'message': response_message})
+                # manage the response message : 
+                print(response_push_content)
+                if response_push_content == 1:
+                    response_message = "Your file has been loaded."
+                    response_state = "custom"
+                    # update the last update date : 
+                    update_date = folder.updateDate(origin_data['folder'])
+                    print( origin_data )
+                else:
+                    response_message = "Sorry, we can't load your file, try again."
+                    response_state = "danger"
+            return jsonify({'state': response_state,'message': response_message})
 
 if __name__ == '__main__':
     my_app.secret_key = 'super secret key'

@@ -76,4 +76,28 @@ class Folder:
             )
         )
         return folders
-
+    def AddContent(self,foldername="",fileData={}):
+        # create an contene object :
+        my_content = {
+            'Name':fileData.filename,
+            'Type':'File',
+            'Date': str(datetime.datetime.now()).split(" ")[0]
+        }
+        print("contenet to add ",my_content)
+        try:
+            #get connexion to mongo db 
+            self.my_db.Folders.update_one(
+                {'Name': foldername}, {'$addToSet': {'Content': my_content}})
+            return 1
+        except Exception as e:
+            print("[ Push Content Error ] : "+str(e))
+            return -1
+    def updateDate(self,foldername=""):
+        try:
+            #get connexion to mongo db
+            self.my_db.Folders.update_one(
+                {'Name': foldername}, {'$set': {'LastUpdate': str(datetime.datetime.now()).split(" ")[0]}})
+            return 1
+        except Exception as e:
+            print("[ Update Date  Error ] : "+str(e))
+            return -1
