@@ -37,7 +37,7 @@
 			<li type="button" class="btn-services btn-sm" id="btn_upload_file" data-bs-toggle="tooltip" data-bs-placement="top" title="upload file">
   				<i class="fas fa-file-plus"></i>
 			</li>
-			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="upload folder">
+			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" id="btn_upload_folder" data-bs-placement="top" title="upload folder">
   				<i class="fas fa-folder-plus"></i>
 			</li>
 			<li type="button" class="btn-services btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="search">
@@ -166,12 +166,42 @@
 	</div>
 </div>
 
-
-
-
-
-
 <!--     Modal to uplad a file    -->
+
+<!-- modal to television a folder -->
+
+<div class="Folder-upload-modal-overlay">
+	<div class="Folder-upload-modal-container">
+		<div class="popup-upload-folder">
+			<div class="popup-Folder-upload-header">
+				<h4 class="popup-header_handler"><i class="fas fa-upload"></i> Add folder </h4>
+				<button type="button" class="btn-close" id="btn-close-Fupload" aria-label="Close"></button>
+			</div>
+			<div class="popup-Folder-upload-form">
+				<label for="folder_to_upload" class="custom-folder-upload-label"> Click to select folder : </label>
+				<input type="file" class="custom-folder-upload" id="folder_to_upload" directory="" webkitdirectory=""  multiple=''/>
+			</div>
+			<div class="popup-btns">
+				<button class="btn-Folder-upload"> add </button>
+				<button class="btn-cancel-Folder-upload"> cancel </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- modal to television a folder -->
+
+
+
+
+
+
+
+
+
+
+
 
 
 {% endblock %}
