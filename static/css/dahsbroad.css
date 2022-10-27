@@ -81,7 +81,8 @@
     margin-left: 10px;
     cursor: pointer;
 }
-.modal-overlay, .open-modal-overlay, .update-modal-overlay, .upload-modal-overlay{
+.modal-overlay, .open-modal-overlay, .update-modal-overlay,
+.upload-modal-overlay, .Folder-upload-modal-overlay{
     position: fixed;
     top: 0;
     left: 0;
@@ -109,7 +110,7 @@
     align-content: center;
 }
 
-.update-modal-overlay, .upload-modal-container{
+.update-modal-overlay, .upload-modal-container,.Folder-upload-modal-container{
     color:#eee;
 }
 
@@ -128,7 +129,7 @@
     text-transform: capitalize;
     color:#ccc;
 }
-.open-modal-container{
+.open-modal-container, .Folder-upload-modal-container{
     top:0;
     float: top;
     width: 40%;
@@ -137,7 +138,8 @@
 }
 
 
-.popup-header, .popup-update-header, .popup-upload-header{
+.popup-header, .popup-update-header, .popup-upload-header,
+.popup-Folder-upload-header{
     display:flex;
     justify-content: space-between;
     margin-bottom: 2%;
@@ -208,6 +210,12 @@
     margin-bottom: 5%;
     margin-left: 5%;
 }
+
+.popup-Folder-upload-form{
+    margin-bottom: 3%;
+}
+
+
 .folder_list_select{
     margin-top: 3%;
     padding:8px;
@@ -217,7 +225,7 @@
 }
 
 
-.custom-file-upload-label{
+.custom-file-upload-label,.custom-folder-upload-label {
     cursor: pointer;
     color:#eee;
     border-top: none;
@@ -227,7 +235,8 @@
     padding:5px 8px;
 }
 
-.custom-file-upload-label:hover, .custom-file-upload-label:focus{
+.custom-file-upload-label:hover, .custom-file-upload-label:focus,
+.custom-folder-upload-label:hover, .custom-folder-upload-label:focus{
     border-color: #ccc;
     background-color: #00797270;
     opacity: 0.;
@@ -235,14 +244,15 @@
     transition: 0.6s;
 }
 
-.custom-file-upload {
+.custom-file-upload, .custom-folder-upload {
     border-radius: 50px;
     background-color: transparent;
     opacity: 0.5;
     cursor: pointer;
 }
 
-.custom-file-upload::file-selector-button {
+.custom-file-upload::file-selector-button,
+.custom-folder-upload::file-selector-button{
     opacity: 0;
     display:hidden;
     position:absolute;
@@ -337,7 +347,9 @@
 .popup-btns{
     margin-left: 5%;
 }
-.btn-send, .btn-update, .Button-Update-details, .Button-Update-credit, .btn-upload{
+.btn-send, .btn-update, .Button-Update-details, .Button-Update-credit,.btn-upload,
+.btn-Folder-upload
+{
     color:#ccc;
     background:transparent;
     padding:5px 8px;
@@ -350,12 +362,13 @@
 .btn-send:hover ,.btn-update:hover, .Button-Update-credit:hover,
 .btn-upload:hover, .btn-upload:focus,
 .btn-send:focus ,.btn-update:focus, .Button-Update-credit:focus,
-.Button-Update-details:hover , .Button-Update-details:focus{
+.Button-Update-details:hover , .Button-Update-details:focus,
+.btn-Folder-upload:hover, .btn-Folder-upload:focus{
     color:#fff;
     border: 1px solid #fff;
 }
 
-.btn-cancel, .btn-cancel-upload{
+.btn-cancel, .btn-cancel-upload, .btn-cancel-Folder-upload{
     background: transparent;
     padding: 5px 8px;
     text-transform: capitalize;
@@ -363,8 +376,9 @@
     color:#ccc;
     font-size: 13px;
 }
-.btn-cancel:hover, .btn-cancel:focus
-.btn-cancel-upload:hover, .btn-cancel-upload:focus
+.btn-cancel:hover, .btn-cancel:focus,
+.btn-cancel-upload:hover, .btn-cancel-upload:focus,
+.btn-cancel-Folder-upload:hover, .btn-cancel-Folder-upload:focus
 {
     color: #fff;
 }
