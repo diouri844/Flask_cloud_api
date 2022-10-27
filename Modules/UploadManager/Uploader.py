@@ -29,6 +29,16 @@ class UploadManager:
 
     def deleteFolderFiles(self, foldername=""):
         # delete each file from the server upload store : UploadStore\bacalaure.png
-        for file_path in self.getFullFilePath(foldername):
-            os.remove(file_path)
-        return
+        list_path = self.getFullFilePath(foldername)
+        counter = len(list_path)
+        for file_path in list_path:
+            try:
+                print(" Delet :   \n"+str(file_path))
+                os.remove(file_path)
+                counter -= 1
+            except Exception as e:
+                print(" [ Delete File Error ] :  "+str(e))
+        # check if the counter is 0: 
+        if counter == 0:
+            return 1
+        return -1
