@@ -180,15 +180,20 @@ function handlerFolderClick(event){
       axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
       axios.get("/Folder/"+target_folder_id,config)
       .then( response => {
-
+          notify({
+            message: response.data.message,
+            color: response.data.state,
+            timeout: 2500
+          });
+          // update ui componoent : 
+          setTimeout(()=>{
+            loading = true;
+          },500);
+          loading = false;
       })
       .catch( error => { 
         console.error(error);
       })
-      setTimeout(()=>{
-        loading = true;
-      },100);
-      loading = false;
       const div_list_folders = document.querySelector(".folder-handler");
       // send delete request to the backend api : 
       div_list_folders.innerHTML = displayFoldeItems(FOLDER_LIST).join("");
@@ -605,6 +610,62 @@ function displayUserUploadForm(){
   },false);  
 }
 
+function displayUserUploadFolderForm(){
+  document.querySelector('.Folder-upload-modal-overlay').classList.add('open-modal');
+  // detect close event : 
+  document.getElementById('btn-close-Fupload').addEventListener("click",()=>{
+    document.querySelector('.Folder-upload-modal-overlay').classList.remove('open-modal');
+  },false);
+  // detect cancel event : 
+  document.querySelector(".btn-cancel-Folder-upload").addEventListener("click",()=>{
+    document.querySelector('.Folder-upload-modal-overlay').classList.remove('open-modal');
+  },false);
+  // add send ( upload ) event : 
+  document.querySelector('.btn-Folder-upload').addEventListener("click",()=>{
+    // check if the values is not empty : 
+    if (document.getElementById('folder_to_upload').value.length === 0)
+    {
+      notify({
+            message: " You will not be able to load the empty path.",
+            color: 'custom',
+            timeout: 2500
+      });
+      return;
+    }
+    // get the folder name :
+    let folder_name = document.getElementById('folder_to_upload').files[0].webkitRelativePath.split("/")[0];
+    // check if the foldername already used:
+    let result_filter = FOLDER_LIST.filter( item => {
+      return item.Name === folder_name;
+    });
+    if (result_filter.length != 0)
+    {
+      notify({
+            message: " The name of the directory already used. ",
+            color: 'custom',
+            timeout: 2500
+      });
+      return;
+    }
+    // get the folder content :
+    let uploaded_data = document.getElementById('folder_to_upload').files;
+    // check if the selecte folder is empty : 
+    if ( uploaded_data.length === 0)
+    {
+      notify({
+            message: " You will not be able to load the empty folder.",
+            color: 'custom',
+            timeout: 2500
+      });
+      return;
+    }
+    console.log(
+      folder_name,
+      "\n",
+      uploaded_data);
+  },false);
+}
+
 
 
 
@@ -661,6 +722,12 @@ btn_new_folder.addEventListener("click",insertNewFolder,false);
 const btn_user_upload_data_file = document.getElementById("btn_upload_file");
 // add event listner : 
 btn_user_upload_data_file.addEventListener("click",displayUserUploadForm,false);
+
+
+const btn_user_upload_data_folder = document.getElementById('btn_upload_folder');
+// add event listner : 
+btn_user_upload_data_folder.addEventListener("click",displayUserUploadFolderForm,false)
+
 
 
 // user settings and profile : 
