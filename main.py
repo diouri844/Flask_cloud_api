@@ -142,10 +142,16 @@ def FolderMAnager(foldername):
         response_state = ""
         folder_handler = Folder()
         folder_handler.connect()
-        #response_delete_folder = folder_handler.delete(foldername)
+        # create a upload manager instance : 
         my_manager = UploadManager(UploadFolder,session['User'][1])
-        print(my_manager.deleteFolderFiles((foldername)))
-    return jsonify({"message":"","state":""})
+        # delete the files from upload folder : 
+        delete_files_response = my_manager.deleteFolderFiles((foldername))
+        # delete the v-folder user :
+        response_delete_folder = folder_handler.delete(foldername)
+        if delete_files_response == 1 and response_delete_folder == 1:
+            response_message = "You have succeeded in removing your folder and its files."
+            response_state = "custom"
+    return jsonify({"message":response_message,"state":response_state})
 
 
 
