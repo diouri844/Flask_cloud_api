@@ -224,11 +224,18 @@ def upload_now(option):
                 folder = Folder()
                 folder.connect()
                 # for each file upload it :   
-                for file_to_upload in target_files:
+                for  file_to_upload in target_files:
+                    current_file_name = file_to_upload.filename.split("\r")
+                    print(current_file_name)
+                    current_file_name = current_file_name[0].split("/")[1]
+                    print("\n Upload :    ",
+                          current_file_name)
                     # error naming files uploaded : to fix later 
                     try:
                         file_to_upload.save(
-                            my_app.config['UPLOAD_FOLDER']+""+secure_filename(file_to_upload.filename))
+                            my_app.config['UPLOAD_FOLDER']+""+secure_filename(
+                                current_file_name
+                                ))
                         folder.AddContent(
                             origin_data['folder'],file_to_upload)
                     except Exception as e:
