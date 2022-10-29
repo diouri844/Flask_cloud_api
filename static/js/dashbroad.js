@@ -681,6 +681,7 @@ function displayUserUploadFolderForm(){
       // send post request : 
       let data_frame = new FormData();
       for (var i = 0; i < uploaded_data.length; i++) {
+        console.log(uploaded_data[i]);
         data_frame.append('files[]', uploaded_data[i]);
       }
       data_frame.append("folder",folder_name);
