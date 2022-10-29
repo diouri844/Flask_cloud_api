@@ -199,9 +199,6 @@ def upload_now(option):
                 # upload file : 
                 target_file = request.files.to_dict()
                 origin_data = request.form.to_dict()
-                print(target_file)
-                print("\n ")
-                print(origin_data)
                 # upload file : 
                 target_file['file'].save(my_app.config['UPLOAD_FOLDER']+""+secure_filename(target_file['file'].filename))
                 # manage the data base and the front : 
@@ -217,10 +214,25 @@ def upload_now(option):
                     response_state = "custom"
                     # update the last update date : 
                     update_date = folder.updateDate(origin_data['folder'])
-                    print( origin_data )
                 else:
                     response_message = "Sorry, we can't load your file, try again."
                     response_state = "danger"
+            if option == supported_upload[1]:
+                target_files = request.files.getlist('files[]')
+                origin_data = request.form.to_dict()
+                # we have an folder image to insert liste of files as it's content :
+                folder = Folder()
+                folder.connect()
+                # for each file upload it :   
+                for file_to_upload in target_files:
+                    # error naming files uploaded : to fix later 
+                    try:
+                        file_to_upload.save(
+                            my_app.config['UPLOAD_FOLDER']+""+secure_filename(file_to_upload.filename))
+                        folder.AddContent(
+                            origin_data['folder'],file_to_upload)
+                    except Exception as e:
+                        print ("[ Error Upload File ] : "+str(e)) 
             return jsonify({'state': response_state,'message': response_message})
 
 if __name__ == '__main__':
