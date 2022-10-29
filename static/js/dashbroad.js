@@ -659,10 +659,47 @@ function displayUserUploadFolderForm(){
       });
       return;
     }
-    console.log(
-      folder_name,
-      "\n",
-      uploaded_data);
+    // check if the folder name have white spaces : 
+    if (folder_name.split(" ").length >  1 ){
+      // the folder name have spaces : 
+      // replace the spaces with _ :
+      folder_name = folder_name.replaceAll(" ","_");
+    }
+    // now we have correct folder name and folder files to upload : 
+    let folder_data = new FormData();
+    folder_data.append('FolderName',folder_name);
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    axios.post('/Folder',folder_data,config)
+    .then( response => {
+      // the v-folder has created : 
+      notify({
+                message: response.data.message,
+                color: 'custom',
+                timeout: 2500
+      });
+      // send post request : 
+      let data_frame = new FormData();
+      for (var i = 0; i < uploaded_data.length; i++) {
+        data_frame.append('files[]', uploaded_data[i]);
+      }
+      data_frame.append("folder",folder_name);
+      axios.defaults.baseURL = 'http://127.0.0.1:5000';
+      axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+      axios.post('/Upload/Folder',data_frame,config)
+      .then( response => {
+        console.log(response);
+      })
+      .catch( error => console.error(error));
+      // update ui : 
+      setTimeout(()=>{
+        loading = true;
+      },500);
+      loading = false ;
+    })
+    .catch(err=> {
+      console.error(err);
+    });
   },false);
 }
 
