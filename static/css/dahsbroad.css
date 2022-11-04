@@ -293,6 +293,37 @@
     justify-content: space-between;
 }
 
+.sub-item-name{
+    opacity: 0.5;
+    padding: 10px 10px;
+    color:#eee;
+    border:none;
+    background:transparent;
+    cursor: pointer;
+}
+.sub-item-name:hover,.sub-item-name:focus  {
+    opacity: 1;
+    color: #eee;
+    border-radius: 15px;
+    background-color: #00797270;
+    transition: 0.6s;
+}
+
+
+.open_file{
+    cursor: pointer;
+    background:transparent;
+    margin-right: 0.5;
+    margin-top: 5%;
+    opacity: 0.5;
+    color:#A7A7A9;
+}
+.open_file:hover, .open_file:focus{
+    color: #eee;
+    opacity: 1;
+    transition: 0.6s;
+}
+
 .open-folder-body-data{
     height: 350px;
     overflow-y: auto;
