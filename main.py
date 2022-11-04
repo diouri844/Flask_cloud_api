@@ -235,7 +235,7 @@ def upload_now(option):
                             my_app.config['UPLOAD_FOLDER']+""+secure_filename(
                                 current_file_name
                             ))
-                        folder.AddContent(
+                        folder.AddUploadedContent(
                             origin_data['folder'],
                             file_to_upload)
                         # folder and all files uploaded succuflly :
