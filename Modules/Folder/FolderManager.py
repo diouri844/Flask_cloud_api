@@ -94,13 +94,32 @@ class Folder:
         # create an contene object :
         print("\n Cuurent file Name :   ",str(fileData.filename))
         my_content = {
-            'Name':fileData.filename.split('/')[1],
+            'Name':fileData.filename,
             'Type':'File',
-            'Date': str(datetime.datetime.now()).split(" ")[0]
+            'Date': str(datetime.datetime.now()).split(" ")[0],
+            'Url': "UploadStore/"+str(fileData.filename)
         }
         print("contenet to add ",my_content)
         try:
             #get connexion to mongo db 
+            self.my_db.Folders.update_one(
+                {'Name': foldername}, {'$addToSet': {'Content': my_content}})
+            return 1
+        except Exception as e:
+            print("[ Push Content Error ] : "+str(e))
+            return -1
+    def AddUploadedContent(self, foldername="",fileData={}):
+        # create an contene object :
+        print("\n Cuurent file Name :   ", str(fileData.filename))
+        my_content = {
+            'Name': fileData.filename.split('/')[1],
+            'Type': 'File',
+            'Date': str(datetime.datetime.now()).split(" ")[0],
+            'Url': "UploadStore/"+str(fileData.filename.split('/')[1])
+        }
+        print("contenet to add ", my_content)
+        try:
+            #get connexion to mongo db
             self.my_db.Folders.update_one(
                 {'Name': foldername}, {'$addToSet': {'Content': my_content}})
             return 1
