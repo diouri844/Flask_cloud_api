@@ -92,8 +92,9 @@ class Folder:
             return -1
     def AddContent(self,foldername="",fileData={}):
         # create an contene object :
+        print("\n Cuurent file Name :   ",str(fileData.filename))
         my_content = {
-            'Name':fileData.filename,
+            'Name':fileData.filename.split('/')[1],
             'Type':'File',
             'Date': str(datetime.datetime.now()).split(" ")[0]
         }
