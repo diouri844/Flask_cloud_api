@@ -109,7 +109,7 @@ function handlerFolderClick(event){
         let content_display = current_folder.Content.map((sub_element)=>{
         return `
         <div class="sub-folder-item">
-          <h6 class="sub-item-name"> ${sub_element.Name }</h6>
+          <h6 class="sub-item-name"> ${sub_element.Name } <i class="fas fa-arrow-down open_file"></i></h6>
           <h6 class="sub-item-type"> ${sub_element.Type }</h6>
           <h6 class="sub-item-date"> ${sub_element.Date }</h6>
         </div>
@@ -689,7 +689,20 @@ function displayUserUploadFolderForm(){
       axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
       axios.post('/Upload/Folder',data_frame,config)
       .then( response => {
-        console.log(response);
+        notify({
+                message: response.data.message,
+                color: response.data.state,
+                timeout: 2500
+        });
+        // check response state : 
+        if ( response.data.state === "danger"){
+          // delete the folder v-image 
+        }
+        if (response.data.state === 'custom'){
+          setTimeout(()=>{
+          },500);
+          document.querySelector('.Folder-upload-modal-overlay').classList.remove('open-modal');
+        }
       })
       .catch( error => console.error(error));
       // update ui : 
