@@ -109,7 +109,7 @@ function handlerFolderClick(event){
         let content_display = current_folder.Content.map((sub_element)=>{
         return `
         <div class="sub-folder-item">
-          <h6 class="sub-item-name"> ${sub_element.Name } <i class="fas fa-arrow-down open_file"></i></h6>
+          <h6 class="sub-item-name"> ${sub_element.Name }   <i class="fas fa-arrow-down open_file"></i></h6>
           <h6 class="sub-item-type"> ${sub_element.Type }</h6>
           <h6 class="sub-item-date"> ${sub_element.Date }</h6>
         </div>
