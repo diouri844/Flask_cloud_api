@@ -226,7 +226,6 @@ def upload_now(option):
                 # for each file upload it :   
                 for  file_to_upload in target_files:
                     current_file_name = file_to_upload.filename.split("\r")
-                    print(current_file_name)
                     current_file_name = current_file_name[0].split("/")[1]
                     print("\n Upload :    ",
                           current_file_name)
@@ -235,11 +234,18 @@ def upload_now(option):
                         file_to_upload.save(
                             my_app.config['UPLOAD_FOLDER']+""+secure_filename(
                                 current_file_name
-                                ))
+                            ))
                         folder.AddContent(
-                            origin_data['folder'],file_to_upload)
+                            origin_data['folder'],
+                            file_to_upload)
+                        # folder and all files uploaded succuflly :
+                        response_message = "All  file has been loaded."
+                        response_state = "custom"
                     except Exception as e:
-                        print ("[ Error Upload File ] : "+str(e)) 
+                        # faile to upload Folder :
+                        print ("[ Error Upload File ] : "+str(e))
+                        response_message = "Sorry, we can't load your file, try again."
+                        response_state = "danger"
             return jsonify({'state': response_state,'message': response_message})
 
 if __name__ == '__main__':
