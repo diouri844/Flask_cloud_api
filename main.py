@@ -214,6 +214,7 @@ def upload_now(option):
                     response_state = "custom"
                     # update the last update date : 
                     update_date = folder.updateDate(origin_data['folder'])
+                    # update ReccentFiles collecction : 
                 else:
                     response_message = "Sorry, we can't load your file, try again."
                     response_state = "danger"
