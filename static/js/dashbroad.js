@@ -29,6 +29,8 @@ function create_folder() {
 };
 
 function insertNewFolder(){
+  // add more reactive transition to create button : 
+  document.querySelector('.btn-send').textContent = " pending ......."
   const folder_name = document.getElementById("folder_name_input").value;
   let folder_data = new FormData();
   folder_data.append('FolderName',folder_name);
@@ -41,9 +43,12 @@ function insertNewFolder(){
             color: 'custom',
             timeout: 2500
     });
+    // reset the value of text ontent : 
+  document.querySelector('.btn-send').textContent = " create "
     // close the popup :
     close_add_folder()
     loading = true;
+
   })
   .catch(err=> {
     console.error(err);
@@ -567,6 +572,8 @@ function displayUserUploadForm(){
   `;
   // add evenet listner to the uplad btn : 
   document.querySelector('.btn-upload').addEventListener("click",()=>{
+    // update gui : 
+    document.querySelector('.btn-upload').textContent = " Pending ...... ";
     // check if the input is no epty : 
     let current_file = document.getElementById('file_to_upload').files[0];
     let folder_target = document.getElementById('selected_folders_to_upload').value;
@@ -599,6 +606,10 @@ function displayUserUploadForm(){
         });
         // update the global state : 
         setTimeout(()=>{
+          // reset upload button to the default  value : 
+          document.querySelector('.btn-upload').textContent = " add ";
+          // close modal : 
+          document.querySelector(".upload-modal-overlay").classList.remove('open-modal');
           loading = true;
         },1000);
         loading = false;
@@ -622,6 +633,8 @@ function displayUserUploadFolderForm(){
   },false);
   // add send ( upload ) event : 
   document.querySelector('.btn-Folder-upload').addEventListener("click",()=>{
+    // update view : 
+    document.querySelector('.btn-Folder-upload').textContent = " Pending ...... ";
     // check if the values is not empty : 
     if (document.getElementById('folder_to_upload').value.length === 0)
     {
@@ -630,6 +643,7 @@ function displayUserUploadFolderForm(){
             color: 'custom',
             timeout: 2500
       });
+      document.querySelector('.btn-Folder-upload').textContent = " add ";
       return;
     }
     // get the folder name :
@@ -645,6 +659,7 @@ function displayUserUploadFolderForm(){
             color: 'custom',
             timeout: 2500
       });
+      document.querySelector('.btn-Folder-upload').textContent = " add ";
       return;
     }
     // get the folder content :
@@ -657,6 +672,7 @@ function displayUserUploadFolderForm(){
             color: 'custom',
             timeout: 2500
       });
+      document.querySelector('.btn-Folder-upload').textContent = " add ";
       return;
     }
     // check if the folder name have white spaces : 
@@ -678,6 +694,7 @@ function displayUserUploadFolderForm(){
                 color: 'custom',
                 timeout: 2500
       });
+      document.querySelector('.btn-Folder-upload').textContent = " add ";
       // send post request : 
       let data_frame = new FormData();
       for (var i = 0; i < uploaded_data.length; i++) {
