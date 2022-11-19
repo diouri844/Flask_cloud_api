@@ -264,6 +264,7 @@ function getAllFolders(){
     folders_target.forEach(folder_div => {
     folder_div.addEventListener("click",handlerFolderClick,false);
     });
+    UpdateRecentViews();
     loading = false;
     USER_FOLDER_COUNTER = FOLDER_LIST.length;
     document.getElementById("user_folder_count").innerHTML = `  ${USER_FOLDER_COUNTER}`;
@@ -273,6 +274,24 @@ function getAllFolders(){
     loading = false;
   });
 }
+
+function UpdateRecentViews(){
+  axios.defaults.baseURL = 'http://127.0.0.1:5000';
+  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+  axios.get("/GetReccent",config)
+  .then( response => {
+    // set the global variables : 
+    USER_RECENT_COUNTER = response.data.response_data.length;
+    RECENT_LIST = response.data.response_data;
+    // up^date ui :
+    document.getElementById('user_recent_count').innerHTML = ` ${USER_RECENT_COUNTER} `;
+  })
+  .catch( error => {
+    console.error( error );
+  })
+}
+
+
 
 // user settings : 
 
@@ -744,6 +763,7 @@ setInterval(()=>{
   if(loading){
     getAllFolders();
     USER_FOLDER_COUNTER = FOLDER_LIST.length;
+    USER_RECENT_COUNTER = RECENT_LIST.length;
     loading = false;
   }
 },1000)
@@ -770,8 +790,10 @@ let DISPLAY_USER_CREDIT_CARD = false;
 // global folders list :
 
 
-let FOLDER_LIST = []; 
-let USER_FOLDER_COUNTER = 0
+let FOLDER_LIST = [];
+let RECENT_LIST = []; 
+let USER_FOLDER_COUNTER = 0;
+let USER_RECENT_COUNTER = 0;
 const btn_add_folder = document.getElementById("create_new_folder");
 btn_add_folder.addEventListener("click",create_folder,false);
 
