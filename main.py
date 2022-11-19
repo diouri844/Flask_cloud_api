@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from Modules.User import *
 from Modules.Folder.FolderManager import Folder
 from Modules.UploadManager.Uploader import UploadManager
+from Modules.CurrentFiles.Recent import CurrentUploaded
 from werkzeug.utils import secure_filename
 
 my_app = Flask(__name__)
@@ -142,8 +143,15 @@ def FolderMAnager(foldername):
         response_state = ""
         folder_handler = Folder()
         folder_handler.connect()
+        # create my current file manager instance :
+        my_current_manager = CurrentUploaded(session['User'][1])
         # create a upload manager instance : 
         my_manager = UploadManager(UploadFolder,session['User'][1])
+        # get filename list of the target folder : 
+        content_files= folder_handler.getFolder(session['User'][1],foldername)['Content']
+        print("\n ",content_files,"\n")
+        for content_item in content_files:
+            my_current_manager.remove_item(content_item['Name'])
         # delete the files from upload folder : 
         delete_files_response = my_manager.deleteFolderFiles((foldername))
         # delete the v-folder user :
@@ -186,6 +194,16 @@ def get_User_Profile(target):
         return jsonify({'state': response_state, 'data':response_data})
 
 
+@my_app.route("/GetReccent",methods=['GET'])
+def manage_recent():
+    if request.method == 'GET':
+        # set new connexion to currentmanager : 
+        reccent_manager = CurrentUploaded(session['User'][1])
+        response_data = reccent_manager.get()
+        return jsonify({'response_data': response_data})
+
+
+
 @my_app.route("/Upload/<option>",methods=['POST'])
 def upload_now(option):
     if request.method == 'POST':
@@ -215,6 +233,10 @@ def upload_now(option):
                     # update the last update date : 
                     update_date = folder.updateDate(origin_data['folder'])
                     # update ReccentFiles collecction : 
+                    reccent_manager = CurrentUploaded(session['User'][1])
+                    reccent_manager.addFile({
+                        'Name': target_file['file'].filename
+                    })
                 else:
                     response_message = "Sorry, we can't load your file, try again."
                     response_state = "danger"
