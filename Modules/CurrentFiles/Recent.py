@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
 from  datetime import datetime, timedelta 
-
+import os
 #define my Current Uploded Files class  :
 
 class CurrentUploaded:
@@ -42,6 +42,32 @@ class CurrentUploaded:
         except Exception as e:
             print(" [ Update Recent files error ] : "+str(e))
         return
-
-
-
+    def delete_date(self):
+        # check if the deleted day is the current day :
+        current_date = str(datetime.now()).split(" ")[0]
+        # filter by user name and  deleted ddate : 
+        try:
+            self.my_collection.delete_many({
+                #filter :
+                "User":self.User,
+                "DeletedDate":current_date
+            })
+        except Exception as e:
+            print(" [ Error delete recent ] :  "+str(e))
+        return
+    def get(self):
+        # try make connexion : 
+        try:
+            return list(self.my_collection.find(
+                {'User':self.User},
+                {"_id": 0}
+            ))
+        except Exception as e:
+            print(" [ error get files ] : "+str(e))
+            return []
+    def remove_item(self,item_name):
+        try:
+            self.my_collection.delete_one({'Name':item_name,'User':self.User})
+        except Exception as e:
+            print("[ force delete error ] :  "+str(e))
+        return 
