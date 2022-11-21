@@ -49,7 +49,7 @@
 	<div class="user_services">
 			<ul class="u_serv_list">
 				<li class="u_serv_item" id="btn-show-user-profile"><i class="fas fa-user-edit"></i> Profile </li>
-				<li class="u_serv_item"><i class="fas fa-clock"></i> Récent </li>
+				<li class="u_serv_item" id="btn-show-user-recent"><i class="fas fa-clock"></i> Récent </li>
 				<li class="u_serv_item"><i class="fas fa-trash-restore"></i> Corbeille </li>
 				<li class="u_serv_item"><i class="fas fa-folder"></i> Folders </li>
 				<li class="u_serv_item"><i class="fas fa-link"></i> Links </li>
@@ -191,15 +191,30 @@
 
 <!-- modal to television a folder -->
 
+<!--  modal to show recent files -->
+
+
+<div class="display-recent-modal-overlay">
+	<div class="display-recent-modal-container">
+		<div class="popup-display-recent">
+			<div class="popup-recent-header">
+				<h4 class="popup-header_handler"><i class="fas fa-clock"></i> Recent files </h4>
+				<button type="button" class="btn-close" id="btn-close-display-recent" aria-label="Close"></button>
+			</div>
+			<div class="header-item">
+				<span class="header-name"><i class="fas fa-id-badge"></i> Name </span>
+				<span class="header-Type"><i class="fas fa-comment"></i> Type </span>
+				<span class="header-date"><i class="fas fa-calendar"></i> Date </span>
+			</div>
+			<div class="popup-display-recent-body"></div>
+		</div>
+	</div>
+</div>
 
 
 
 
-
-
-
-
-
+<!-- modal to show recent files -->
 
 
 
