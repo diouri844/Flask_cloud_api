@@ -264,14 +264,11 @@ function getAllFolders(){
     folders_target.forEach(folder_div => {
     folder_div.addEventListener("click",handlerFolderClick,false);
     });
-    UpdateRecentViews();
-    loading = false;
     USER_FOLDER_COUNTER = FOLDER_LIST.length;
     document.getElementById("user_folder_count").innerHTML = `  ${USER_FOLDER_COUNTER}`;
   })
   .catch(error => {
     console.error(error);
-    loading = false;
   });
 }
 
@@ -283,6 +280,7 @@ function UpdateRecentViews(){
     // set the global variables : 
     USER_RECENT_COUNTER = response.data.response_data.length;
     RECENT_LIST = response.data.response_data;
+    console.log(RECENT_LIST);
     // up^date ui :
     document.getElementById('user_recent_count').innerHTML = ` ${USER_RECENT_COUNTER} `;
   })
@@ -327,6 +325,35 @@ function display_user_profile(){
   },false);
   //
 }
+
+
+
+function display_user_recent(){
+  // display modal :
+  document.querySelector(".display-recent-modal-overlay").classList.add('open-modal');
+  // handle click events :
+  document.getElementById("btn-close-display-recent").addEventListener("click",()=>{
+    document.querySelector(".display-recent-modal-overlay").classList.remove('open-modal');
+  },false);
+  //* create a template :
+  let tempalte_current = RECENT_LIST.map(
+    function(item){
+      return `
+      <div class="recent-item">
+      <span class="recent_name"><i class="fas fa-fire"></i> ${item.Name} </span>
+      <span class="reccent_Edate"> ${item.Type} </span>
+      <span class="reccent_date"> ${item.OperationDate} </span>
+      </div>
+      `;
+    }
+  )
+  // add recent file list to div body :
+  document.querySelector('.popup-display-recent-body').innerHTML = tempalte_current.join("");
+  console.log(" show recents ");
+  console.log(RECENT_LIST);
+}
+
+
 
 function check_display_content(){
   // stock the current data : 
@@ -762,6 +789,7 @@ let loading = false;
 setInterval(()=>{
   if(loading){
     getAllFolders();
+    UpdateRecentViews();
     USER_FOLDER_COUNTER = FOLDER_LIST.length;
     USER_RECENT_COUNTER = RECENT_LIST.length;
     loading = false;
@@ -769,7 +797,7 @@ setInterval(()=>{
 },1000)
 
 getAllFolders();
-
+UpdateRecentViews();
 
 var config = {};
 config = {
@@ -825,3 +853,8 @@ btn_user_upload_data_folder.addEventListener("click",displayUserUploadFolderForm
 const btn_display_profile = document.getElementById("btn-show-user-profile");
 
 btn_display_profile.addEventListener("click",display_user_profile,false);
+
+
+const btn_display_recent = document.getElementById("btn-show-user-recent");
+
+btn_display_recent.addEventListener("click",display_user_recent,false);
