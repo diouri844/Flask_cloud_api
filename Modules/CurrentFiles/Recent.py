@@ -31,17 +31,28 @@ class CurrentUploaded:
         operatig_date = datetime.now()
         # define deleted time after 24 hours :
         deleting_date = operatig_date + timedelta(days=1)
+        # check if the file is already existe : 
         try:
-            self.my_collection.insert_one({
-                "Name":formdata['Name'],
-                "Type":"File",
-                "User":self.User,
-                "OperationDate": str(operatig_date).split(" ")[0],
-                "DeletedDate": str(deleting_date).split(" ")[0]
-            })
-        except Exception as e:
-            print(" [ Update Recent files error ] : "+str(e))
-        return
+            response = list(self.my_collection.find(
+                {
+                    "Name": formdata['Name'],
+                    "User":self.User
+                }))
+            if len(response)==0:
+                try:
+                    self.my_collection.insert_one({
+                        "Name":formdata['Name'],
+                        "Type":"File",
+                        "User":self.User,
+                        "OperationDate": str(operatig_date).split(" ")[0],
+                        "DeletedDate": str(deleting_date).split(" ")[0]
+                    })
+                except Exception as e:
+                    print(" [ Update Recent files error ] : "+str(e))
+                return
+        except  Exception as ex:
+            print(" [ error find ] : "+str(ex))
+            return
     def delete_date(self):
         # check if the deleted day is the current day :
         current_date = str(datetime.now()).split(" ")[0]
