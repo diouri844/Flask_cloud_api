@@ -3,6 +3,7 @@ from Modules.User import *
 from Modules.Folder.FolderManager import Folder
 from Modules.UploadManager.Uploader import UploadManager
 from Modules.CurrentFiles.Recent import CurrentUploaded
+from Modules.RestoreManager.Delete_Restore import DataRestoreManager
 from werkzeug.utils import secure_filename
 
 my_app = Flask(__name__)
@@ -149,11 +150,17 @@ def FolderMAnager(foldername):
         my_manager = UploadManager(UploadFolder,session['User'][1])
         # get filename list of the target folder : 
         content_files= folder_handler.getFolder(session['User'][1],foldername)['Content']
-        print("\n ",content_files,"\n")
+        # create delet restore manager :
+        delet_manager = DataRestoreManager(UploadFolder, session['User'][1])
         for content_item in content_files:
+            '''
+            for each content_item deleted , add it as an new
+            document  
+            '''
+            delet_manager.addToTrush(content_item)
             my_current_manager.remove_item(content_item['Name'])
         # delete the files from upload folder : 
-        delete_files_response = my_manager.deleteFolderFiles((foldername))
+        delete_files_response = my_manager.replaceFolderFiles((foldername))
         # delete the v-folder user :
         response_delete_folder = folder_handler.delete(foldername)
         if delete_files_response == 1 and response_delete_folder == 1:
@@ -167,6 +174,10 @@ def FolderMAnager(foldername):
 @my_app.route("/Dashbroad/<user_name>")
 def get_home(user_name):
     if 'User' in session:
+        # check all recent files : 
+        my_current_manager = CurrentUploaded(session['User'][1])
+        # delete all files should be deleted : 
+        my_current_manager.delete_date()
         return render_template("Dashbroad.html",User=session['User'])
     else:
         return render_template("Error_Handler.html",user=user_name)
@@ -226,7 +237,6 @@ def upload_now(option):
                 response_push_content = folder.AddContent(
                     origin_data['folder'], target_file['file'])
                 # manage the response message : 
-                print(response_push_content)
                 if response_push_content == 1:
                     response_message = "Your file has been loaded."
                     response_state = "custom"
@@ -246,13 +256,11 @@ def upload_now(option):
                 # we have an folder image to insert liste of files as it's content :
                 folder = Folder()
                 folder.connect()
+                reccent_manager = CurrentUploaded(session['User'][1])
                 # for each file upload it :   
                 for  file_to_upload in target_files:
                     current_file_name = file_to_upload.filename.split("\r")
                     current_file_name = current_file_name[0].split("/")[1]
-                    print("\n Upload :    ",
-                          current_file_name)
-                    # error naming files uploaded : to fix later 
                     try:
                         file_to_upload.save(
                             my_app.config['UPLOAD_FOLDER']+""+secure_filename(
@@ -261,6 +269,10 @@ def upload_now(option):
                         folder.AddUploadedContent(
                             origin_data['folder'],
                             file_to_upload)
+                        # add files to the current files uploaded : 
+                        reccent_manager.addFile(
+                            {'Name':current_file_name}
+                        )
                         # folder and all files uploaded succuflly :
                         response_message = "All  file has been loaded."
                         response_state = "custom"
