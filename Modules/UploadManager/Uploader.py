@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
-import os
+import shutil,os
 from Modules.Folder.FolderManager import Folder
 
 
@@ -39,6 +39,25 @@ class UploadManager:
             except Exception as e:
                 print(" [ Delete File Error ] :  "+str(e))
         # check if the counter is 0: 
+        if counter == 0:
+            return 1
+        return -1
+    def replaceFolderFiles(self, foldername=""):
+        # replace each file from the server upload store : UploadStore\bacalaure.png
+        list_path = self.getFullFilePath(foldername)
+        counter = len(list_path)
+        for file_path in list_path:
+            try:
+                print(" Replace :   \n"+str(file_path))
+                """
+                try to replace file to DeletedStore Folder :
+                """
+                shutil.copy(file_path, 'DeleteStore')
+                os.remove(file_path)
+                counter -= 1
+            except Exception as e:
+                print(" [ Delete File Error ] :  "+str(e))
+        # check if the counter is 0:
         if counter == 0:
             return 1
         return -1
