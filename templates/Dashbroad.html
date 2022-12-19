@@ -50,7 +50,7 @@
 			<ul class="u_serv_list">
 				<li class="u_serv_item" id="btn-show-user-profile"><i class="fas fa-user-edit"></i> Profile </li>
 				<li class="u_serv_item" id="btn-show-user-recent"><i class="fas fa-clock"></i> Récent </li>
-				<li class="u_serv_item"><i class="fas fa-trash-restore"></i> Corbeille </li>
+				<li class="u_serv_item" id="btn-show-user-trush"><i class="fas fa-trash-restore"></i> Corbeille </li>
 				<li class="u_serv_item"><i class="fas fa-folder"></i> Folders </li>
 				<li class="u_serv_item"><i class="fas fa-link"></i> Links </li>
 				<li class="u_serv_item"><i class="fas fa-door-open"></i> Logout </li>
@@ -211,10 +211,31 @@
 	</div>
 </div>
 
-
-
-
 <!-- modal to show recent files -->
+
+
+
+
+
+<!-- modal deleted file list -->
+
+<div class="display-deleted-modal-overlay">
+	<div class="display-deleted-modal-container">
+		<div class="popup-display-deleted">
+			<div class="popup-deleted-header">
+				<h4 class="popup-header_handler deleted_title"><i class="fas fa-clock"></i> Deleted files </h4>
+				<button type="button" class="btn-close" id="btn-close-display-deleted" aria-label="Close"></button>
+			</div>
+			<div class="popup-display-deleted-body"></div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- modal deleted file list -->
+
 
 
 
