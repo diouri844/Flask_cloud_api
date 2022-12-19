@@ -283,6 +283,22 @@ def upload_now(option):
                         response_state = "danger"
             return jsonify({'state': response_state,'message': response_message})
 
+
+@my_app.route("/RestoreManager/<option>", methods=['GET'])
+def restore_manager_handler(option):
+    # check session : 
+    if 'User' in session:
+        # check methode : 
+        enabel_options_list = ['Deleted']
+        if request.method == "GET":
+            # check if there is an allowd option : 
+            if option in enabel_options_list and enabel_options_list[0] == option :
+                # create new restore class instance : 
+                delete_manager = DataRestoreManager(UploadFolder, session['User'][1])
+                response_data = delete_manager.getAll()
+                return jsonify({'response_data':response_data})
+
+
 if __name__ == '__main__':
     my_app.secret_key = 'super secret key'
     my_app.config['SESSION_TYPE'] = 'filesystem'
