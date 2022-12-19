@@ -83,7 +83,7 @@
 }
 .modal-overlay, .open-modal-overlay, .update-modal-overlay,
 .upload-modal-overlay, .Folder-upload-modal-overlay,
-.display-recent-modal-overlay
+.display-recent-modal-overlay, .display-deleted-modal-overlay
 {
     position: fixed;
     top: 0;
@@ -113,7 +113,7 @@
 }
 
 .update-modal-overlay, .upload-modal-container,.Folder-upload-modal-container,
-.display-recent-modal-overlay{
+.display-recent-modal-overlay,.display-deleted-modal-container {
     color:#eee;
 }
 
@@ -142,7 +142,9 @@
 
 
 
-.display-recent-modal-container{
+.display-recent-modal-container , 
+.display-deleted-modal-container
+{
     width: 70%;
     float:top;
     top:0;
@@ -203,7 +205,7 @@
 }
 
 .popup-header, .popup-update-header, .popup-upload-header,
-.popup-Folder-upload-header, .popup-recent-header {
+.popup-Folder-upload-header, .popup-recent-header, .popup-deleted-header {
     display:flex;
     justify-content: space-between;
     margin-bottom: 2%;
@@ -406,6 +408,17 @@
 .open-folder-body-data::-webkit-scrollbar-thumb {
     background: #797270;
 }
+
+/*   add custom scroll bar to truch file list body  */
+
+.popup-display-deleted-body{
+    height: 350px;
+    overflow-y: auto;
+    padding: 10px 10px;
+    margin-top: 2%;
+    border-radius: 15px;
+}
+
 
 
 
