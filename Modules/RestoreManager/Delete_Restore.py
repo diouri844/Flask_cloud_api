@@ -49,3 +49,17 @@ class DataRestoreManager:
         except Exception as e:
             print("[ New DeletedFile Error ] : "+str(e))
         return
+    def getAll(self):
+        self.connect_to_mongoDb()
+        try:
+            return list(
+                self.my_collection.find({
+                    "User":self.User
+                },
+                {
+                    '_id':0
+                })
+                )
+        except Exception as e:
+            print(" [ fetch All deleted error ] : "+str(e))
+            return []
