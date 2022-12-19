@@ -294,9 +294,12 @@ function UpdateRecentViews(){
 // user settings : 
 
 function display_user_profile(){
-
   // add the display class : 
   document.querySelector(".update-modal-overlay").classList.add("open-modal");
+  const element = document.querySelector(".user_services");
+    if(element.style.display === 'flex'){
+      element.style.display = 'none';
+    }
   /*document.querySelector(".close-Update").addEventListener("click",()=>{
   document.querySelector(".update-modal-overlay").classList.remove("open-modal");
   },false);*/
@@ -331,6 +334,10 @@ function display_user_profile(){
 function display_user_recent(){
   // display modal :
   document.querySelector(".display-recent-modal-overlay").classList.add('open-modal');
+  const element = document.querySelector(".user_services");
+    if(element.style.display === 'flex'){
+      element.style.display = 'none';
+    }
   // handle click events :
   document.getElementById("btn-close-display-recent").addEventListener("click",()=>{
     document.querySelector(".display-recent-modal-overlay").classList.remove('open-modal');
@@ -349,8 +356,6 @@ function display_user_recent(){
   )
   // add recent file list to div body :
   document.querySelector('.popup-display-recent-body').innerHTML = tempalte_current.join("");
-  console.log(" show recents ");
-  console.log(RECENT_LIST);
 }
 
 
@@ -782,6 +787,58 @@ function displayUserUploadFolderForm(){
 
 
 
+function display_user_trush(){
+  // get the class of the model : 
+  document.querySelector(".display-deleted-modal-overlay")
+  .classList.add("open-modal");
+  // remove open model from ower dropdown : 
+   const element = document.querySelector(".user_services");
+    if(element.style.display === 'flex'){
+      element.style.display = 'none';
+    }
+  // manage close button : 
+  document.getElementById("btn-close-display-deleted")
+  .addEventListener("click",()=>{
+    document.querySelector(".display-deleted-modal-overlay")
+    .classList.remove("open-modal");
+  },false);
+  // send get request to the endpoint apo : get all removed file :
+  axios.defaults.baseURL = 'http://127.0.0.1:5000';
+  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+  axios.get('/RestoreManager/Deleted',config)
+  .then( response => {
+    // update header message : 
+    document.querySelector(".deleted_title")
+    .innerHTML=
+    `<i class="fas fa-clock"></i>
+      ${response.data.response_data.length}  Deleted files
+    `
+    //  get the body target  :
+    // create an template to push it as an body target : 
+    document.querySelector('.popup-display-deleted-body').innerHTML =
+    response.data.response_data.map(
+      function(deleted_item){
+        return `
+        <div class="folder-item" id="${deleted_item.Name}">
+        <h4 class="folder-item-Name"> 
+          <i class="fas fa-ghost"></i>
+            ${deleted_item.Name}
+          <span class="creating-date">${ deleted_item.Date }</span>
+        </h4>
+        <h7 class="folder-item-date"><i class="fas fa-trash-restore"></i> Deleted at :  ${ deleted_item.DeletedDate }</h7>
+        <i class="fas fa-trash"></i>
+        <i class="fas fa-ghost"></i>
+        </div>`
+      }
+    ).join("");
+  })
+  .catch( error => {console.error(error)});
+  return;
+}
+
+
+
+
 
 let loading = false;
 //let my_session = sessionStorage;
@@ -850,11 +907,24 @@ btn_user_upload_data_folder.addEventListener("click",displayUserUploadFolderForm
 
 // user settings and profile : 
 
+
+// profile manager : 
 const btn_display_profile = document.getElementById("btn-show-user-profile");
 
 btn_display_profile.addEventListener("click",display_user_profile,false);
 
 
+
+// recent files manager : 
 const btn_display_recent = document.getElementById("btn-show-user-recent");
 
 btn_display_recent.addEventListener("click",display_user_recent,false);
+
+
+
+// trush file manager : 
+
+const btn_display_deleted_files = document.getElementById("btn-show-user-trush");
+
+btn_display_deleted_files.addEventListener("click",display_user_trush,false);
+
