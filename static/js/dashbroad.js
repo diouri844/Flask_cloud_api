@@ -289,6 +289,22 @@ function UpdateRecentViews(){
   })
 }
 
+// update User deleted counter : 
+function UpdateDeletedCounter(){
+  axios.defaults.baseURL = 'http://127.0.0.1:5000';
+  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+  axios.get("/RestoreManager/Deleted",config)
+  .then( response => {
+    // set the global variables : 
+    USER_DELETED_COUNTER = response.data.response_data.length;
+    // up^date ui :
+    document.getElementById('user_deleted_count').innerHTML = ` ${ USER_DELETED_COUNTER } `;
+  })
+  .catch( error => {
+    console.error( error );
+  })
+}
+
 
 
 // user settings : 
@@ -785,9 +801,13 @@ function displayUserUploadFolderForm(){
   },false);
 }
 
-
+function DeleteAction(e){
+  console.log(e);
+  return
+}
 
 function display_user_trush(){
+  let loading_data = true ;
   // get the class of the model : 
   document.querySelector(".display-deleted-modal-overlay")
   .classList.add("open-modal");
@@ -801,13 +821,14 @@ function display_user_trush(){
   .addEventListener("click",()=>{
     document.querySelector(".display-deleted-modal-overlay")
     .classList.remove("open-modal");
-  },false);
+  },false);  
   // send get request to the endpoint apo : get all removed file :
   axios.defaults.baseURL = 'http://127.0.0.1:5000';
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
   axios.get('/RestoreManager/Deleted',config)
   .then( response => {
     // update header message : 
+    loading_data = false;
     document.querySelector(".deleted_title")
     .innerHTML=
     `<i class="fas fa-clock"></i>
@@ -825,16 +846,48 @@ function display_user_trush(){
             ${deleted_item.Name}
           <span class="creating-date">${ deleted_item.Date }</span>
         </h4>
-        <h7 class="folder-item-date"><i class="fas fa-trash-restore"></i> Deleted at :  ${ deleted_item.DeletedDate }</h7>
-        <i class="fas fa-trash"></i>
-        <i class="fas fa-ghost"></i>
+        <h7 class="folder-item-date"><i class="fas fa-clock"></i> Deleted at :  ${ deleted_item.DeletedDate }</h7>
+        <i 
+        class="fas fa-trash confirme-delete"
+        ></i>
+        <i 
+        class="fas fa-trash-restore cancel-delete"
+        ></i>
         </div>`
       }
     ).join("");
+      // add eventlistner to all button : 
+      document.querySelectorAll('.confirme-delete').forEach(
+        (item)=>{
+          item.addEventListener(
+        'click',
+        (e)=>{
+          // the event object is the key to get spécifique file :
+          console.log("confirme delete : ",e.path[1].id);
+          // send delet request to the endpoint :
+        },
+        false);
+        }
+      );
+      document.querySelectorAll('.cancel-delete').forEach(
+        ( item )=>{
+          item.addEventListener(
+            'click',
+            ( e )=>{
+              // the event object is the key to get spécifique file :
+              console.log("cancel delete : ",e.path[1].id);
+              // send delet request to the endpoint :
+            },
+            false
+          )
+        }
+      );
   })
   .catch( error => {console.error(error)});
   return;
 }
+
+
 
 
 
@@ -847,12 +900,15 @@ setInterval(()=>{
   if(loading){
     getAllFolders();
     UpdateRecentViews();
+    UpdateDeletedCounter();
     USER_FOLDER_COUNTER = FOLDER_LIST.length;
     USER_RECENT_COUNTER = RECENT_LIST.length;
     loading = false;
   }
 },1000)
 
+
+UpdateDeletedCounter();
 getAllFolders();
 UpdateRecentViews();
 
@@ -879,6 +935,7 @@ let FOLDER_LIST = [];
 let RECENT_LIST = []; 
 let USER_FOLDER_COUNTER = 0;
 let USER_RECENT_COUNTER = 0;
+let USER_DELETED_COUNTER =  0;
 const btn_add_folder = document.getElementById("create_new_folder");
 btn_add_folder.addEventListener("click",create_folder,false);
 
