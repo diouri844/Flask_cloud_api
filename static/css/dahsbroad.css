@@ -409,6 +409,28 @@
     background: #797270;
 }
 
+.confirme-delete,
+.cancel-delete{
+    cursor: pointer;
+    margin-left: 0.25rem;
+}
+
+/* add hover and focus effects */
+.confirme-delete:hover,
+.cancel-delete:hover,
+.confirme-delete:focus,
+.cancel-delete:focus
+{
+    color:#ccc;
+}
+
+
+
+.ldBar{
+    margin-left:35%;
+    font-size: 35px;
+}
+
 /*   add custom scroll bar to truch file list body  */
 
 .popup-display-deleted-body{
