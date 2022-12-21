@@ -25,6 +25,7 @@ class DataRestoreManager:
     def __init__(self,upload_path="",User=""):
         self.path_base = upload_path
         self.User = User
+        self.DeleteStore = "/DeleteStore"
     def connect_to_mongoDb(self):
         env_path = "../../.env"
         load_dotenv(env_path)
@@ -49,6 +50,35 @@ class DataRestoreManager:
         except Exception as e:
             print("[ New DeletedFile Error ] : "+str(e))
         return
+    # method that delet finally the physical file from deletedStore :
+    def RemoveFile(self,file_target_name=""):
+        # step 1: make connection to the mongodb database : 
+        self.connect_to_mongoDb()
+        # step 2 : get the file object from collection by name :
+        try:
+            file_target = list(
+                self.my_collection.find(
+                    {
+                        'Name':file_target_name,
+                        'User':self.User
+                    },{
+                        '_id':0
+                    }
+                    )
+            )[0]
+            # step 3 : delete phy-file from DeleteStore :
+            file_path = os.path.join("././DeleteStore",file_target['Name'])
+            #print(" Delet :   \n"+str(file_path))
+            os.remove(file_path)
+            # step 4 : delete the file document from the collection :
+            self.my_collection.delete_one({
+                'Name': file_target_name,
+                'User': self.User
+            })
+            return 1
+        except Exception as e:
+            print(" [get deleted-file error ] : "+str(e))
+            return -1
     def getAll(self):
         self.connect_to_mongoDb()
         try:
