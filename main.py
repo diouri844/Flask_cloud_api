@@ -283,7 +283,7 @@ def upload_now(option):
                         response_state = "danger"
             return jsonify({'state': response_state,'message': response_message})
 
-
+# manage displayed deleted and restored user file :  
 @my_app.route("/RestoreManager/<option>", methods=['GET'])
 def restore_manager_handler(option):
     # check session : 
@@ -297,6 +297,30 @@ def restore_manager_handler(option):
                 delete_manager = DataRestoreManager(UploadFolder, session['User'][1])
                 response_data = delete_manager.getAll()
                 return jsonify({'response_data':response_data})
+
+# new router that manage confrime / cancel delete file from trush : 
+@my_app.route("/Trush/<option>/<file_name>",methods=['GET'])
+def trush_space_manager(option,file_name):
+    # check http method  : 
+    if request.method == "GET":
+        # check session : 
+        if 'User' in session:
+            enabel_options = [ 'Confirme' , 'Cancel']
+            # create my delete restore manager : 
+            my_trush_manager = DataRestoreManager(
+                UploadFolder, session['User'][1])
+            response_message = ""
+            response_state = ""
+            if option in enabel_options and enabel_options.index(option) == 0:
+                response_confirme = my_trush_manager.RemoveFile(file_target_name=file_name)
+                if response_confirme == 1:
+                    response_message = f"{file_name} has been deleted successful."
+                    response_state = "custom"
+                if response_confirme == -1:
+                    response_message = "Delete file  has been blocked , try again !."
+                    response_state = "danger"
+            return jsonify({"message": response_message, "state": response_state})
+
 
 
 if __name__ == '__main__':
