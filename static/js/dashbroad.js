@@ -865,6 +865,24 @@ function display_user_trush(){
           // the event object is the key to get spécifique file :
           console.log("confirme delete : ",e.path[1].id);
           // send delet request to the endpoint :
+          axios.defaults.baseURL = 'http://127.0.0.1:5000';
+          axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+          axios.get('/Trush/Confirme/'+e.path[1].id,config)
+          .then( response => {
+             notify({
+                message: response.data.message,
+                color: response.data.state,
+                timeout: 2500
+            });
+            // update the gloal view : 
+            loading = true;
+            setTimeout(
+              ()=>{
+                loading = false;
+              },1500
+            );
+          })
+          .catch( error => console.error(error));
         },
         false);
         }
@@ -877,6 +895,16 @@ function display_user_trush(){
               // the event object is the key to get spécifique file :
               console.log("cancel delete : ",e.path[1].id);
               // send delet request to the endpoint :
+              // endpoint designe : 
+              // baseurl/Trush/<option >/<file_id:name>
+              // option :[ Confirme , Cancel]
+              axios.defaults.baseURL = 'http://127.0.0.1:5000';
+              axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+              axios.get('/Trush/Cancel/'+e.path[1].id,config)
+              .then( response => {
+                console.log( response.data);
+              })
+              .catch( error => console.error(error));
             },
             false
           )
