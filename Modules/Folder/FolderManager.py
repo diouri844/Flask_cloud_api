@@ -135,3 +135,31 @@ class Folder:
         except Exception as e:
             print("[ Update Date  Error ] : "+str(e))
             return -1
+    def RestoreFolderContent(self,foldername="",fileData={}):
+        # define my content : 
+        restored_content = {
+            'Name':fileData['Name'],
+            'Type':fileData['Type'],
+            'Date':fileData['Date'],
+            'Url':fileData['Url']
+        }
+        # update the content array :
+        try:
+            self.my_db.Folders.update_one(
+                {
+                    # filter :
+                    'Name':foldername,
+                    'Owner':fileData['User']
+                },
+                {
+                    # update checker :
+                    '$addToSet':
+                    {
+                        'Content':restored_content
+                    }
+                }
+            )
+            return 1
+        except Exception as e:
+            print(" [ error update restored folder ] : "+str(e))
+            return -1
