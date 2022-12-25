@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
+from Modules.Folder.FolderManager import Folder
 import os
 import datetime
 
@@ -33,7 +34,7 @@ class DataRestoreManager:
         self.my_collection = MongoClient(
             self.connxion_uri).Flask_Cloud.DeletedFiles
         return
-    def addToTrush(self,file_target={}):
+    def addToTrush(self,file_target={},folder_target=""):
         # make connexion to mongodb database :
         self.connect_to_mongoDb()
         try:
@@ -44,6 +45,7 @@ class DataRestoreManager:
                     "Date": file_target['Date'],
                     "User":self.User,
                     "Url":file_target['Url'],
+                    "Vrl":folder_target+"/"+file_target['Name'],
                     "DeletedDate": str(datetime.datetime.now()).split(" ")[0]
                 }
             )
@@ -79,6 +81,70 @@ class DataRestoreManager:
         except Exception as e:
             print(" [get deleted-file error ] : "+str(e))
             return -1
+    def RestoreFile(self,file_target_name=""):
+        # step 1 : get the file target :
+        self.connect_to_mongoDb()
+        try:
+            target_file = list(
+                self.my_collection.find(
+                {
+                    'Name':file_target_name,
+                    'User':self.User
+                },
+                {
+                    '_id':0
+                }
+            ))[0]
+            # step 2 : create the folder-image if not exist form file['Vrl']
+            # sub-step 1 : get the folder name from the Vrl file attribute :
+            folder_t_create = target_file['Vrl'].split('/')[0]
+            # sub-step 2: check if there is the folder already exit ( it sould be not):
+            my_folder_manager = Folder()
+            my_folder_manager.connect()
+            my_folder_form = {
+                'Name':folder_t_create,
+                "Owner":self.User
+            }
+            # step 3 : creta new folder.content object to reference current restored file
+            # sub step : check if the folder image already exist :
+            list_folders = my_folder_manager.getAllFolders(username=self.User)
+            response_check = 0
+            for f_item in list_folders:
+                if f_item['Name'] == folder_t_create:
+                    response_check = 1
+                    break
+            if response_check == 0:
+                respose_insert_folder = my_folder_manager.insertFolder(
+                    folderdata=my_folder_form)
+                # step 4 : copy physical-file from deletedStore to UploadedStore
+                if respose_insert_folder == 1:
+                    update_content_response = my_folder_manager.RestoreFolderContent(
+                        foldername=folder_t_create
+                        ,fileData=target_file
+                    )
+                    if update_content_response == 1:
+                        # step 5 :delete file document from deleted_files colletion:
+                        self.my_collection.delete_one({
+                            'Name': file_target_name,
+                            'User': self.User
+                        })
+                    return 1
+            else:
+                # folder already created :
+                update_content_response = my_folder_manager.RestoreFolderContent(
+                    foldername=folder_t_create, fileData=target_file
+                )
+                if update_content_response == 1:
+                    # step 5 :delete file document from deleted_files colletion:
+                    self.my_collection.delete_one({
+                        'Name': file_target_name,
+                        'User': self.User
+                    })
+                    return 1
+        except Exception as e:
+            print(" [ find file to restore error ] : "+str(e))
+            return -1
+        return
     def getAll(self):
         self.connect_to_mongoDb()
         try:
