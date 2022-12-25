@@ -157,7 +157,8 @@ def FolderMAnager(foldername):
             for each content_item deleted , add it as an new
             document  
             '''
-            delet_manager.addToTrush(content_item)
+            # add folder image name as seconde arg to refer current folder :
+            delet_manager.addToTrush(content_item,foldername)
             my_current_manager.remove_item(content_item['Name'])
         # delete the files from upload folder : 
         delete_files_response = my_manager.replaceFolderFiles((foldername))
@@ -318,6 +319,15 @@ def trush_space_manager(option,file_name):
                     response_state = "custom"
                 if response_confirme == -1:
                     response_message = "Delete file  has been blocked , try again !."
+                    response_state = "danger"
+            if option in enabel_options and enabel_options.index(option) == 1:
+                response_restore = my_trush_manager.RestoreFile(file_name)
+                # check the response : 
+                if response_restore == 1:
+                    response_message = f"{file_name} has been Restored successful."
+                    response_state = "custom"
+                else:
+                    response_message = "Restore data  has been blocked , try again !."
                     response_state = "danger"
             return jsonify({"message": response_message, "state": response_state})
 
