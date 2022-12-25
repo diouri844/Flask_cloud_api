@@ -114,7 +114,7 @@ function handlerFolderClick(event){
         let content_display = current_folder.Content.map((sub_element)=>{
         return `
         <div class="sub-folder-item">
-          <h6 class="sub-item-name"> ${sub_element.Name }   <i class="fas fa-arrow-down open_file"></i></h6>
+          <h6 class="sub-item-name"> ${sub_element.Name }</h6>
           <h6 class="sub-item-type"> ${sub_element.Type }</h6>
           <h6 class="sub-item-date"> ${sub_element.Date }</h6>
         </div>
@@ -363,8 +363,7 @@ function display_user_recent(){
     function(item){
       return `
       <div class="recent-item">
-      <span class="recent_name"><i class="fas fa-fire"></i> ${item.Name} </span>
-      <span class="reccent_Edate"> ${item.Type} </span>
+      <span class="recent_name"> ${item.Name} </span>
       <span class="reccent_date"> ${item.OperationDate} </span>
       </div>
       `;
@@ -841,11 +840,11 @@ function display_user_trush(){
       function(deleted_item){
         return `
         <div class="folder-item" id="${deleted_item.Name}">
-        <h4 class="folder-item-Name"> 
+        <h6 class="deleted-file-Name"> 
           <i class="fas fa-ghost"></i>
             ${deleted_item.Name}
-          <span class="creating-date">${ deleted_item.Date }</span>
-        </h4>
+        </h6>
+            <span class="creating-date">${ deleted_item.Date }</span>
         <h7 class="folder-item-date"><i class="fas fa-clock"></i> Deleted at :  ${ deleted_item.DeletedDate }</h7>
         <i 
         class="fas fa-trash confirme-delete"
@@ -862,8 +861,6 @@ function display_user_trush(){
           item.addEventListener(
         'click',
         (e)=>{
-          // the event object is the key to get spécifique file :
-          console.log("confirme delete : ",e.path[1].id);
           // send delet request to the endpoint :
           axios.defaults.baseURL = 'http://127.0.0.1:5000';
           axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -879,6 +876,8 @@ function display_user_trush(){
             setTimeout(
               ()=>{
                 loading = false;
+                document.querySelector(".display-deleted-modal-overlay")
+                .classList.remove("open-modal");
               },1500
             );
           })
@@ -892,9 +891,7 @@ function display_user_trush(){
           item.addEventListener(
             'click',
             ( e )=>{
-              // the event object is the key to get spécifique file :
-              console.log("cancel delete : ",e.path[1].id);
-              // send delet request to the endpoint :
+              // send restore request to the endpoint :
               // endpoint designe : 
               // baseurl/Trush/<option >/<file_id:name>
               // option :[ Confirme , Cancel]
@@ -903,6 +900,20 @@ function display_user_trush(){
               axios.get('/Trush/Cancel/'+e.path[1].id,config)
               .then( response => {
                 console.log( response.data);
+                notify({
+                  message: response.data.message,
+                  color: response.data.state,
+                  timeout: 2500
+                });
+                // update the gloal view : 
+                loading = true;
+                setTimeout(
+                  ()=>{
+                    loading = false;
+                    document.querySelector(".display-deleted-modal-overlay")
+                    .classList.remove("open-modal");
+                  },1500
+                ); 
               })
               .catch( error => console.error(error));
             },
