@@ -151,9 +151,9 @@
     margin-top: 1%;
 }
 
+
 .popup-display-recent-body{
     margin-top: 1%;
-    max-height: 450px;
     overflow-y: auto;
     background: transparent;
     border-radius: 25px;
@@ -180,9 +180,9 @@
     display: flex;
     justify-content: space-between;
     margin-top: 1%;
+    width: 100%;
     margin-bottom: 1%;
     padding: 15px;
-    border-bottom: 3px solid #797270;
     font-size:large;
 }
 .recent-item{
@@ -190,13 +190,34 @@
     justify-content: space-between;
     margin-top: 1%;
     margin-bottom: 1%;
-    padding:15px;
-    border-radius: 15px;
+    width: 100%;
+    padding:10px;
+}
+.popup-display-recent{
+    width:60%;
+    margin-left: 15%;
 }
 .recent_name{
     font-size: larger;
+    max-width: 200px;
+    overflow-x: auto;
     color: #A7A7A9;
 }
+
+
+.recent_name::-webkit-scrollbar {
+    height: 5px;
+}
+
+.recent_name::-webkit-scrollbar-track {
+    border: none;
+}
+
+/* Handle */
+.recent_name::-webkit-scrollbar-thumb {
+    background: #eee;
+}
+
 .reccent_date{
     opacity: 0.5;
     color:#eee;
@@ -342,6 +363,7 @@
 
 .open-folder-body{
     margin-top: 2%;
+    width:100%;
     padding: 10px 10px;
     border-radius: 15px;
     -webkit-box-shadow: 14px 3px 19px -7px rgba(0, 0, 0, 0.68);
@@ -365,13 +387,32 @@
     color:#eee;
     border:none;
     background:transparent;
+    overflow-x: auto;
     cursor: pointer;
+    text-align: justify;
+    max-width: 180px;
 }
+
+.sub-item-name::-webkit-scrollbar {
+    height: 5px;
+}
+
+.sub-item-name::-webkit-scrollbar-track {
+    border: none;
+}
+
+/* Handle */
+.sub-item-name::-webkit-scrollbar-thumb {
+    background: #eee;
+}
+
+
+
+
+
 .sub-item-name:hover,.sub-item-name:focus  {
     opacity: 1;
     color: #eee;
-    border-radius: 15px;
-    background-color: #00797270;
     transition: 0.6s;
 }
 
@@ -575,6 +616,15 @@
     bottom: 0;
     float: bottom;
     margin-top:1%;
+}
+
+.deleted-file-Name{
+    text-align: justify;
+    max-width:50%;
+}
+.deleted-file-Name:hover{
+    color: #fff;
+    cursor: pointer;
 }
 
 .folder-item-Name:hover{
