@@ -613,6 +613,61 @@ function check_display_content(){
   }
 }
 
+function display_user_spaces(){
+  // close the dropdown menu :
+  let loading_spaces = true;
+  const element = document.querySelector(".user_services");
+    if(element.style.display === 'flex'){
+      element.style.display = 'none';
+    }
+    // display the model :
+    document.querySelector(".display-shared-modal-overlay").classList.add('open-modal');
+    // manager close event : 
+    document.getElementById('btn-close-display-shared')
+    .addEventListener(
+      'click',
+      ()=>{
+        document.querySelector(".display-shared-modal-overlay").classList.remove('open-modal');
+        return;
+      },
+      false
+    );
+    let div_body =  document.querySelector('.popup-display-shared-body');
+    // send an get request to the backend api :
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    axios.get("/Spaces/all",config)
+    .then( response => {
+      console.log( response.data);
+      // update state : 
+      loading_spaces = false;
+      // update ui : 
+      let container_result = response.data.response_data.map(
+        function( item ){
+          return `
+            <div class="space_item" id="${item.Name}">
+              <h4 class="folder-item-Name" "> 
+                <i class="fas fa-users"></i>
+                  ${item.Name}
+                    <span class="space-item-content-len"><i class="fas fa-file"></i> ${ item.Content.length }</span>
+                    <span class="space-item-member-len"><i class="fas fa-user"></i> ${ item.Member.length }</span>
+                  <span class="space-creator"> by ${item.Creator }</span>
+              </h4>
+              <h7 class="space-item-date">
+              <i class="fas fa-clock"></i> Last update :  ${ item.LastUpdate }</h7>
+              </div>
+          `
+        }
+      );
+      // join the created template to the html section :
+      div_body.innerHTML = container_result.join('');
+      return;
+    })
+    .catch( error => console.error( error ));
+    return;
+}
+
+
 
 
 function displayUserUploadForm(){
@@ -1024,3 +1079,10 @@ const btn_display_deleted_files = document.getElementById("btn-show-user-trush")
 
 btn_display_deleted_files.addEventListener("click",display_user_trush,false);
 
+
+
+// shared spaces manager : 
+
+const btn_display_Groups = document.getElementById('btn-show-user-spaces');
+
+btn_display_Groups.addEventListener('click',display_user_spaces,false);
