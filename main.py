@@ -4,6 +4,7 @@ from Modules.Folder.FolderManager import Folder
 from Modules.UploadManager.Uploader import UploadManager
 from Modules.CurrentFiles.Recent import CurrentUploaded
 from Modules.RestoreManager.Delete_Restore import DataRestoreManager
+from Modules.SpaceManager.UsersGroup import Group
 from werkzeug.utils import secure_filename
 
 my_app = Flask(__name__)
@@ -298,6 +299,18 @@ def restore_manager_handler(option):
                 delete_manager = DataRestoreManager(UploadFolder, session['User'][1])
                 response_data = delete_manager.getAll()
                 return jsonify({'response_data':response_data})
+
+
+@my_app.route("/Spaces/<space_option>",methods=['GET','POST'])
+def shared_space_handler(space_option="all"):
+    if 'User' in session:
+        if request.method =='GET':
+            # step 1 : connect my manager :
+            my_space_manager = Group(session['User'][1])
+            space_response = my_space_manager.getAllSpaces()
+        return jsonify({'response_data':space_response})
+
+
 
 # new router that manage confrime / cancel delete file from trush : 
 @my_app.route("/Trush/<option>/<file_name>",methods=['GET'])
