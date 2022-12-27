@@ -51,7 +51,7 @@
 				<li class="u_serv_item" id="btn-show-user-profile"><i class="fas fa-user-edit"></i> Profile </li>
 				<li class="u_serv_item" id="btn-show-user-recent"><i class="fas fa-clock"></i> Récent </li>
 				<li class="u_serv_item" id="btn-show-user-trush"><i class="fas fa-trash-restore"></i> Corbeille </li>
-				<li class="u_serv_item"><i class="fas fa-folder"></i> Folders </li>
+				<li class="u_serv_item" id="btn-show-user-spaces"><i class="fas fa-atom"></i> Spaces </li>
 				<li class="u_serv_item"><i class="fas fa-link"></i> Links </li>
 				<li class="u_serv_item"><i class="fas fa-door-open"></i> Logout </li>
 			</ul>
@@ -100,13 +100,6 @@
 
 
 <!---  Profile update and manage modal -->
-
-
-
-
-
-
-
 
 
 
@@ -213,9 +206,6 @@
 <!-- modal to show recent files -->
 
 
-
-
-
 <!-- modal deleted file list -->
 
 <div class="display-deleted-modal-overlay">
@@ -237,8 +227,33 @@
 
 <!-- modal deleted file list -->
 
+<!-- modal display all shared spaces -->
+
+<div class="display-shared-modal-overlay">
+	<div class="display-shared-modal-container">
+		<div class="popup-display-shared">
+			<div class="popup-shared-header">
+				<h4 class="popup-header_handler shared_title"><i class="fas fa-atom"></i> Your spaces </h4>
+				<button type="button" class="btn-close" id="btn-close-display-shared" aria-label="Close"></button>
+			</div>
+			<div class="popup-display-shared-body">
+				<h5> Loading ....... </h5>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
 
 
+
+
+
+
+
+
+
+
+<!-- modal display all shared spaces -->
 
 {% endblock %}
 </body>
