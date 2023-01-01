@@ -375,6 +375,38 @@ function display_user_recent(){
 
 
 
+function display_space_content(space_name,space_file_list){
+  // enable show madal :
+  document.querySelector('.shared-content-modal-container')
+  .classList.add('open-modal');
+  // manage the close event ;
+  document.getElementById("btn-close-shared-content")
+  .addEventListener( 'click',
+  ()=>{
+    document.querySelector('.shared-content-modal-container')
+  .classList.remove('open-modal');
+  },
+  false);
+  // check if there is a content :
+  if ( space_file_list.length === 0)
+  {
+    document.querySelector('.popup-shared-content-body')
+    .innerHTML = `
+    <h4 class="non-file-display">
+      <i class="fas fa-empty-set"></i>
+      No  shared file for now ........ </h4>
+    `;
+    return;
+  }else{
+    // display all files : to be continued ......
+  }
+
+  return;
+}
+
+
+
+
 function check_display_content(){
   // stock the current data : 
   let origin_user_profile = new FormData();
@@ -638,7 +670,7 @@ function display_user_spaces(){
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     axios.get("/Spaces/all",config)
     .then( response => {
-      console.log( response.data);
+      USER_SPACES = response.data.response_data;
       // update state : 
       loading_spaces = false;
       // update ui : 
@@ -649,8 +681,17 @@ function display_user_spaces(){
               <h4 class="folder-item-Name" "> 
                 <i class="fas fa-users"></i>
                   ${item.Name}
-                    <span class="space-item-content-len"><i class="fas fa-file"></i> ${ item.Content.length }</span>
-                    <span class="space-item-member-len"><i class="fas fa-user"></i> ${ item.Member.length }</span>
+                    <span 
+                    class="space-item-content-len"
+                    id="open_file_liste_"+${item.Name}
+                    >
+                      <i class="fas fa-file"></i>
+                      ${ item.Content.length }
+                    </span>
+                    <span class="space-item-member-len">
+                    <i class="fas fa-user"></i>
+                     ${ item.Member.length }
+                    </span>
                   <span class="space-creator"> by ${item.Creator }</span>
               </h4>
               <h7 class="space-item-date">
@@ -661,6 +702,27 @@ function display_user_spaces(){
       );
       // join the created template to the html section :
       div_body.innerHTML = container_result.join('');
+      // manage event of this secition :
+      // step 1 : manage open file liste event :
+      document.querySelectorAll('.space-item-content-len')
+      .forEach( ( item )=> 
+      {
+        item.addEventListener('click',
+          (e) => {
+            let space_target_name = e.path[3].id;
+            // filter the user spaces array : 
+            let space_obj_target = USER_SPACES.filter(
+              ( space_item )=>{ return space_item.Name === space_target_name }
+            )[0];
+            // display the target space content :
+            display_space_content(
+              space_obj_target.Name,
+              space_obj_target.Content
+            )
+            return;
+          },false);
+        }  
+      );
       return;
     })
     .catch( error => console.error( error ));
@@ -1026,7 +1088,13 @@ let DISPLAY_USER_CREDIT_CARD = false;
 
 
 let FOLDER_LIST = [];
-let RECENT_LIST = []; 
+let RECENT_LIST = [];
+
+// global var for user spaces : 
+
+let USER_SPACES = [];
+
+
 let USER_FOLDER_COUNTER = 0;
 let USER_RECENT_COUNTER = 0;
 let USER_DELETED_COUNTER =  0;
