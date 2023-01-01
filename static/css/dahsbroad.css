@@ -84,7 +84,7 @@
 .modal-overlay, .open-modal-overlay, .update-modal-overlay,
 .upload-modal-overlay, .Folder-upload-modal-overlay,
 .display-recent-modal-overlay, .display-deleted-modal-overlay,
-.display-shared-modal-overlay
+.display-shared-modal-overlay,.shared-content-modal-container
 {
     position: fixed;
     top: 0;
@@ -95,6 +95,44 @@
     place-items: center;
     visibility: hidden;
     z-index: -10;
+}
+
+.popup-content-header{
+    display: flex;
+    justify-content: space-between;
+    color:#eee;
+    margin-bottom: 2%;
+    padding-bottom: 2%;
+    border-bottom: 2px solid #79727080;
+}
+
+.popup-shared-content{
+    padding:  10px 5px;
+    margin-left:1%;
+    width:30%;
+    border-radius:  15px;
+    color: #eee;
+}
+
+.popup-shared-content-body{
+    max-height: 200px;
+    padding: 5px 8px;
+    margin-top: 1%;
+    color:#eeee;
+}
+.non-file-display{
+    margin-top: 0;
+    float:top;
+    padding: 5px 8px;
+    font-size: 15px;
+    text-decoration: underline;
+    opacity: 0.6;
+    cursor: pointer;
+}
+.non-file-display:hover{
+    opacity: 1;
+    transition: 0.6s;
+    text-decoration: none;
 }
 
 .open-modal-overlay, .update-modal-overlay{
