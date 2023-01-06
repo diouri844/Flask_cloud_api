@@ -399,9 +399,59 @@ function display_space_content(space_name,space_file_list){
     return;
   }else{
     // display all files : to be continued ......
+    /*
+    the content is an array of file objects with this schema : 
+    {
+      "Name": "pade2.css",
+      "Type": "File",
+      "Date": "2022-12-25",
+      "Url": "UploadStore/pade2.css",
+      "Owner": "chopen"
+    }
+    now we should loop over the content :
+    */ 
+    let space_template = space_file_list.map(
+      function( file_item ){
+        return  `
+        <div class="space-file-item"
+        >
+          <span class="space-file-name"> 
+            ${ file_item.Name } 
+          </span>
+          <span class="space-file-owner">
+           by ${ file_item.Owner } 
+          </span>
+          <span class="space-file-actions"> 
+            <i 
+            class="fas fa-bookmark btn-add-to-bookmarks"
+            id=${ file_item.Name }
+            ></i>
+            <i 
+            class="fas fa-upload btn-display-file"
+            ></i>
+          </span>
+        </div>
+        `;
+      }
+    );
+    document.querySelector('.popup-shared-content-body')
+      .innerHTML = space_template.join("");
+      // manage clicks events :
+      document.querySelectorAll('.btn-add-to-bookmarks')
+      .forEach( 
+        ( btn_item )=>{
+          btn_item.addEventListener(
+            'click',
+            ( e )=>{
+              console.log(" \n add target :   ", e.path[0].id );
+              return;
+            },
+            false
+          );
+        }
+      );
+      return;
   }
-
-  return;
 }
 
 
@@ -715,6 +765,9 @@ function display_user_spaces(){
               ( space_item )=>{ return space_item.Name === space_target_name }
             )[0];
             // display the target space content :
+            console.log(
+              space_obj_target
+            );
             display_space_content(
               space_obj_target.Name,
               space_obj_target.Content
