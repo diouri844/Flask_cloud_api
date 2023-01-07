@@ -375,6 +375,51 @@ function display_user_recent(){
 
 
 
+
+// implemment display file as a modal fucntion : 
+
+
+function DisplayFileContent(file_target_object={}){
+  /*
+  file object structur  : 
+    {
+    Date: '2022-12-25', 
+    Name: 'pade2.css', 
+    Owner: 'chopen', 
+    Type: 'File', 
+    Url: 'UploadStore/pade2.css'
+  }
+  */
+  // create an html object with src-data from file_target_obj.Url:
+  let arr_url = file_target_object.Url.split('/');
+  document.querySelector('.popup-shared-display-file').classList.add('open-modal');
+  document.querySelector('.popup-shared-display-file').innerHTML = `
+  <button 
+		type="button" 
+		class="btn-close"
+		id="btn-close-opend-file" 
+		aria-label="Close"></button>
+    <object 
+      data="../apple-1868496_640.jpg" 
+    >
+    </object>
+  `;
+  document.getElementById('btn-close-opend-file')
+  .addEventListener(
+    'click',
+    ()=>{
+    document.querySelector('.popup-shared-display-file')
+    .classList.remove('open-modal');
+    },
+    false
+  );
+ console.log(file_target_object.Url);
+  return
+}
+
+
+
+
 function display_space_content(space_name,space_file_list){
   // enable show madal :
   document.querySelector('.shared-content-modal-container')
@@ -428,6 +473,7 @@ function display_space_content(space_name,space_file_list){
             ></i>
             <i 
             class="fas fa-upload btn-display-file"
+            id=${ file_item.Name }
             ></i>
           </span>
         </div>
@@ -437,19 +483,60 @@ function display_space_content(space_name,space_file_list){
     document.querySelector('.popup-shared-content-body')
       .innerHTML = space_template.join("");
       // manage clicks events :
+      // manage add to bookmarks click event :
       document.querySelectorAll('.btn-add-to-bookmarks')
       .forEach( 
         ( btn_item )=>{
           btn_item.addEventListener(
             'click',
             ( e )=>{
-              console.log(" \n add target :   ", e.path[0].id );
+              console.log(" \n add target :   ", e.path[0].id);
+              // all shared files is saved in a global list : space_file_list:
+              // check the detected target shared files : get it by the name :
+              let file_target_object  = space_file_list.filter(
+                ( file_item )=>{
+                  return file_item.Name === e.path[0].id;
+                }
+              )[0];
+              // display messages : 
+              notify({
+                message: file_target_object.Name + " added to your bookmarks ",
+                color: 'custom',
+                timeout: 1000
+              });
+              // update ui :
+              let targ_btn =document.getElementById(e.path[1].childNodes[1].id)
+              targ_btn.style.opacity="1";
+              targ_btn.style.fontSize = "18px";
+              // style have been update :) ......
               return;
             },
             false
           );
         }
       );
+      // manage display file  click event :
+      document.querySelectorAll('.btn-display-file')
+      .forEach(
+        ( btn_item )=>{
+          btn_item.addEventListener(
+            'click',
+            ( e )=>{
+              console.log(" \n add target :   ", e.path[0].id);
+              // all shared files is saved in a global list : space_file_list:
+              // check the detected target shared files : get it by the name :
+              let file_target_object  = space_file_list.filter(
+                ( file_item )=>{
+                  return file_item.Name === e.path[0].id;
+                }
+              )[0];
+              // file data hase been geted successufully : 
+              DisplayFileContent(file_target_object);
+            },
+            false
+          );
+        }
+      )
       return;
   }
 }
