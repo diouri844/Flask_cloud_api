@@ -84,7 +84,8 @@
 .modal-overlay, .open-modal-overlay, .update-modal-overlay,
 .upload-modal-overlay, .Folder-upload-modal-overlay,
 .display-recent-modal-overlay, .display-deleted-modal-overlay,
-.display-shared-modal-overlay,.shared-content-modal-container
+.display-shared-modal-overlay,.shared-content-modal-container,
+.popup-shared-display-file
 {
     position: fixed;
     top: 0;
@@ -146,6 +147,8 @@
     opacity: 1;
     font-size: 18px;
 }
+
+
 
 
 
