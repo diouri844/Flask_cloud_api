@@ -407,9 +407,9 @@ function DisplayFileContent(file_target_object={}){
   document.getElementById('btn-close-opend-file')
   .addEventListener(
     'click',
-    ()=>{
-    document.querySelector('.popup-shared-display-file')
-    .classList.remove('open-modal');
+      ()=>{
+      document.querySelector('.popup-shared-display-file')
+      .classList.remove('open-modal');
     },
     false
   );
@@ -531,7 +531,11 @@ function display_space_content(space_name,space_file_list){
                 }
               )[0];
               // file data hase been geted successufully : 
-              DisplayFileContent(file_target_object);
+              notify({
+                message: "This feature is not available for now",
+                color: 'custom',
+                timeout: 1000
+              });
             },
             false
           );
@@ -541,7 +545,34 @@ function display_space_content(space_name,space_file_list){
   }
 }
 
-
+function display_space_users(Creator,Member){
+  // display modal :
+  document.querySelector('.shared-users-modal-container').classList.add('open-modal');
+  // manager close click event :
+  document.getElementById("btn-close-shared-users")
+  .addEventListener(
+    'click',
+    ()=>{
+    document.querySelector('.shared-users-modal-container')
+    .classList.remove('open-modal');
+    return;
+    },
+    false
+  );
+  // display data :
+  if ( Member.length === 0){
+    document.querySelector('.popup-shared-users-body')
+    .innerHTML = `
+      <h4 class="non-users-display">
+          <i class="fas fa-empty-set"></i>
+      Empty space , no user for now .....
+      </h4>
+      `;
+  }
+  // manage listed users with toolbar :
+  console.log( " created by :  \n", Creator);
+  console.log( " Members  :  \n", Member);
+}
 
 
 function check_display_content(){
@@ -863,6 +894,30 @@ function display_user_spaces(){
           },false);
         }  
       );
+      // manage click event into space-users-counter :
+      document.querySelectorAll('.space-item-member-len')
+      .forEach(
+        ( item ) =>{
+          item.addEventListener(
+            'click',
+            ( e ) => {
+              let space_target_name = e.path[3].id;
+              // filter the user spaces array : 
+              let space_obj_target = USER_SPACES.filter(
+                ( space_item )=>{ return space_item.Name === space_target_name }
+              )[0];
+              display_space_users(
+                space_obj_target.Creator,
+                space_obj_target.Member
+              );
+              return;
+            },
+            false
+          );
+        }
+      )
+
+
       return;
     })
     .catch( error => console.error( error ));
