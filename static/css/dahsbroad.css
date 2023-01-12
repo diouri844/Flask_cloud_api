@@ -85,7 +85,7 @@
 .upload-modal-overlay, .Folder-upload-modal-overlay,
 .display-recent-modal-overlay, .display-deleted-modal-overlay,
 .display-shared-modal-overlay,.shared-content-modal-container,
-.popup-shared-display-file
+.popup-shared-display-file,.shared-users-modal-container
 {
     position: fixed;
     top: 0;
@@ -98,7 +98,7 @@
     z-index: -10;
 }
 
-.popup-content-header{
+.popup-content-header,.popup-users-header {
     display: flex;
     justify-content: space-between;
     color:#eee;
@@ -106,7 +106,7 @@
     border-bottom: 2px solid #79727080;
 }
 
-.popup-shared-content{
+.popup-shared-content,.popup-shared-users{
     padding:  10px 5px;
     margin-left:1%;
     width:30%;
@@ -152,7 +152,7 @@
 
 
 
-.popup-shared-content-body{
+.popup-shared-content-body .popup-shared-users-body{
     position: relative;
     margin-top: 0;
     top:0;
@@ -184,16 +184,16 @@
 
 
 
-.non-file-display{
-    margin-top: 0;
-    float:top;
+.non-file-display , .non-users-display{
+    margin-top: 2%;
+    text-align: center;
     padding: 5px 8px;
     font-size: 15px;
     text-decoration: underline;
     opacity: 0.6;
     cursor: pointer;
 }
-.non-file-display:hover{
+.non-file-display:hover, .non-users-display:hover{
     opacity: 1;
     transition: 0.6s;
     text-decoration: none;
